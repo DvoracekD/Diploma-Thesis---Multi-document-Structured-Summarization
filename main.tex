@@ -1,0 +1,92 @@
+% The documentation of the usage of CTUstyle -- the template for
+% typessetting thesis by plain\TeX at CTU in Prague
+% ---------------------------------------------------------------------
+% Petr Olsak  Jan. 2013
+
+% You can copy this file to your own file and do some changes.
+% Then you can run:  pdfcsplain your-file
+
+\input ctustyle2  % The template (in version 2) is included here.
+\parskip=\medskipamount \parindent=0pt
+%\input pdfuni    % Uncomment this if you need accented PDFoutlines
+%\input opmac-bib % Uncomment this for direct reading of .bib database files 
+
+\worktype [M/EN] % Type: B = bachelor, M = master, D = Ph.D., O = other
+                 % / the language: CZ = Czech, SK = Slovak, EN = English
+
+\faculty    {F3}  % Type your faculty F1, F2, F3, etc. or MUVS
+            % use main language of your document here:
+\department {Department of Computer Science}
+\title      {Multi-document Structured Summarization}
+\author     {Dominik Dvořáček}
+\date       {January 2025}
+\supervisor {Ing. Jan Drchal, Ph.D.}  % One or more supervisors
+\studyinfo  {Open Informatics}  % Study programme etc.
+\workname   {Diploma Project}
+            % Title / Subtitle in minor language:
+\titleCZ    {Metody strukturované sumarizace množiny dokumentů}
+\subtitleEN {the plain\TeX{} template for theses at CTU}
+            % If minor language is other than English
+            % use \titleCZ, \subtitleCZ or \titleSK, \subtitleSK instead it.
+\pagetwo    {}  % The text printed on the page 2 at the bottom.
+
+\abstractEN {
+% TODO update
+The thesis deals with the documentation of the diploma project. The diploma project is the basis for a future thesis dealing with the creation and improvement of an application for summarizing and navigating long-term media cases using event extraction, entity extraction and other NLP tasks. The thesis presents a survey of state of the art solutions and a description of the method resources required for the development of the target application.
+}
+\abstractCZ {
+% TODO update
+Diplomová práce se zabývá dokumentací diplomového projektu. Diplomový projekt je základem pro budoucí diplomovou práci zabývající se vytvořením a zdokonalením aplikace pro sumarizaci a navigaci v dlouhodobých mediálních kauzách s využitím extrakce událostí, extrakce entit a dalších úloh NLP. V práci je uveden přehled současného stavu řešení a popis metodických prostředků potřebných pro vývoj cílové aplikace.
+}           % If your language is Slovak use \abstractSK instead \abstractCZ
+
+\keywordsEN {%
+    % TODO update
+   Timeline Summarization, Event Extraction, Named Entity Recognition (NER), Multi-Document Summarization, Clustering in NLP, Transformers, Retrieval-Augmented Generation (RAG), Large Language Models (LLM), Semantic Search, Natural Language Processing (NLP)
+}
+\keywordsCZ {
+    % TODO update
+    Sumarizace časové osy, Extrakce událostí, Rozpoznávání pojmenovaných entit (NER), Multi-dokumentová sumarizace, Shlukování v NLP, Transformery, Retrieval Augmented Generation (RAG), Velké jazykové modely (LLM), Sémantické vyhledávání, Zpracování přirozeného jazyka (NLP)
+}
+\thanks {           % Use main language here
+}
+\declaration {      % Use main language here
+   I declare that I have prepared the submitted thesis independently and that I have listed all the information sources used in accordance with the Methodological Guideline on the Observance of Ethical Principles in the Preparation of University Theses. The access to the computational infrastructure of the OP VVV funded project CZ.02.1.01/0.0/0.0/16\_019/0000765 ``Research Center for Informatics'' is also gratefully acknowledged.
+   \signature % makes dots
+}
+
+\specification {
+  \vbox to0pt{\vskip-25mm\centerline{\inspic specification/1.pdf }\vss} \null\vfil\break
+  \vbox to0pt{\vskip-25mm\centerline{\inspic specification/2.pdf }\vss}
+}
+
+%%%%% <--   % The place for your own macros is here.
+
+%\draft     % Uncomment this if the version of your document is working only.
+%\linespacing=1,5  % uncomment this if you need more spaces between lines
+                   % Warning: this works only when \draft is activated!
+%\savetoner        % Turns off the lightBlue backround of tables and
+                   % verbatims, only for \draft version.
+%\blackwhite       % Use this if you need really Black+White thesis.
+%\onesideprinting  % Use this if you really don't use duplex printing. 
+
+\makefront  % Mandatory command. Makes title page, acknowledgment, contents etc.
+
+\input chap_introduction    % Files where the source of the document is prepared.
+\input chap_theory  
+\input chap_sota
+\input chap_datasets
+\input chap_methods
+\input chap_implementation
+\input chap_results
+\input chap_discussion
+\input chap_conclusion
+
+\begingroup
+\emergencystretch=8em
+
+\bibchap
+\usebib/c (simple) bibliography
+
+\endgroup
+
+\bye
