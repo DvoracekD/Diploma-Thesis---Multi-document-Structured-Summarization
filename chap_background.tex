@@ -1,0 +1,222 @@
+\chap Background and Related Work
+
+\sec Natural Language Processing
+
+Natural Language Processing (NLP) is a subfield of artificial intelligence that focuses on enabling machines to understand and generate human language. While human languages are built from a finite set of symbols, the possible combinations and meanings are vast and often context-dependent, making NLP a complex challenge.
+
+Traditional NLP methods rely heavily on syntactic structures and statistical patterns to perform tasks like information retrieval, spell-checking, and word-level analysis. However, they struggle with deeper understanding, such as interpreting ambiguous sentences or referencing prior context—areas where humans naturally excel due to background knowledge and cognitive associations.
+
+For example, machines find it difficult to resolve pronouns or understand phrases like “I saw the Golden Gate Bridge flying into San Francisco,” where context is essential. This limitation arises from the lack of high-level symbolic reasoning and semantic understanding in current systems. \cite[fundAI]{}
+
+To bridge this gap, modern NLP increasingly focuses on Natural Language Understanding (NLU), which involves cognitive-like processing such as identifying entities, understanding relationships, and representing abstract concepts. Although recent computational models aim to simulate human-like language comprehension, achieving true understanding remains an ongoing challenge.
+
+NLP plays a critical role in applications like machine translation, chatbots, and question answering, and continues to evolve toward more sophisticated and human-like language interaction.
+
+\secc Data representations
+% TODO
+
+\secc Metrics
+%TODO
+
+\sec Neural networks in NLP
+%TODO
+
+\sec Transformer architecture
+%TODO
+
+\secc Constrained inference
+
+\sec Text Summarization
+
+People are under information overload. With an increasing amount of information in the public space, comes a natural need to reduce the amount of this data overload. Textual summarization is a subfield of NLP that deals with the volumetric reduction of text to preserve the most important messages and merit of a matter \cite[summarizationSurvey, summarizationSurvey2]. Important criteria for summarizing are properties such as conciseness, cohesion, and grammatical and factual correctness. The different methods then represent a trade-off between these qualities. Methods can be classified according to several factors\cite[summarizationSurvey]: 
+\begitems
+* Input type: Single-document or multi-document
+* Aim: Generic, domain-specific, or query-based
+* Learning phase: Supervised, Unsupervised
+* Output type: Extractive or abstractive.
+\enditems
+
+Multi-document summarization introduces added complexity due to semantic relationships among the source documents. Techniques targeting this task must account for such inter-document connections. Domain-specific methods leverage additional knowledge, enabling them to generate outputs that are aligned with domain expectations or enriched by external knowledge. Query-based summarization, on the other hand, constructs summaries by answering pre-defined questions.
+
+\secc Extractive summarization
+
+A primary classification in summarization is between extractive and abstractive methods. This distinction significantly influences the nature of the summarization output. Extractive methods generate summaries composed of original sentences or text segments directly extracted from the source text. The core mechanism of such approaches lies in evaluating the informativeness of textual fragments. Sentences with the highest scores are selected for inclusion in the final summary \cite[summarizationIBM]. These summaries typically do not consider linguistic coherence, as they rely solely on sentence extraction. Most extractive approaches require preprocessing steps such as sentence boundary identification, stop-word elimination, and stemming.
+
+Major Extractive Summarization Methods \cite[summarizationSurvey]:
+
+Frequency-based Methods construct a dictionary of key phrases and compute their relative frequencies. Sentences containing high-frequency terms are selected for the summary.
+
+Position-based Methods are based on the assumption that key information tends to appear in specific textual locations (e.g., the beginning or end of documents or paragraphs), these methods prioritize such positions during sentence selection.
+
+Graph-based Methods: Sentences are modeled as nodes in a graph, and relationships between them are represented as edges. The importance of each sentence is assessed using graph-ranking algorithms, such as PageRank. For instance, PacSumm (Position-Augmented Centrality based Summarization) \cite[pacsumm] integrates graph algorithms with BERT (Bidirectional Encoder Representations from Transformers)\cite[bert] for sentence mapping. EdgeSumm\cite[edgeSum] constructs a graph where nouns are nodes and non-nouns serve as edges, with node weights determined by frequency.
+
+Latent Semantic Analysis (LSA) Methods \cite[summaryLSA] rely on algebraic and statistical techniques to uncover latent semantic relationships between words and sentences. A term-sentence matrix is created, and singular value decomposition (SVD) is applied to identify the most informative sentences.
+
+Clustering-based Methods: Similar sentences are grouped into clusters, and representative sentences from each cluster are selected for the final summary. Methods such as Fuzzy Evolutionary Optimization Modeling (FEOM) \cite[fuzzySum] apply evolutionary operations to phrase clustering. K-Means clustering is also commonly employed to group sentences based on similarity.
+
+Supervised Classifier-based Methods utilize labeled data (original texts and corresponding human-generated summaries) to train classifiers that predict whether a sentence should be included in a summary. Sentences are represented using various features (e.g., word frequency, position, length), and classifiers such as Naive Bayes (NBC) \cite[bayessum] or Support Vector Machines (SVM) \cite[supervisedsum] are trained to estimate sentence importance.
+
+Elementary Discourse Unit (EDU) Deletion Methods iteratively eliminate less important EDUs from the text until the desired summary length is reached. For example, the Weighted Compression Model\cite[eduSum] assigns scores to EDUs and selects those with the highest weight-to-cost ratios.
+
+Hybrid Methods combine multiple extractive techniques to enhance summary quality. For instance, some models \cite[hybrid1] merge clustering, word graphs, and neural networks. Other hybrid methods \cite[hybrid2, hybrid3] integrate supervised and unsupervised learning paradigms, such as co-training with Probabilistic Support Vector Machines (PSVM) and Na\"{\i}ve Bayes classifier.
+
+\secc Abstractive summarization
+
+Abstractive methods differ from extractive ones. Instead of copying segments from the input, they generate a condensed version through paraphrasing, often employing a novel vocabulary that may not overlap with the original text. This technique mirrors the human approach to summarization tasks \cite[summarizationSurvey2]. As a result, these methods tend to be more complex. Language models must comprehend context and generalize effectively to produce coherent and factually accurate summaries.
+
+Semantic structure can guide summarization. The Semantic Abstractive Summarization (SAS) framework \cite[dohare] uses Abstract Meaning Representation (AMR) graphs to encode this structure. The process involves three stages: graph extraction, summary graph construction, and surface text generation. In these graphs, nodes represent lexical units, and edges denote semantic relations, including those obtained through co-reference resolution. Key nodes and edges are then selected to construct the summary graph.
+
+Neural encoders are widely used. The MeanSum model \cite[meansum], for example, performs multi-document summarization, where the documents relate to single entity (for example reviews of a restaurant). Each document is passed through an autoencoder to extract its latent representation. These vectors are averaged, and the resulting mean vector is decoded into a summary in natural language.
+
+Transformers improve abstractive summarization. In \cite[ted], a Transformer model undergoes unsupervised pretraining on a corpus of news articles, using abstracts as reference summaries. Fine-tuning ensures the latent representations of summaries reflect semantic similarity or dissimilarity between input texts. The model also incorporates a denoising autoencoder objective, where noisy input sequences are reconstructed to strengthen robustness and generalization.
+
+% TODO: Moznost pridat dalsi
+
+\secc Reinforcement learning
+
+A promising avenue of research is reinforcement learning. These methods rely on the iterative refinement of existing approaches through the incorporation of user feedback. One of the proposed methods\cite[autoRL]  presents an extractive single-document summarization approach grounded in reinforcement learning (RL) and enhanced by embedding-based features. The authors employ a Deep Q-Network (DQN) \cite[dqn] to estimate Q-values for candidate sentences, guiding the selection of sentences that maximize the expected quality of the final summary. Each sentence is represented through two types of embeddings: a content vector (from averaged GloVe word embeddings) and a position vector capturing hierarchical structural information (sentence, paragraph, and section positions). The model architecture comprises three modules: one assessing semantic relevance between the document and candidate sentences, another capturing the contextual compatibility between candidate sentences and the partial summary using a GRU-based RNN, and a final module integrating these signals to compute Q-values via regression.
+
+SAAR\cite[SAAR] method also refines the outputs with user feedback. The system is designed for single-document summarization. The system combines standard preprocessing methods and term weighting schemes—such as term frequency and inverse sentence frequency—with a sentence scoring strategy based on information gain, which factors in sentence position, normalized length, and numerical content. A term-sentence matrix is constructed using these weights, and reinforcement learning algorithms are applied to optimize sentence selection. The summary is iteratively refined through user feedback, allowing the system to adjust based on user-provided keywords to generate more contextually relevant and personalized summaries.
+
+\secc Large language models
+
+In recent years, large transformer-based language models have emerged as the dominant approach in the field of text summarization. This shift is largely attributed to advances in neural networks and deep learning, particularly with the introduction of the Transformer architecture\cite[transformer], which has revolutionized how machines process and summarize textual data. As noted in recent research, instruction-tuned models like GPT-3 are capable of producing abstractive summaries with quality comparable to those generated by human annotators \cite[prompt-sums, news-sum].
+
+The prominence of transformer models began with BERT (Bidirectional Encoder Representations from Transformers)\cite[bert]. BERT contributed significantly to text summarization through its bidirectional encoding mechanism, which captures contextual information from both preceding and succeeding tokens. Pre-trained on massive textual corpora, BERT produces deeply contextualized word embeddings, enabling it to detect subtle linguistic cues and semantic dependencies. This results in a highly accurate extraction and condensation of information, particularly effective in summarizing structured content such as news articles.
+
+GPT-3 (Generative Pre-trained Transformer)\cite[gpt-3] further exemplifies the capabilities of large-scale transformer models. By being trained on an extensive dataset, GPT-3 acquired a nuanced understanding of linguistic structure and semantics. This allows it to generate fluent, logically consistent summaries that retain the essence of complex or technical source texts, such as academic publications. The strength of GPT-3 lies in its ability to synthesize information while ensuring coherence and relevance, highlighting the transformative potential of generative pre-trained models in summarization tasks.
+
+At present, the development of transformer-based models is accelerating rapidly. On platforms like HuggingFace, there is a clear trend of frequent releases of increasingly large and powerful instruction-tuned models by major organizations\cite[huggingfaceModels]. These models, characterized by their growing parameter counts and improved generative capabilities, hold considerable promise for advancing abstractive summarization through large language models.
+
+\secc Multi-document Summarization
+
+Multi-document summarization introduces new challenges. Compared to single-document summarization (SDS), multi-document summarization (MDS) involves the inclusion of multiple source texts, which may result in semantic conflicts between individual statements. Semantic unit duplication is another issue, leading to increased cognitive load and a reduction of usable context. However, such duplications can also serve as indicators of importance, based on the frequency of occurrence. Moreover, documents can complement each other, increasing the quantity of salient information and consequently extending the length of the summary. This introduces a difficult trade-off in determining which high-value information to omit. Unlike SDS, the field of MDS suffers from a lack of annotated datasets, and the evaluation metrics for MDS are computationally more demanding \cite[multi-survay].
+
+Convolutional neural networks (CNNs) are utilized in MDS tasks.
+Certain proposed approaches employ CNN architectures to model and abstract textual content for MDS purposes. These typically operate on simplified n-gram-based feature models. CNNs provide highly efficient training potential but lack the capability to model long-range textual dependencies. Methods such as \cite[MDS-text-clasification] and \cite[MDS-opt-sentence-mod] apply CNN classifiers to evaluate the importance of textual units in extractive MDS.
+
+Recurrent neural networks (RNNs) are widely adopted in MDS methods.
+Various RNN modifications demonstrate an ability to capture temporality and context. However, their performance deteriorates on longer sequences, and they face limitations in parallelizing both training and inference compared to more modern architectures. In RNNs, the processing unit receives not only the current token input but also the hidden state output from the previous unit. Specific approaches such as \cite[coavoux-etal-2019-unsupervised] and \cite[meansum] leverage the Long Short-Term Memory (LSTM) \cite[LSTM] variant of RNNs, while others like \cite[amplayo-lapata-2021-informative] use Bi-LSTM-based networks \cite[Bi-LSTM].
+
+Graph neural networks (GNNs) offer a theoretically optimal model of text semantics\cite[multi-survay].
+The components of natural language exhibit relationships that can be represented as edges within a general graph. GNNs are thus capable of explicitly modeling hierarchical and, in the context of MDS, cross-document dependencies. A drawback of these approaches lies in their high computational cost, particularly for large graph-based architectures. Techniques proposed in \cite[yasunaga-etal-2017-graph, antognini-faltings-2019-learning, MDS-scisummnet] utilize Graph Convolutional Networks to analyze pre-constructed dependency graphs, while \cite[MDS-hetero-GNN] integrates Graph Attention Networks to capture inter-document relationships.
+
+Pointer-generator architecture\cite[pointer-generator] marked a turning point in MDS. These methods are based on an attention-driven sequence-to-sequence model augmented with a pointer mechanism. The pointer enables referencing vocabulary from the original text, whereas the generator can produce new lexical content. This results in a trade-off between preserving factual information and introducing novel expressions to maintain the language fluency, which can be explicitly managed. A coverage component is included to monitor already summarized parts and to prevent redundancy. Methods like \cite[fabbri-etal-2019-multi] and \cite[lebanoff-etal-2018-adapting] additionally implement Maximal Marginal Relevance (MMR) \cite[MMR] to score sentences based on importance and redundancy.
+
+% TODO: add Deep Hybrid Models
+
+Transformer architecture significantly advanced the field of MDS. Transformers\cite[transformer] leverage the self-attention mechanism to capture long-range semantic dependencies while also enabling efficient parallelization of training and inference. Their advantages include high performance and compatibility with unsupervised pre-training, as discussed in the Transformers chapter. However, these models are computationally expensive. Transformer-based models such as \cite[MDS-wiki] have been used to generate Wikipedia articles from source documents, while \cite[jin-etal-2020-multi] introduces multi-level granularity (word, sentence, document), with each level processed by a dedicated attention layer.
+
+Hierarchical Transformers efficiently handle large document sets.
+In an effort to scale MDS to larger datasets, \cite[MDS-dialog-sum] proposed a hierarchical Transformer structure. This approach first selects the top-K most informative paragraphs using a logistic regression model. Each paragraph is encoded using a local transformer, and inter-paragraph dependencies are modeled via a global transformer. The GraphSum model \cite[li-etal-2020-leveraging-graph] extends this by integrating a hierarchical dependency graph directly into the encoding phase. To reduce memory usage, \cite[pasunuru-etal-2021-efficiently] introduces a method that linearizes the graph representation of inter-document dependencies.
+
+Pre-trained language models achieve state-of-the-art MDS performance.
+As with SDS, the use of pre-trained transformer-based models has proven effective for MDS tasks \cite[multi-survay]. Pre-training on large corpora helps to overcome the scarcity of annotated MDS data and significantly enhances generalization capabilities \cite[multi-survay]. Nevertheless, pre-trained models—especially large language models (LLMs)—require substantial resources and may hallucinate facts not grounded in the source documents. Models like BERT \cite[bert] and GPT-2 \cite[gpt-2] have been successfully employed for MDS. For instance, \cite[MDS-topic-centric] utilizes these models for abstract summarization of scientific papers.
+
+Several studies propose adaptations to the pre-training phase.
+Article \cite[PEGASUS] introduces the PEGASUS encoder-decoder model, which uses the Gap Sentences Generation technique. During pre-training, the model predicts entire masked sentences instead of individual words or tokens, which better reflects summarization generalization. In \cite[wu-etal-2021-controllable], the authors present the PRIMER model, which uses an Entity Pyramid masking strategy. The model identifies the most critical sentences using Named Entity Recognition. From the extracted entities, a frequency-based pyramid is constructed across all documents. For each entity, the sentence with the highest ROUGE overlap is selected, removed from the candidate pool, and added to the list of important sentences for masking. This pre-training strategy enabled the model to achieve state-of-the-art performance on datasets such as Multi-News \cite[multi-news-dataset] and arXiv \cite[arxiv-dataset] in 2021.
+
+\secc Summary metrics
+
+Quality is evaluated using various metrics. All presented metrics rely on the availability of a reference summary. Due to the nature of the task, these metrics are analogous to those used in machine translation evaluation, where system outputs are compared against one or more reference translations. Different metrics capture different dimensions of summarization quality.
+
+{\bf ROUGE (Recall-Oriented Understudy for Gisting Evaluation)} \cite[prompt-sums, survayArxiv]
+
+ROUGE is a set of evaluation metrics that assess lexical overlap between the generated and reference summaries.
+
+{\bf ROUGE-N}
+
+Measures the overlap of $n$-grams between a generated summary $S$ and reference summary $R$.
+
+Precision:
+
+$$
+P_n = {{\sum_{gram_n \in S \cap R} \hbox{Count}_{S}(gram_n)}\over{\sum_{gram_n \in S} \hbox{Count}_{S}(gram_n)}}
+$$
+
+Recall:
+$$
+R_n = {{\sum_{gram_n \in S \cap R} \text{Count}_{S}(gram_n)}\over{\sum_{gram_n \in R} \text{Count}_{R}(gram_n)}}
+$$
+
+F1 Score:
+$$
+F1_n = {{2 \cdot P_n \cdot R_n}\over{P_n + R_n}}
+$$
+
+{\bf ROUGE-L}
+
+Uses the length of the Longest Common Subsequence (LCS) between the candidate and reference summaries.
+
+Precision:
+$$
+P_L = {{LCS(S, R)}\over{\text{length}(S)}}
+$$
+
+Recall:
+$$
+R_L = {{LCS(S, R)}\over{\text{length}(R)}}
+$$
+
+F1 Score:
+$$
+F1_L = {{(1 + \beta^2) \cdot P_L \cdot R_L}\over{R_L + \beta^2 \cdot P_L}}
+$$
+Typically, $\beta = 1$.
+
+{\bf BLEU (Bilingual Evaluation Understudy)} \cite[prompt-sums, survayArxiv]
+
+BLEU focuses on precision. It measures the extent to which $n$-grams in the generated summary match those in the reference summary. A brevity penalty accounts for differences in length between the generated and reference summaries.
+
+$$
+\text{BLEU} = BP \cdot \exp \left( \sum_{n=1}^{N} w_n \log p_n \right) 
+$$
+
+Where:
+\begitems
+    * $p_n$ is the modified $n$-gram precision.
+    * $w_n$ is the weight for $n$-gram order (often uniform).
+    * $BP$ is the brevity penalty:
+    $$
+    BP = \cases{
+        1                         & \text{if} c $>$ r, \cr
+        e^{1 - {{r}\over{c}}}     & \text{if} c \leq r \cr
+        }
+    $$ 
+    where $c$ is the length of the candidate summary and $r$ is the length of the reference.
+\enditems
+
+{\bf BERTScore} \cite[bert-score]
+
+BERTScore evaluates semantic similarity. It computes the cosine similarity between BERT embeddings of tokens in the candidate and reference summaries.
+
+Let $x_i$ be token embeddings from the candidate summary $S$ and $y_j$ from the reference $R$.
+
+Precision:
+$$
+P = {1\over|S|} \sum_{x_i \in S} \max_{y_j \in R} \text{cosine}(x_i, y_j)
+$$
+
+Recall:
+$$
+R = {1\over|R|} \sum_{y_j \in R} \max_{x_i \in S} \text{cosine}(x_i, y_j)
+$$
+
+F1 Score:
+$$
+F1 = {2PR \over P + R}
+$$
+
+where $cosine$ is cosine similarity function.
+
+
+\sec Knowledge extraction
+
+\secc Named Entity Recognition (NER)
+\secc Entity linking
+\secc Relation Extraction
+\secc Event Detection and Temporal Ordering
+\secc Event Extraction and Clustering in NLP
+\secc Coreference Resolution
+
+\sec Prompt engineering and instruction tuning

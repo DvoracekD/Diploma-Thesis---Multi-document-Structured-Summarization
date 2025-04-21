@@ -1,249 +1,12 @@
-@misc{slurm,
-   title = {Slurm Workload Manager - Documentation},
-   url = {https://slurm.schedmd.com/documentation.html},
-}
-@misc{rci,
-   author = {Research Center for Informatics},
-   title = {RCI Cluster},
-   url = {https://login.rci.cvut.cz/wiki/start},
-}
-@misc{timelines,
-   author = {Jan Drchal},
-   title = {Timelines...},
-   url = {https://fcheck.fel.cvut.cz/static/timelines/becva/},
-}
-@misc{vllm-github,
-   title = {vllm-project/vllm: A high-throughput and memory-efficient inference and serving engine for LLMs},
-   url = {https://github.com/vllm-project/vllm},
-}
-@inproceedings{vllm,
-   abstract = {High throughput serving of large language models (LLMs) requires batching sufficiently many requests at a time. However, existing systems struggle because the key-value cache (KV cache) memory for each request is huge and grows and shrinks dynamically. When managed inefficiently, this memory can be significantly wasted by fragmentation and redundant duplication, limiting the batch size. To address this problem, we propose PagedAttention, an attention algorithm inspired by the classical virtual memory and paging techniques in operating systems. On top of it, we build vLLM, an LLM serving system that achieves (1) near-zero waste in KV cache memory and (2) flexible sharing of KV cache within and across requests to further reduce memory usage. Our evaluations show that vLLM improves the throughput of popular LLMs by 2 - 4× with the same level of latency compared to the state-of-the-art systems, such as FasterTransformer and Orca. The improvement is more pronounced with longer sequences, larger models, and more complex decoding algorithms. vLLM's source code is publicly available at https://github.com/vllm-project/vllm.},
-   author = {Woosuk Kwon and Zhuohan Li and Siyuan Zhuang and Ying Sheng and Lianmin Zheng and Cody Hao Yu and Joseph Gonzalez and Hao Zhang and Ion Stoica},
-   doi = {10.1145/3600006.3613165},
-   isbn = {9798400702297},
-   booktitle = {SOSP 2023 - Proceedings of the 29th ACM Symposium on Operating Systems Principles},
-   month = {10},
-   pages = {611-626},
-   publisher = {Association for Computing Machinery, Inc},
-   title = {Efficient Memory Management for Large Language Model Serving with PagedAttention},
-   year = {2023},
-}
-@misc{hf-transformers,
-   author = {Inc. Hugging Face},
-   title = {Transformers},
-   url = {https://huggingface.co/docs/transformers/index},
-}
-@misc{huggingface,
-   author = {Inc. Hugging Face},
-   title = {Hugging Face - The AI community building the future.},
-   url = {https://huggingface.co/},
-}
-@article{transformer,
-   abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.},
-   author = {Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},
-   month = {6},
-   title = {Attention Is All You Need},
-   year = {2017},
-}
-@article{evolution-prompt,
-   abstract = {Evolutionary algorithms (EAs) have achieved remarkable success in tackling complex combinatorial optimization problems. However, EAs often demand carefully-designed operators with the aid of domain expertise to achieve satisfactory performance. In this work, we present the first study on large language models (LLMs) as evolutionary combinatorial optimizers. The main advantage is that it requires minimal domain knowledge and human efforts, as well as no additional training of the model. This approach is referred to as LLM-driven EA (LMEA). Specifically, in each generation of the evolutionary search, LMEA instructs the LLM to select parent solutions from current population, and perform crossover and mutation to generate offspring solutions. Then, LMEA evaluates these new solutions and include them into the population for the next generation. LMEA is equipped with a self-adaptation mechanism that controls the temperature of the LLM. This enables it to balance between exploration and exploitation and prevents the search from getting stuck in local optima. We investigate the power of LMEA on the classical traveling salesman problems (TSPs) widely used in combinatorial optimization research. Notably, the results show that LMEA performs competitively to traditional heuristics in finding high-quality solutions on TSP instances with up to 20 nodes. Additionally, we also study the effectiveness of LLM-driven crossover/mutation and the self-adaptation mechanism in evolutionary search. In summary, our results reveal the great potentials of LLMs as evolutionary optimizers for solving combinatorial problems. We hope our research shall inspire future explorations on LLM-driven EAs for complex optimization challenges.},
-   author = {Shengcai Liu and Caishun Chen and Xinghua Qu and Ke Tang and Yew-Soon Ong},
-   month = {10},
-   title = {Large Language Models as Evolutionary Optimizers},
-   url = {http://arxiv.org/abs/2310.19046},
-   year = {2023},
-}
-@article{black-box-prompt,
-   abstract = {Large language models (LLMs) have shown impressive success in various applications. However, these models are often not well aligned with human intents, which calls for additional treatments on them; that is, the alignment problem. To make LLMs better follow user instructions, existing alignment methods primarily focus on further training them. However, the extra training of LLMs is usually expensive in terms of GPU computing; even worse, some LLMs are not accessible for user-demanded training, such as GPTs. In this work, we take a different perspective -- Black-Box Prompt Optimization (BPO) -- to perform alignments. The idea is to optimize user prompts to suit LLMs' input understanding, so as to best realize users' intents without updating LLMs' parameters. BPO leverages human preferences to optimize prompts, thus making it superior to LLM (e.g., ChatGPT) as a prompt engineer. Moreover, BPO is model-agnostic, and the empirical results demonstrate that the BPO-aligned ChatGPT yields a 22% increase in the win rate against its original version and 10% for GPT-4. Notably, the BPO-aligned LLMs can outperform the same models aligned by PPO and DPO, and it also brings additional performance gains when combining BPO with PPO or DPO. Code and datasets are released at https://github.com/thu-coai/BPO.},
-   author = {Jiale Cheng and Xiao Liu and Kehan Zheng and Pei Ke and Hongning Wang and Yuxiao Dong and Jie Tang and Minlie Huang},
-   month = {11},
-   title = {Black-Box Prompt Optimization: Aligning Large Language Models without Model Training},
-   url = {http://arxiv.org/abs/2311.04155},
-   year = {2023},
-}
-@article{RAG,
-   abstract = {Large Language Models (LLMs) showcase impressive capabilities but encounter challenges like hallucination, outdated knowledge, and non-transparent, untraceable reasoning processes. Retrieval-Augmented Generation (RAG) has emerged as a promising solution by incorporating knowledge from external databases. This enhances the accuracy and credibility of the generation, particularly for knowledge-intensive tasks, and allows for continuous knowledge updates and integration of domain-specific information. RAG synergistically merges LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases. This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG. It meticulously scrutinizes the tripartite foundation of RAG frameworks, which includes the retrieval, the generation and the augmentation techniques. The paper highlights the state-of-the-art technologies embedded in each of these critical components, providing a profound understanding of the advancements in RAG systems. Furthermore, this paper introduces up-to-date evaluation framework and benchmark. At the end, this article delineates the challenges currently faced and points out prospective avenues for research and development.},
-   author = {Yunfan Gao and Yun Xiong and Xinyu Gao and Kangxiang Jia and Jinliu Pan and Yuxi Bi and Yi Dai and Jiawei Sun and Meng Wang and Haofen Wang},
-   month = {12},
-   title = {Retrieval-Augmented Generation for Large Language Models: A Survey},
-   url = {http://arxiv.org/abs/2312.10997},
-   year = {2023},
-}
-@misc{hf-ST5-XXL,
-   title = {sentence-transformers/sentence-t5-xxl | Hugging Face},
-   url = {https://huggingface.co/sentence-transformers/sentence-t5-xxl},
-}
-@article{ST5-XXL,
-   abstract = {We provide the first exploration of sentence embeddings from text-to-text transformers (T5). Sentence embeddings are broadly useful for language processing tasks. While T5 achieves impressive performance on language tasks cast as sequence-to-sequence mapping problems, it is unclear how to produce sentence embeddings from encoder-decoder models. We investigate three methods for extracting T5 sentence embeddings: two utilize only the T5 encoder and one uses the full T5 encoder-decoder model. To support our investigation, we establish a new sentence representation transfer benchmark, SentGLUE, which extends the SentEval toolkit to nine tasks from the GLUE benchmark. Our encoder-only models outperforms Sentence-BERT and SimCSE sentence embeddings on both SentEval and SentGLUE transfer tasks, including semantic textual similarity (STS). Scaling up T5 from millions to billions of parameters is found to produce consistent further improvements. Finally, our encoder-decoder method achieves a new state-of-the-art on STS when using sentence embeddings. Our models are released at https://tfhub.dev/google/collections/sentence-t5/1.},
-   author = {Jianmo Ni and Gustavo Hernández Ábrego and Noah Constant and Ji Ma and Keith B. Hall and Daniel Cer and Yinfei Yang},
-   month = {8},
-   title = {Sentence-T5: Scalable Sentence Encoders from Pre-trained Text-to-Text Models},
-   year = {2021},
-}
-@article{clustering-benchmark,
-   abstract = {Text embeddings are commonly evaluated on a small set of datasets from a single task not covering their possible applications to other tasks. It is unclear whether state-of-the-art embeddings on semantic textual similarity (STS) can be equally well applied to other tasks like clustering or reranking. This makes progress in the field difficult to track, as various models are constantly being proposed without proper evaluation. To solve this problem, we introduce the Massive Text Embedding Benchmark (MTEB). MTEB spans 8 embedding tasks covering a total of 58 datasets and 112 languages. Through the benchmarking of 33 models on MTEB, we establish the most comprehensive benchmark of text embeddings to date. We find that no particular text embedding method dominates across all tasks. This suggests that the field has yet to converge on a universal text embedding method and scale it up sufficiently to provide state-of-the-art results on all embedding tasks. MTEB comes with open-source code and a public leaderboard at https://github.com/embeddings-benchmark/mteb.},
-   author = {Niklas Muennighoff and Nouamane Tazi and Loic Magne and Nils Reimers},
-   month = {10},
-   title = {MTEB: Massive Text Embedding Benchmark},
-   url = {http://arxiv.org/abs/2210.07316},
-   year = {2022},
-}
-@inbook{clustering,
-   author = {Lior Rokach and Oded Maimon},
-   city = {New York},
-   doi = {10.1007/0-387-25465-X_15},
-   journal = {Data Mining and Knowledge Discovery Handbook},
-   pages = {321-352},
-   publisher = {Springer-Verlag},
-   title = {Clustering Methods},
-}
-@article{bert,
-   abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
-   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
-   month = {10},
-   title = {BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding},
-   url = {http://arxiv.org/abs/1810.04805},
-   year = {2018},
-}
-@inproceedings{dice-loss,
-   abstract = {Many NLP tasks such as tagging and machine reading comprehension (MRC) are faced with the severe data imbalance issue: negative examples significantly outnumber positive ones, and the huge number of easy-negative examples overwhelms training. The most commonly used cross entropy criteria is actually accuracy-oriented, which creates a discrepancy between training and test. At training time, each training instance contributes equally to the objective function, while at test time F1 score concerns more about positive examples. In this paper, we propose to use dice loss in replacement of the standard cross-entropy objective for data-imbalanced NLP tasks. Dice loss is based on the Sørensen-Dice coefficient (Sorensen, 1948) or Tversky index (Tversky, 1977), which attaches similar importance to false positives and false negatives, and is more immune to the data-imbalance issue. To further alleviate the dominating influence from easy-negative examples in training, we propose to associate training examples with dynamically adjusted weights to deemphasize easy-negative examples. Experimental results show that this strategy narrows down the gap between the F1 score in evaluation and the dice loss in training. With the proposed training objective, we observe significant performance boosts over a wide range of data imbalanced NLP tasks. Notably , we are able to achieve SOTA results on CTB5, CTB6 and UD1.4 for the part of speech tagging task, and competitive or even better results on CoNLL03, OntoNotes5.0, MSRA and OntoNotes4.0 for the named entity recognition task along with the machine reading comprehension and paraphrase identification tasks. The code can be found at https://github.com/ShannonAI/ dice_loss_for_NLP.},
-   author = {Xiaoya Li and Xiaofei Sun and Yuxian Meng and Junjun Liang and Fei Wu and Jiwei Li},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/2020.acl-main.45},
-   booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
-   pages = {465-476},
-   publisher = {Association for Computational Linguistics},
-   title = {Dice Loss for Data-imbalanced NLP Tasks},
-   url = {https://www.aclweb.org/anthology/2020.acl-main.45},
-   year = {2020},
-}
-@misc{concat-embed,
-   abstract = {Pretrained contextualized embeddings are powerful word representations for structured prediction tasks. Recent work found that better word representations can be obtained by concatenating different types of embeddings. However, the selection of embeddings to form the best concatenated representation usually varies depending on the task and the collection of candidate embeddings, and the ever-increasing number of embedding types makes it a more difficult problem. In this paper, we propose Automated Concatenation of Embed-dings (ACE) to automate the process of finding better concatenations of embeddings for structured prediction tasks, based on a formulation inspired by recent progress on neural architecture search. Specifically, a controller alternately samples a concatenation of embed-dings, according to its current belief of the effectiveness of individual embedding types in consideration for a task, and updates the belief based on a reward. We follow strategies in reinforcement learning to optimize the parameters of the controller and compute the reward based on the accuracy of a task model, which is fed with the sampled concatenation as input and trained on a task dataset. Empirical results on 6 tasks and 21 datasets show that our approach outperforms strong base-lines and achieves state-of-the-art performance with fine-tuned embeddings in all the evaluations. 1},
-   author = {Xinyu Wang and Yong Jiang and Nguyen Bach and Tao Wang and Zhongqiang Huang and Fei Huang and Kewei Tu},
-   pages = {2643-2660},
-   title = {Automated Concatenation of Embeddings for Structured Prediction},
-   url = {https://github.},
-}
-@misc{pwc-ner,
-   title = {Named Entity Recognition (NER) | Papers With Code},
-   url = {https://paperswithcode.com/task/named-entity-recognition-ner},
-}
-@article{NER,
-   author = {Jing Li and Aixin Sun and Jianglei Han and Chenliang Li},
-   doi = {10.1109/TKDE.2020.2981314},
-   issn = {1041-4347},
-   issue = {1},
-   journal = {IEEE Transactions on Knowledge and Data Engineering},
-   month = {1},
-   pages = {50-70},
-   title = {A Survey on Deep Learning for Named Entity Recognition},
-   volume = {34},
-   year = {2022},
-}
-@article{pwc-event-extraction,
-   title = {Event Extraction | Papers With Code},
-   url = {https://paperswithcode.com/task/event-extraction},
-}
-@article{event-extraction,
-   abstract = {Event extraction (EE) is a crucial research task for promptly apprehending event information from massive textual data. With the rapid development of deep learning, EE based on deep learning technology has become a research hotspot. Numerous methods, datasets, and evaluation metrics have been proposed in the literature, raising the need for a comprehensive and updated survey. This article fills the research gap by reviewing the state-of-the-art approaches, especially focusing on the general domain EE based on deep learning models. We introduce a new literature classification of current general domain EE research according to the task definition. Afterward, we summarize the paradigm and models of EE approaches, and then discuss each of them in detail. As an important aspect, we summarize the benchmarks that support tests of predictions and evaluation metrics. A comprehensive comparison among different approaches is also provided in this survey. Finally, we conclude by summarizing future research directions facing the research area.},
-   author = {Qian Li and Jianxin Li and Jiawei Sheng and Shiyao Cui and Jia Wu and Yiming Hei and Hao Peng and Shu Guo and Lihong Wang and Amin Beheshti and Philip S. Yu},
-   doi = {10.1109/TNNLS.2022.3213168},
-   issn = {21622388},
-   issue = {5},
-   journal = {IEEE Transactions on Neural Networks and Learning Systems},
-   keywords = {Deep learning,evaluation metrics,event extraction (EE),research trends},
+@misc{summarizationIBM,
+   author = {Jacob Murel Ph.D. and Eda Kavlakoglu},
+   journal = {IBM.com},
    month = {5},
-   pages = {6301-6321},
-   pmid = {36269921},
-   publisher = {Institute of Electrical and Electronics Engineers Inc.},
-   title = {A Survey on Deep Learning Event Extraction: Approaches and Applications},
-   volume = {35},
-   year = {2024},
+   title = {What is text summarization?},
+   url = {https://www.ibm.com/think/topics/text-summarization},
+   year = {2024}
 }
-@inproceedings{DeepStruct,
-   abstract = {We introduce a method for improving the structural understanding abilities of language models. Unlike previous approaches that finetune the models with task-specific augmentation, we pretrain language models on a collection of task-agnostic corpora to generate structures from text. Our structure pretraining enables zero-shot transfer of the learned knowledge that models have about the structure tasks. We study the performance of this approach on 28 datasets, spanning 10 structure prediction tasks including open information extraction, joint entity and relation extraction, named entity recognition , relation classification, semantic role labeling , event extraction, coreference resolution, factual probe, intent detection, and dialogue state tracking. We further enhance the pretrain-ing with the task-specific training sets. We show that a 10B parameter language model transfers non-trivially to most tasks and obtains state-of-the-art performance on 21 of 28 datasets that we evaluate. 1},
-   author = {Chenguang Wang and Xiao Liu and Zui Chen and Haoyun Hong and Jie Tang and Dawn Song},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/2022.findings-acl.67},
-   booktitle = {Findings of the Association for Computational Linguistics: ACL 2022},
-   pages = {803-823},
-   publisher = {Association for Computational Linguistics},
-   title = {DeepStruct: Pretraining of Language Models for Structure Prediction},
-   url = {https://aclanthology.org/2022.findings-acl.67},
-   year = {2022},
-}
-@article{DeepEventMine,
-   abstract = {Motivation: Recent neural approaches on event extraction from text mainly focus on flat events in general domain, while there are less attempts to detect nested and overlapping events. These existing systems are built on given entities and they depend on external syntactic tools. Results: We propose an end-to-end neural nested event extraction model named DeepEventMine that extracts multiple overlapping directed acyclic graph structures from a raw sentence. On the top of the bidirectional encoder representations from transformers model, our model detects nested entities and triggers, roles, nested events and their modifications in an end-to-end manner without any syntactic tools. Our DeepEventMine model achieves the new state-of-the-art performance on seven biomedical nested event extraction tasks. Even when gold entities are unavailable, our model can detect events from raw text with promising performance. Availability and implementation: Our codes and models to reproduce the results are available at: https://github. com/aistairc/DeepEventMine.},
-   author = {Hai Long Trieu and Thy Thy Tran and Khoa N.A. Duong and Anh Nguyen and Makoto Miwa and Sophia Ananiadou},
-   doi = {10.1093/bioinformatics/btaa540},
-   issn = {14602059},
-   issue = {19},
-   journal = {Bioinformatics},
-   month = {10},
-   pages = {4910-4917},
-   pmid = {33141147},
-   publisher = {Oxford University Press},
-   title = {DeepEventMine: End-to-end neural nested event extraction from biomedical texts},
-   volume = {36},
-   year = {2020},
-}
-@inproceedings{twitter-events,
-   abstract = {Event Detection has been one of the research areas in Text Mining that has attracted attention during this decade due to the widespread availability of social media data specifically twitter data. Twitter has become a major source for information about real-world events because of the use of hashtags and the small word limit of Twitter that ensures concise presentation of events. Previous works on event detection from tweets are either applicable to detect localized events or breaking news only or miss out on many important events. This paper presents the problems associated with event detection from tweets and a tweet-segmentation based system for event detection called SEDTWik, an extension to a previous work, that is able to detect newsworthy events occurring at different locations of the world from a wide range of categories. The main idea is to split each tweet and hash-tag into segments, extract bursty segments, cluster them, and summarize them. We evaluated our results on the well-known Events2012 corpus and achieved state-of-the-art results.},
-   author = {Keval Morabia and Neti Lalita Bhanu Murthy and Aruna Malapati and Surender Samant},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/N19-3011},
-   booktitle = {Proceedings of the 2019 Conference of the North},
-   keywords = {Event detection,Hashtag,Microblogging,Social Media,Text Mining,Tweet segmentation,Twitter,Wikipedia},
-   pages = {77-85},
-   publisher = {Association for Computational Linguistics},
-   title = {SEDTWik: Segmentation-based Event Detection from Tweets using
-Wikipedia},
-   url = {http://aclweb.org/anthology/N19-3011},
-   year = {2019},
-}
-@inproceedings{cnn-dailymail,
-   author = {Abigail See and Peter J. Liu and Christopher D. Manning},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/P17-1099},
-   booktitle = {Proceedings of the 55th Annual Meeting of the Association for
-          Computational Linguistics (Volume 1: Long Papers)},
-   pages = {1073-1083},
-   publisher = {Association for Computational Linguistics},
-   title = {Get To The Point: Summarization with Pointer-Generator Networks},
-   year = {2017},
-}
-@misc{paperswithcode-timeline-sum,
-   title = {Timeline Summarization | Papers With Code},
-   url = {https://paperswithcode.com/task/timeline-summarization},
-}
-@inproceedings{timeline-sum,
-   abstract = {Timeline summarization (TLS) automatically identifies key dates of major events and provides short descriptions of what happened on these dates. Previous approaches to TLS have focused on extractive methods. In contrast, we suggest an abstractive timeline summarization system. Our system is entirely unsupervised, which makes it especially suited to TLS where there are very few gold summaries available for training of supervised systems. In addition, we present the first abstractive oracle experiments for TLS. Our system outperforms ex-tractive competitors in terms of ROUGE when the number of input documents is high and the output requires strong compression. In these cases, our oracle experiments confirm that our approach also has a higher upper bound for ROUGE scores than extractive methods. A study with human judges shows that our ab-stractive system also produces output that is easy to read and understand.},
-   author = {Julius Steen and Katja Markert},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/D19-5403},
-   booktitle = {Proceedings of the 2nd Workshop on New Frontiers in Summarization},
-   pages = {21-31},
-   publisher = {Association for Computational Linguistics},
-   title = {Abstractive Timeline Summarization},
-   url = {https://www.aclweb.org/anthology/D19-5403},
-   year = {2019},
-}
-@inproceedings{towards-timeline-sum,
-   abstract = {Timeline summarization targets at concisely summarizing the evolution trajectory along the timeline and existing timeline summarization approaches are all based on extractive methods. In this paper, we propose the task of abstractive timeline summa-rization, which tends to concisely paraphrase the information in the time-stamped events. Unlike traditional document summarization, timeline sum-marization needs to model the time series information of the input events and summarize important events in chronological order. To tackle this challenge , we propose a memory-based timeline sum-marization model (MTS). Concretely, we propose a time-event memory to establish a timeline, and use the time position of events on this timeline to guide generation process. Besides, in each decoding step, we incorporate event-level information into word-level attention to avoid confusion between events. Extensive experiments are conducted on a large-scale real-world dataset, and the results show that MTS achieves the state-of-the-art performance in terms of both automatic and human evaluations.},
-   author = {Xiuying Chen and Zhangming Chan and Shen Gao and Meng-Hsuan Yu and Dongyan Zhao and Rui Yan},
-   city = {California},
-   doi = {10.24963/ijcai.2019/686},
-   isbn = {978-0-9992411-4-1},
-   booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence},
-   keywords = {Natural Language Processing: Natural Language Generation,Natural Language Processing: Natural Language Summarization},
-   month = {8},
-   pages = {4939-4945},
-   publisher = {International Joint Conferences on Artificial Intelligence Organization},
-   title = {Learning towards Abstractive Timeline Summarization},
-   url = {https://www.ijcai.org/proceedings/2019/686},
-   year = {2019},
-}
-@article{multidocumentSummarization,
+@article{Ma2022,
    abstract = {Multi-document summarization (MDS) is an effective tool for information aggregation that generates an informative and concise summary from a cluster of topic-related documents. Our survey, the first of its kind, systematically overviews the recent deep-learning-based MDS models. We propose a novel taxonomy to summarize the design strategies of neural networks and conduct a comprehensive summary of the state of the art. We highlight the differences between various objective functions that are rarely discussed in the existing literature. Finally, we propose several future directions pertaining to this new and exciting field.},
    author = {Congbo Ma and Wei Emma Zhang and Mingyu Guo and Hu Wang and Quan Z. Sheng},
    doi = {10.1145/3529754},
@@ -255,7 +18,7 @@ Wikipedia},
    publisher = {Association for Computing Machinery},
    title = {Multi-document Summarization via Deep Learning Techniques: A Survey},
    volume = {55},
-   year = {2022},
+   year = {2022}
 }
 @article{Sheng2020,
    abstract = {Given the overwhelming amounts of information in our current 24/7 stream of new incoming articles, new techniques are needed to enable users to focus on just the key entities and concepts along with their relationships. Examples include news articles but also business reports and social media. The fact that relevant information may be distributed across diverse sources makes it particularly challenging to identify relevant connections. In this paper, we propose a system called MuReX to aid users in quickly discerning salient connections and facts from a set of related documents and viewing the resulting information as a graph-based visualization. Our approach involves open information extraction, followed by a careful transformation and filtering approach. We rely on integer linear programming to ensure that we retain only the most confident and compatible facts with regard to a user query, and finally apply a graph ranking approach to obtain a coherent graph that represents meaningful and salient relationships, which users may explore visually. Experimental results corroborate the effectiveness of our proposed approaches, and the local system we developed has been running for more than one year.},
@@ -270,9 +33,478 @@ Wikipedia},
    publisher = {Springer},
    title = {Multi-document semantic relation extraction for news analytics},
    volume = {23},
-   year = {2020},
+   year = {2020}
 }
 @misc{,
    title = {Papers With Code},
-   url = {https://paperswithcode.com/task/multi-document-summarization},
+   url = {https://paperswithcode.com/task/multi-document-summarization}
+}
+@techReport{Chen2019,
+   abstract = {Timeline summarization targets at concisely summarizing the evolution trajectory along the timeline and existing timeline summarization approaches are all based on extractive methods. In this paper, we propose the task of abstractive timeline summa-rization, which tends to concisely paraphrase the information in the time-stamped events. Unlike traditional document summarization, timeline sum-marization needs to model the time series information of the input events and summarize important events in chronological order. To tackle this challenge , we propose a memory-based timeline sum-marization model (MTS). Concretely, we propose a time-event memory to establish a timeline, and use the time position of events on this timeline to guide generation process. Besides, in each decoding step, we incorporate event-level information into word-level attention to avoid confusion between events. Extensive experiments are conducted on a large-scale real-world dataset, and the results show that MTS achieves the state-of-the-art performance in terms of both automatic and human evaluations.},
+   author = {Xiuying Chen and Zhangming Chan and Shen Gao and Meng-Hsuan Yu and Dongyan Zhao and Rui Yan},
+   keywords = {Natural Language Processing: Natural Language Generation,Natural Language Processing: Natural Language Summarization},
+   title = {Learning towards Abstractive Timeline Summarization},
+   url = {http://tiny.cc/lfh56y},
+   year = {2019}
+}
+@techReport{,
+   abstract = {Timeline summarization (TLS) automatically identifies key dates of major events and provides short descriptions of what happened on these dates. Previous approaches to TLS have focused on extractive methods. In contrast, we suggest an abstractive timeline summarization system. Our system is entirely unsupervised, which makes it especially suited to TLS where there are very few gold summaries available for training of supervised systems. In addition, we present the first abstractive oracle experiments for TLS. Our system outperforms ex-tractive competitors in terms of ROUGE when the number of input documents is high and the output requires strong compression. In these cases, our oracle experiments confirm that our approach also has a higher upper bound for ROUGE scores than extractive methods. A study with human judges shows that our ab-stractive system also produces output that is easy to read and understand.},
+   author = {Julius Steen and Katja Markert},
+   title = {Abstractive Timeline Summarization}
+}
+@misc{paperswithcode-timeline-sum,
+   title = {Timeline Summarization | Papers With Code},
+   url = {https://paperswithcode.com/task/timeline-summarization}
+}
+@inproceedings{cnn-dailymail,
+   author = {Abigail See and Peter J. Liu and Christopher D. Manning},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/P17-1099},
+   booktitle = {Proceedings of the 55th Annual Meeting of the Association for
+          Computational Linguistics (Volume 1: Long Papers)},
+   pages = {1073-1083},
+   publisher = {Association for Computational Linguistics},
+   title = {Get To The Point: Summarization with Pointer-Generator Networks},
+   year = {2017}
+}
+@inproceedings{twitter-events,
+   abstract = {Event Detection has been one of the research areas in Text Mining that has attracted attention during this decade due to the widespread availability of social media data specifically twitter data. Twitter has become a major source for information about real-world events because of the use of hashtags and the small word limit of Twitter that ensures concise presentation of events. Previous works on event detection from tweets are either applicable to detect localized events or breaking news only or miss out on many important events. This paper presents the problems associated with event detection from tweets and a tweet-segmentation based system for event detection called SEDTWik, an extension to a previous work, that is able to detect newsworthy events occurring at different locations of the world from a wide range of categories. The main idea is to split each tweet and hash-tag into segments, extract bursty segments, cluster them, and summarize them. We evaluated our results on the well-known Events2012 corpus and achieved state-of-the-art results.},
+   author = {Keval Morabia and Neti Lalita Bhanu Murthy and Aruna Malapati and Surender Samant},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/N19-3011},
+   booktitle = {Proceedings of the 2019 Conference of the North},
+   keywords = {Event detection,Hashtag,Microblogging,Social Media,Text Mining,Tweet segmentation,Twitter,Wikipedia},
+   pages = {77-85},
+   publisher = {Association for Computational Linguistics},
+   title = {SEDTWik: Segmentation-based Event Detection from Tweets using
+Wikipedia},
+   url = {http://aclweb.org/anthology/N19-3011},
+   year = {2019}
+}
+@article{Trieu2020,
+   abstract = {Motivation: Recent neural approaches on event extraction from text mainly focus on flat events in general domain, while there are less attempts to detect nested and overlapping events. These existing systems are built on given entities and they depend on external syntactic tools. Results: We propose an end-to-end neural nested event extraction model named DeepEventMine that extracts multiple overlapping directed acyclic graph structures from a raw sentence. On the top of the bidirectional encoder representations from transformers model, our model detects nested entities and triggers, roles, nested events and their modifications in an end-to-end manner without any syntactic tools. Our DeepEventMine model achieves the new state-of-the-art performance on seven biomedical nested event extraction tasks. Even when gold entities are unavailable, our model can detect events from raw text with promising performance. Availability and implementation: Our codes and models to reproduce the results are available at: https://github. com/aistairc/DeepEventMine.},
+   author = {Hai Long Trieu and Thy Thy Tran and Khoa N.A. Duong and Anh Nguyen and Makoto Miwa and Sophia Ananiadou},
+   doi = {10.1093/bioinformatics/btaa540},
+   issn = {14602059},
+   issue = {19},
+   journal = {Bioinformatics},
+   month = {10},
+   pages = {4910-4917},
+   pmid = {33141147},
+   publisher = {Oxford University Press},
+   title = {DeepEventMine: End-to-end neural nested event extraction from biomedical texts},
+   volume = {36},
+   year = {2020}
+}
+@inproceedings{DeepStruct,
+   abstract = {We introduce a method for improving the structural understanding abilities of language models. Unlike previous approaches that finetune the models with task-specific augmentation, we pretrain language models on a collection of task-agnostic corpora to generate structures from text. Our structure pretraining enables zero-shot transfer of the learned knowledge that models have about the structure tasks. We study the performance of this approach on 28 datasets, spanning 10 structure prediction tasks including open information extraction, joint entity and relation extraction, named entity recognition , relation classification, semantic role labeling , event extraction, coreference resolution, factual probe, intent detection, and dialogue state tracking. We further enhance the pretrain-ing with the task-specific training sets. We show that a 10B parameter language model transfers non-trivially to most tasks and obtains state-of-the-art performance on 21 of 28 datasets that we evaluate. 1},
+   author = {Chenguang Wang and Xiao Liu and Zui Chen and Haoyun Hong and Jie Tang and Dawn Song},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/2022.findings-acl.67},
+   booktitle = {Findings of the Association for Computational Linguistics: ACL 2022},
+   pages = {803-823},
+   publisher = {Association for Computational Linguistics},
+   title = {DeepStruct: Pretraining of Language Models for Structure Prediction},
+   url = {https://aclanthology.org/2022.findings-acl.67},
+   year = {2022}
+}
+@article{Li2024,
+   abstract = {Event extraction (EE) is a crucial research task for promptly apprehending event information from massive textual data. With the rapid development of deep learning, EE based on deep learning technology has become a research hotspot. Numerous methods, datasets, and evaluation metrics have been proposed in the literature, raising the need for a comprehensive and updated survey. This article fills the research gap by reviewing the state-of-the-art approaches, especially focusing on the general domain EE based on deep learning models. We introduce a new literature classification of current general domain EE research according to the task definition. Afterward, we summarize the paradigm and models of EE approaches, and then discuss each of them in detail. As an important aspect, we summarize the benchmarks that support tests of predictions and evaluation metrics. A comprehensive comparison among different approaches is also provided in this survey. Finally, we conclude by summarizing future research directions facing the research area.},
+   author = {Qian Li and Jianxin Li and Jiawei Sheng and Shiyao Cui and Jia Wu and Yiming Hei and Hao Peng and Shu Guo and Lihong Wang and Amin Beheshti and Philip S. Yu},
+   doi = {10.1109/TNNLS.2022.3213168},
+   issn = {21622388},
+   issue = {5},
+   journal = {IEEE Transactions on Neural Networks and Learning Systems},
+   keywords = {Deep learning,evaluation metrics,event extraction (EE),research trends},
+   month = {5},
+   pages = {6301-6321},
+   pmid = {36269921},
+   publisher = {Institute of Electrical and Electronics Engineers Inc.},
+   title = {A Survey on Deep Learning Event Extraction: Approaches and Applications},
+   volume = {35},
+   year = {2024}
+}
+@article{pwc-event-extraction,
+   title = {Event Extraction | Papers With Code},
+   url = {https://paperswithcode.com/task/event-extraction}
+}
+@article{Li2022,
+   author = {Jing Li and Aixin Sun and Jianglei Han and Chenliang Li},
+   doi = {10.1109/TKDE.2020.2981314},
+   issn = {1041-4347},
+   issue = {1},
+   journal = {IEEE Transactions on Knowledge and Data Engineering},
+   month = {1},
+   pages = {50-70},
+   title = {A Survey on Deep Learning for Named Entity Recognition},
+   volume = {34},
+   year = {2022}
+}
+@misc{pwc-ner,
+   title = {Named Entity Recognition (NER) | Papers With Code},
+   url = {https://paperswithcode.com/task/named-entity-recognition-ner}
+}
+@techReport{,
+   abstract = {Pretrained contextualized embeddings are powerful word representations for structured prediction tasks. Recent work found that better word representations can be obtained by concatenating different types of embeddings. However, the selection of embeddings to form the best concatenated representation usually varies depending on the task and the collection of candidate embeddings, and the ever-increasing number of embedding types makes it a more difficult problem. In this paper, we propose Automated Concatenation of Embed-dings (ACE) to automate the process of finding better concatenations of embeddings for structured prediction tasks, based on a formulation inspired by recent progress on neural architecture search. Specifically, a controller alternately samples a concatenation of embed-dings, according to its current belief of the effectiveness of individual embedding types in consideration for a task, and updates the belief based on a reward. We follow strategies in reinforcement learning to optimize the parameters of the controller and compute the reward based on the accuracy of a task model, which is fed with the sampled concatenation as input and trained on a task dataset. Empirical results on 6 tasks and 21 datasets show that our approach outperforms strong base-lines and achieves state-of-the-art performance with fine-tuned embeddings in all the evaluations. 1},
+   author = {Xinyu Wang and Yong Jiang and Nguyen Bach and Tao Wang and Zhongqiang Huang and Fei Huang and Kewei Tu},
+   pages = {2643-2660},
+   title = {Automated Concatenation of Embeddings for Structured Prediction},
+   url = {https://github.}
+}
+@inproceedings{dice-loss,
+   abstract = {Many NLP tasks such as tagging and machine reading comprehension (MRC) are faced with the severe data imbalance issue: negative examples significantly outnumber positive ones, and the huge number of easy-negative examples overwhelms training. The most commonly used cross entropy criteria is actually accuracy-oriented, which creates a discrepancy between training and test. At training time, each training instance contributes equally to the objective function, while at test time F1 score concerns more about positive examples. In this paper, we propose to use dice loss in replacement of the standard cross-entropy objective for data-imbalanced NLP tasks. Dice loss is based on the Sørensen-Dice coefficient (Sorensen, 1948) or Tversky index (Tversky, 1977), which attaches similar importance to false positives and false negatives, and is more immune to the data-imbalance issue. To further alleviate the dominating influence from easy-negative examples in training, we propose to associate training examples with dynamically adjusted weights to deemphasize easy-negative examples. Experimental results show that this strategy narrows down the gap between the F1 score in evaluation and the dice loss in training. With the proposed training objective, we observe significant performance boosts over a wide range of data imbalanced NLP tasks. Notably , we are able to achieve SOTA results on CTB5, CTB6 and UD1.4 for the part of speech tagging task, and competitive or even better results on CoNLL03, OntoNotes5.0, MSRA and OntoNotes4.0 for the named entity recognition task along with the machine reading comprehension and paraphrase identification tasks. The code can be found at https://github.com/ShannonAI/ dice_loss_for_NLP.},
+   author = {Xiaoya Li and Xiaofei Sun and Yuxian Meng and Junjun Liang and Fei Wu and Jiwei Li},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/2020.acl-main.45},
+   booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+   pages = {465-476},
+   publisher = {Association for Computational Linguistics},
+   title = {Dice Loss for Data-imbalanced NLP Tasks},
+   url = {https://www.aclweb.org/anthology/2020.acl-main.45},
+   year = {2020}
+}
+@article{bert,
+   abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
+   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+   month = {10},
+   title = {BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding},
+   url = {http://arxiv.org/abs/1810.04805},
+   year = {2018}
+}
+@inbook{clustering,
+   author = {Lior Rokach and Oded Maimon},
+   city = {New York},
+   doi = {10.1007/0-387-25465-X_15},
+   booktitle = {Data Mining and Knowledge Discovery Handbook},
+   pages = {321-352},
+   publisher = {Springer-Verlag},
+   title = {Clustering Methods}
+}
+@article{clustering-benchmark,
+   abstract = {Text embeddings are commonly evaluated on a small set of datasets from a single task not covering their possible applications to other tasks. It is unclear whether state-of-the-art embeddings on semantic textual similarity (STS) can be equally well applied to other tasks like clustering or reranking. This makes progress in the field difficult to track, as various models are constantly being proposed without proper evaluation. To solve this problem, we introduce the Massive Text Embedding Benchmark (MTEB). MTEB spans 8 embedding tasks covering a total of 58 datasets and 112 languages. Through the benchmarking of 33 models on MTEB, we establish the most comprehensive benchmark of text embeddings to date. We find that no particular text embedding method dominates across all tasks. This suggests that the field has yet to converge on a universal text embedding method and scale it up sufficiently to provide state-of-the-art results on all embedding tasks. MTEB comes with open-source code and a public leaderboard at https://github.com/embeddings-benchmark/mteb.},
+   author = {Niklas Muennighoff and Nouamane Tazi and Loïc Magne and Nils Reimers},
+   month = {10},
+   title = {MTEB: Massive Text Embedding Benchmark},
+   url = {http://arxiv.org/abs/2210.07316},
+   year = {2022}
+}
+@article{ST5-XXL,
+   abstract = {We provide the first exploration of sentence embeddings from text-to-text transformers (T5). Sentence embeddings are broadly useful for language processing tasks. While T5 achieves impressive performance on language tasks cast as sequence-to-sequence mapping problems, it is unclear how to produce sentence embeddings from encoder-decoder models. We investigate three methods for extracting T5 sentence embeddings: two utilize only the T5 encoder and one uses the full T5 encoder-decoder model. To support our investigation, we establish a new sentence representation transfer benchmark, SentGLUE, which extends the SentEval toolkit to nine tasks from the GLUE benchmark. Our encoder-only models outperforms Sentence-BERT and SimCSE sentence embeddings on both SentEval and SentGLUE transfer tasks, including semantic textual similarity (STS). Scaling up T5 from millions to billions of parameters is found to produce consistent further improvements. Finally, our encoder-decoder method achieves a new state-of-the-art on STS when using sentence embeddings. Our models are released at https://tfhub.dev/google/collections/sentence-t5/1.},
+   author = {Jianmo Ni and Gustavo Hernández Ábrego and Noah Constant and Ji Ma and Keith B. Hall and Daniel Cer and Yinfei Yang},
+   month = {8},
+   title = {Sentence-T5: Scalable Sentence Encoders from Pre-trained Text-to-Text Models},
+   year = {2021}
+}
+@misc{hf-ST5-XXL,
+   title = {sentence-transformers/sentence-t5-xxl | Hugging Face},
+   url = {https://huggingface.co/sentence-transformers/sentence-t5-xxl}
+}
+@article{RAG,
+   abstract = {Large Language Models (LLMs) showcase impressive capabilities but encounter challenges like hallucination, outdated knowledge, and non-transparent, untraceable reasoning processes. Retrieval-Augmented Generation (RAG) has emerged as a promising solution by incorporating knowledge from external databases. This enhances the accuracy and credibility of the generation, particularly for knowledge-intensive tasks, and allows for continuous knowledge updates and integration of domain-specific information. RAG synergistically merges LLMs' intrinsic knowledge with the vast, dynamic repositories of external databases. This comprehensive review paper offers a detailed examination of the progression of RAG paradigms, encompassing the Naive RAG, the Advanced RAG, and the Modular RAG. It meticulously scrutinizes the tripartite foundation of RAG frameworks, which includes the retrieval, the generation and the augmentation techniques. The paper highlights the state-of-the-art technologies embedded in each of these critical components, providing a profound understanding of the advancements in RAG systems. Furthermore, this paper introduces up-to-date evaluation framework and benchmark. At the end, this article delineates the challenges currently faced and points out prospective avenues for research and development.},
+   author = {Yunfan Gao and Yun Xiong and Xinyu Gao and Kangxiang Jia and Jinliu Pan and Yuxi Bi and Yi Dai and Jiawei Sun and Meng Wang and Haofen Wang},
+   month = {12},
+   title = {Retrieval-Augmented Generation for Large Language Models: A Survey},
+   url = {http://arxiv.org/abs/2312.10997},
+   year = {2023}
+}
+@article{black-box-prompt,
+   abstract = {Large language models (LLMs) have shown impressive success in various applications. However, these models are often not well aligned with human intents, which calls for additional treatments on them; that is, the alignment problem. To make LLMs better follow user instructions, existing alignment methods primarily focus on further training them. However, the extra training of LLMs is usually expensive in terms of GPU computing; even worse, some LLMs are not accessible for user-demanded training, such as GPTs. In this work, we take a different perspective -- Black-Box Prompt Optimization (BPO) -- to perform alignments. The idea is to optimize user prompts to suit LLMs' input understanding, so as to best realize users' intents without updating LLMs' parameters. BPO leverages human preferences to optimize prompts, thus making it superior to LLM (e.g., ChatGPT) as a prompt engineer. Moreover, BPO is model-agnostic, and the empirical results demonstrate that the BPO-aligned ChatGPT yields a 22% increase in the win rate against its original version and 10% for GPT-4. Notably, the BPO-aligned LLMs can outperform the same models aligned by PPO and DPO, and it also brings additional performance gains when combining BPO with PPO or DPO. Code and datasets are released at https://github.com/thu-coai/BPO.},
+   author = {Jiale Cheng and Xiao Liu and Kehan Zheng and Pei Ke and Hongning Wang and Yuxiao Dong and Jie Tang and Minlie Huang},
+   month = {11},
+   title = {Black-Box Prompt Optimization: Aligning Large Language Models without Model Training},
+   url = {http://arxiv.org/abs/2311.04155},
+   year = {2023}
+}
+@article{evolution-prompt,
+   abstract = {Evolutionary algorithms (EAs) have achieved remarkable success in tackling complex combinatorial optimization problems. However, EAs often demand carefully-designed operators with the aid of domain expertise to achieve satisfactory performance. In this work, we present the first study on large language models (LLMs) as evolutionary combinatorial optimizers. The main advantage is that it requires minimal domain knowledge and human efforts, as well as no additional training of the model. This approach is referred to as LLM-driven EA (LMEA). Specifically, in each generation of the evolutionary search, LMEA instructs the LLM to select parent solutions from current population, and perform crossover and mutation to generate offspring solutions. Then, LMEA evaluates these new solutions and include them into the population for the next generation. LMEA is equipped with a self-adaptation mechanism that controls the temperature of the LLM. This enables it to balance between exploration and exploitation and prevents the search from getting stuck in local optima. We investigate the power of LMEA on the classical traveling salesman problems (TSPs) widely used in combinatorial optimization research. Notably, the results show that LMEA performs competitively to traditional heuristics in finding high-quality solutions on TSP instances with up to 20 nodes. Additionally, we also study the effectiveness of LLM-driven crossover/mutation and the self-adaptation mechanism in evolutionary search. In summary, our results reveal the great potentials of LLMs as evolutionary optimizers for solving combinatorial problems. We hope our research shall inspire future explorations on LLM-driven EAs for complex optimization challenges.},
+   author = {Shengcai Liu and Caishun Chen and Xinghua Qu and Ke Tang and Yew-Soon Ong},
+   month = {10},
+   title = {Large Language Models as Evolutionary Optimizers},
+   url = {http://arxiv.org/abs/2310.19046},
+   year = {2023}
+}
+@misc{rci,
+   author = {Research Center for Informatics},
+   title = {RCI Cluster},
+   url = {https://login.rci.cvut.cz/wiki/start}
+}
+@misc{slurm,
+   title = {Slurm Workload Manager - Documentation},
+   url = {https://slurm.schedmd.com/documentation.html}
+}
+@article{transformer,
+   abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.},
+   author = {Ashish Vaswani and Noam Shazeer and Niki Parmar and Jakob Uszkoreit and Llion Jones and Aidan N. Gomez and Lukasz Kaiser and Illia Polosukhin},
+   month = {6},
+   title = {Attention Is All You Need},
+   year = {2017}
+}
+@misc{huggingface,
+   author = {Inc. Hugging Face},
+   title = {Hugging Face - The AI community building the future.},
+   url = {https://huggingface.co/}
+}
+@misc{hf-transformers,
+   author = {Inc. Hugging Face},
+   title = {Transformers},
+   url = {https://huggingface.co/docs/transformers/index}
+}
+@inproceedings{vllm,
+   abstract = {High throughput serving of large language models (LLMs) requires batching sufficiently many requests at a time. However, existing systems struggle because the key-value cache (KV cache) memory for each request is huge and grows and shrinks dynamically. When managed inefficiently, this memory can be significantly wasted by fragmentation and redundant duplication, limiting the batch size. To address this problem, we propose PagedAttention, an attention algorithm inspired by the classical virtual memory and paging techniques in operating systems. On top of it, we build vLLM, an LLM serving system that achieves (1) near-zero waste in KV cache memory and (2) flexible sharing of KV cache within and across requests to further reduce memory usage. Our evaluations show that vLLM improves the throughput of popular LLMs by 2 - 4× with the same level of latency compared to the state-of-the-art systems, such as FasterTransformer and Orca. The improvement is more pronounced with longer sequences, larger models, and more complex decoding algorithms. vLLM's source code is publicly available at https://github.com/vllm-project/vllm.},
+   author = {Woosuk Kwon and Zhuohan Li and Siyuan Zhuang and Ying Sheng and Lianmin Zheng and Cody Hao Yu and Joseph Gonzalez and Hao Zhang and Ion Stoica},
+   doi = {10.1145/3600006.3613165},
+   isbn = {9798400702297},
+   booktitle = {SOSP 2023 - Proceedings of the 29th ACM Symposium on Operating Systems Principles},
+   month = {10},
+   pages = {611-626},
+   publisher = {Association for Computing Machinery, Inc},
+   title = {Efficient Memory Management for Large Language Model Serving with PagedAttention},
+   year = {2023}
+}
+@misc{vllm-github,
+   title = {vllm-project/vllm: A high-throughput and memory-efficient inference and serving engine for LLMs},
+   url = {https://github.com/vllm-project/vllm}
+}
+@misc{,
+   author = {Jan Drchal},
+   title = {Timelines...},
+   url = {https://fcheck.fel.cvut.cz/static/timelines/becva/}
+}
+@book{stanfortNLP,
+   author = {Daniel Jurafsky and James H Martin},
+   edition = {3rd},
+   title = {Speech and Language Processing An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition with Language Models Third Edition draft Summary of Contents},
+   url = {https://web.stanford.edu/~jurafsky/slp3/},
+   year = {2025}
+}
+@book{fundAI,
+   abstract = {Fundamentals of Artificial Intelligence introduces the foundations of present day AI and provides coverage to recent developments in AI such as Constraint Satisfaction Problems, Adversarial Search and Game Theory, Statistical Learning Theory, Automated Planning, Intelligent Agents, Information Retrieval, Natural Language \& Speech Processing, and Machine Vision. The book features a wealth of examples and illustrations, and practical approaches along with the theoretical concepts. It covers all major areas of AI in the domain of recent developments. The book is intended primarily for students who major in computer science at undergraduate and graduate level but will also be of interest as a foundation to researchers in the area of AI.},
+   author = {K. R. Chowdhary},
+   doi = {10.1007/978-81-322-3972-7},
+   isbn = {9788132239727},
+   journal = {Fundamentals of Artificial Intelligence},
+   keywords = {First-order Predicate Logic,Knowledge Representation,Non-monotonic Reasoning,Prolog,State-space Search},
+   month = {1},
+   pages = {1-716},
+   publisher = {Springer India},
+   title = {Fundamentals of artificial intelligence},
+   year = {2020}
+}
+@article{genIEsurvey,
+   abstract = {<p>Information Extraction (IE) aims to extract structural knowledge from plain natural language texts. Recently, generative Large Language Models (LLMs) have demonstrated remarkable capabilities in text understanding and generation. As a result, numerous works have been proposed to integrate LLMs for IE tasks based on a generative paradigm. To conduct a comprehensive systematic review and exploration of LLM efforts for IE tasks, in this study, we survey the most recent advancements in this field. We first present an extensive overview by categorizing these works in terms of various IE subtasks and techniques, and then we empirically analyze the most advanced methods and discover the emerging trend of IE tasks with LLMs. Based on a thorough review conducted, we identify several insights in technique and promising research directions that deserve further exploration in future studies. We maintain a public repository and consistently update related works and resources on GitHub (LLM4IE repository).</p>},
+   author = {Derong Xu and Wei Chen and Wenjun Peng and Chao Zhang and Tong Xu and Xiangyu Zhao and Xian Wu and Yefeng Zheng and Yang Wang and Enhong Chen},
+   doi = {10.1007/s11704-024-40555-y},
+   issn = {2095-2228},
+   issue = {6},
+   journal = {Frontiers of Computer Science},
+   month = {12},
+   pages = {186357},
+   title = {Large language models for generative information extraction: a survey},
+   volume = {18},
+   url = {https://link.springer.com/10.1007/s11704-024-40555-y},
+   year = {2024}
+}
+@article{Wang2023,
+   abstract = {Despite the fact that large-scale Language Models (LLM) have achieved SOTA performances on a variety of NLP tasks, its performance on NER is still significantly below supervised baselines. This is due to the gap between the two tasks the NER and LLMs: the former is a sequence labeling task in nature while the latter is a text-generation model. In this paper, we propose GPT-NER to resolve this issue. GPT-NER bridges the gap by transforming the sequence labeling task to a generation task that can be easily adapted by LLMs e.g., the task of finding location entities in the input text "Columbus is a city" is transformed to generate the text sequence "@@Columbus## is a city", where special tokens @@## marks the entity to extract. To efficiently address the "hallucination" issue of LLMs, where LLMs have a strong inclination to over-confidently label NULL inputs as entities, we propose a self-verification strategy by prompting LLMs to ask itself whether the extracted entities belong to a labeled entity tag. We conduct experiments on five widely adopted NER datasets, and GPT-NER achieves comparable performances to fully supervised baselines, which is the first time as far as we are concerned. More importantly, we find that GPT-NER exhibits a greater ability in the low-resource and few-shot setups, when the amount of training data is extremely scarce, GPT-NER performs significantly better than supervised models. This demonstrates the capabilities of GPT-NER in real-world NER applications where the number of labeled examples is limited.},
+   author = {Shuhe Wang and Xiaofei Sun and Xiaoya Li and Rongbin Ouyang and Fei Wu and Tianwei Zhang and Jiwei Li and Guoyin Wang},
+   month = {4},
+   title = {GPT-NER: Named Entity Recognition via Large Language Models},
+   url = {http://arxiv.org/abs/2304.10428},
+   year = {2023}
+}
+@inproceedings{summarizationSurvey,
+   abstract = {The size of data on the Internet has risen in an exponential manner over the past decade. Thus, the need for a solution emerges, that transforms this vast raw information into useful information which a human brain can understand. One such common technique in research that helps in dealing with enormous data is text summarization. Automatic summarization is a renowned approach which is used to reduce a document to its main ideas. It operates by preserving substantial information by creating a shortened version of the text. Text Summarization is categorized into Extractive and Abstractive methods. Extractive methods of summarization minimize the burden of summarization by choosing from the actual text a subset of sentences that are relevant. Although there are a ton of methods, researchers specializing in Natural Language Processing (NLP) are particularly drawn to extractive methods. Based on linguistic and statistical characteristics, the implications of sentences are calculated. A study of extractive and abstract methods for summarizing texts has been made in this paper. This paper also analyses above mentioned methods which yields a less repetitive and a more concentrated summary.},
+   author = {Ishitva Awasthi and Kuntal Gupta and Prabjot Singh Bhogal and Sahejpreet Singh Anand and Piyush Kumar Soni},
+   doi = {10.1109/ICICT50816.2021.9358703},
+   isbn = {9781728185019},
+   booktitle = {Proceedings of the 6th International Conference on Inventive Computation Technologies, ICICT 2021},
+   keywords = {Text summarization,abstractive,extractive,reinforcement learning,supervised,unsupervised},
+   month = {1},
+   pages = {1310-1317},
+   publisher = {Institute of Electrical and Electronics Engineers Inc.},
+   title = {Natural Language Processing (NLP) based Text Summarization-A Survey},
+   year = {2021}
+}
+@inproceedings{summarizationSurvey2,
+   abstract = {NLP (Natural Language Processing) is a subfield of artificial intelligence that examines the interactions between computers and human languages, specifically how to design computers to process and evaluate vast quantities of natural language data. The procedure of condensing long text into paragraphs or phrases is known as NLP text summarization. This technique retrieves essential information from a text while keeping its meaning. This decreases the time necessary to comprehend large elements, such as articles, without compromising the integrity of the content. Major difficulties in text summarizing include subject identification, interpretation, summary construction, and summary evaluation. Most real-world systems that summarize texts rely on extractive summarization. Hence, there must be a way to summarize lengthy assessments into concise statements with few words that convey the same information. The use of text summarization in this context can be helpful. Text Summarization is of interest to several researchers in natural language processing. This study provides an overview of the different text-summarization approaches used in Natural language processing.},
+   author = {G. Senthil Kumar and Midhun Chakkaravarthy},
+   doi = {10.1007/978-3-031-36402-0_46},
+   isbn = {9783031364013},
+   issn = {16113349},
+   booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+   keywords = {Extractive,Natural Language Processing,Text summarization,abstractive and reinforcement learning},
+   pages = {496-502},
+   publisher = {Springer Science and Business Media Deutschland GmbH},
+   title = {A Survey on Recent Text Summarization Techniques},
+   volume = {14078 LNAI},
+   year = {2023}
+}
+@techReport{,
+   abstract = {An automatic text summarization system can automatically generate a short and brief summary that contains a main concept of an original document. In this work, we explore the advantages of simple embedding features in Reinforcement leaning approach to automatic text summarization tasks. In addition, we propose a novel deep learning network for estimating Q-values used in Reinforcement learning. We evaluate our model by using ROUGE scores with DUC 2001, 2002, Wikipedia, ACL-ARC data. Evaluation results show that our model is competitive with the previous models.},
+   author = {Gyoung Ho Lee and Kong Joo Lee},
+   pages = {193-197},
+   title = {Automatic Text Summarization Using Reinforcement Learning with Embedding Features}
+}
+@inproceedings{ted,
+   author = {Ziyi Yang and Chenguang Zhu and Robert Gmyr and Michael Zeng and Xuedong Huang and Eric Darve},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/2020.findings-emnlp.168},
+   booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2020},
+   pages = {1865-1874},
+   publisher = {Association for Computational Linguistics},
+   title = {TED: A Pretrained Unsupervised Summarization Model with Theme Modeling and Denoising},
+   year = {2020}
+}
+@inproceedings{seq3,
+   author = {Christos Baziotis and Ion Androutsopoulos and Ioannis Konstas and Alexandros Potamianos},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/N19-1071},
+   booktitle = {Proceedings of the 2019 Conference of the North},
+   pages = {673-681},
+   publisher = {Association for Computational Linguistics},
+   title = {SEQˆ3: Differentiable Sequence-to-Sequence-to-Sequence Autoencoder for Unsupervised Abstractive Sentence Compression},
+   year = {2019}
+}
+@techReport{meansum,
+   abstract = {ive summarization has been studied using neural sequence transduction methods with datasets of large, paired document-summary examples. However, such datasets are rare and the models trained from them do not generalize to other domains. Recently, some progress has been made in learning sequence-to-sequence mappings with only unpaired examples. In our work, we consider the setting where there are only documents (product or business reviews) with no summaries provided, and propose an end-to-end, neu-ral model architecture to perform unsupervised abstractive summarization. Our proposed model consists of an auto-encoder where the mean of the representations of the input reviews decodes to a reasonable summary-review while not relying on any review-specific features. We consider variants of the proposed architecture and perform an ablation study to show the importance of specific components. We show through automated metrics and human evaluation that the generated summaries are highly abstractive, fluent, relevant, and representative of the average sentiment of the input reviews. Finally, we collect a reference evaluation dataset and show that our model out-performs a strong extractive baseline.},
+   author = {Eric Chu and Peter J Liu},
+   title = {MeanSum : A Neural Model for Unsupervised Multi-Document Abstractive Summarization},
+   url = {https://github.com/sosuperic/MeanSum}
+}
+@inproceedings{dohare,
+   author = {Shibhansh Dohare and Vivek Gupta and Harish Karnick},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/P18-3011},
+   booktitle = {Proceedings of ACL 2018, Student Research Workshop},
+   pages = {74-83},
+   publisher = {Association for Computational Linguistics},
+   title = {Unsupervised Semantic Abstractive Summarization},
+   url = {http://aclweb.org/anthology/P18-3011},
+   year = {2018}
+}
+@inproceedings{Bhagchandani2019,
+   author = {Gaurav Bhagchandani and Deep Bodra and Abhishek Gangan and Nikahat Mulla},
+   doi = {10.1109/ICCS45141.2019.9065724},
+   isbn = {978-1-5386-8113-8},
+   booktitle = {2019 International Conference on Intelligent Computing and Control Systems (ICCS)},
+   month = {5},
+   pages = {566-570},
+   publisher = {IEEE},
+   title = {A Hybrid Solution To Abstractive Multi-Document Summarization Using Supervised and Unsupervised Learning},
+   year = {2019}
+}
+@article{eduSum,
+   author = {Natalia Vanetik and Marina Litvak and Elena Churkin and Mark Last},
+   doi = {10.1016/j.ins.2019.08.079},
+   issn = {00200255},
+   journal = {Information Sciences},
+   month = {1},
+   pages = {22-35},
+   title = {An unsupervised constrained optimization approach to compressive summarization},
+   volume = {509},
+   year = {2020}
+}
+@article{bayessum,
+   abstract = {<p>Text classification categorizes web documents in large collections into predefined classes based on their contents. Unfortunately, the classification process can be time-consuming and users are still required to spend considerable amount of time scanning through the classified web documents to identify the ones with contents that satisfy their information needs. In solving this problem, we first introduce CorSum, an extractive single-document summarization approach, which is simple and effective in performing the summarization task, since it only relies on word similarity to generate high-quality summaries. We further enhance CorSum by considering the significance factor of sentences in documents, in addition to using word-correlation factors, for document summarization. We denote the enhanced approach CorSum-SF and use the summaries generated by CorSum-SF to train a Multinomial Naïve Bayes classifier for categorizing web document summaries into predefined classes. Experimental results on the DUC-2002 and 20 Newsgroups datasets show that CorSum-SF outperforms other extractive summarization methods, and classification time (accuracy, respectively) is significantly reduced (compatible, respectively) using CorSum-SF generated summaries compared with using the entire documents. More importantly, browsing summaries, instead of entire documents, which are assigned to predefined categories, facilitates the information search process on the Web.</p>},
+   author = {Maria Soleda Pera and Yiu-Kai Ng},
+   doi = {10.1142/S0218213010000285},
+   issn = {0218-2130},
+   issue = {04},
+   journal = {International Journal on Artificial Intelligence Tools},
+   month = {8},
+   pages = {465-486},
+   title = {A na\"ve bayes classifier for web document summaries created by using word similarity and significant factors},
+   volume = {19},
+   year = {2010}
+}
+@inproceedings{supervisedsum,
+   abstract = {It is difficult to identify sentence importance from a single point of view. In this paper, we propose a learning-based approach to combine various sentence features. They are categorized as surface, content, relevance and event features. Surface features are related to extrinsic aspects of a sentence. Content features measure a sentence based on content-conveying words. Event features represent sentences by events they contained. Relevance features evaluate a sentence from its relatedness with other sentences. Experiments show that the combined features improved summarization performance significantly. Although the evaluation results are encouraging, supervised learning approach requires much labeled data. Therefore we investigate co-training by combining labeled and unlabeled data. Experiments show that this semi-supervised learning approach achieves comparable performance to its supervised counterpart and saves about half of the labeling time cost.},
+   author = {Kam-Fai Wong and Mingli Wu and Wenjie Li},
+   city = {Manchester, United Kingdom},
+   doi = {10.5555/1599081.1599205},
+   isbn = {9781905593446},
+   pages = {985-992},
+   publisher = {Association for Computational Linguistics},
+   title = {Extractive Summarization Using Supervised and Semi-supervised Learning},
+   year = {2008}
+}
+@article{fuzzySum,
+   author = {Wei Song and Lim Cheon Choi and Soon Cheol Park and Xiao Feng Ding},
+   doi = {10.1016/j.eswa.2010.12.102},
+   issn = {09574174},
+   issue = {8},
+   journal = {Expert Systems with Applications},
+   month = {8},
+   pages = {9112-9121},
+   title = {Fuzzy evolutionary optimization modeling and its applications to unsupervised categorization and extractive summarization},
+   volume = {38},
+   year = {2011}
+}
+@article{summaryLSA,
+   abstract = {<p>Text summarization solves the problem of presenting the information needed by a user in a compact form. There are different approaches to creating well-formed summaries. One of the newest methods is the Latent Semantic Analysis (LSA). In this paper, different LSA-based summarization algorithms are explained, two of which are proposed by the authors of this paper. The algorithms are evaluated on Turkish and English documents, and their performances are compared using their ROUGE scores. One of our algorithms produces the best scores and both algorithms perform equally well on Turkish and English document sets.</p>},
+   author = {Makbule Gulcin Ozsoy and Ferda Nur Alpaslan and Ilyas Cicekli},
+   doi = {10.1177/0165551511408848},
+   issn = {0165-5515},
+   issue = {4},
+   journal = {Journal of Information Science},
+   month = {8},
+   pages = {405-417},
+   title = {Text summarization using Latent Semantic Analysis},
+   volume = {37},
+   year = {2011}
+}
+@article{edgeSum,
+   author = {Wafaa S. El-Kassas and Cherif R. Salama and Ahmed A. Rafea and Hoda K. Mohamed},
+   doi = {10.1016/j.ipm.2020.102264},
+   issn = {03064573},
+   issue = {6},
+   journal = {Information Processing \& Management},
+   month = {11},
+   pages = {102264},
+   title = {EdgeSumm: Graph-based framework for automatic text summarization},
+   volume = {57},
+   year = {2020}
+}
+@inproceedings{bert,
+   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/N19-1423},
+   booktitle = {Proceedings of the 2019 Conference of the North},
+   pages = {4171-4186},
+   publisher = {Association for Computational Linguistics},
+   title = {BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding},
+   year = {2019}
+}
+@inproceedings{pacsumm,
+   author = {Hao Zheng and Mirella Lapata},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/P19-1628},
+   booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics},
+   pages = {6236-6247},
+   publisher = {Association for Computational Linguistics},
+   title = {Sentence Centrality Revisited for Unsupervised Summarization},
+   year = {2019}
+}
+
+@inproceedings{MDS-hetero-GNN,
+    title = "Heterogeneous Graph Neural Networks for Extractive Document Summarization",
+    author = "Wang, Danqing  and
+      Liu, Pengfei  and
+      Zheng, Yining  and
+      Qiu, Xipeng  and
+      Huang, Xuanjing",
+    editor = "Jurafsky, Dan  and
+      Chai, Joyce  and
+      Schluter, Natalie  and
+      Tetreault, Joel",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.553/",
+    doi = "10.18653/v1/2020.acl-main.553",
+    pages = "6209--6219",
+    abstract = "As a crucial step in extractive document summarization, learning cross-sentence relations has been explored by a plethora of approaches. An intuitive way is to put them in the graph-based neural network, which has a more complex structure for capturing inter-sentence relationships. In this paper, we present a heterogeneous graph-based neural network for extractive summarization (HETERSUMGRAPH), which contains semantic nodes of different granularity levels apart from sentences. These additional nodes act as the intermediary between sentences and enrich the cross-sentence relations. Besides, our graph structure is flexible in natural extension from a single-document setting to multi-document via introducing document nodes. To our knowledge, we are the first one to introduce different types of nodes into graph-based neural networks for extractive document summarization and perform a comprehensive qualitative analysis to investigate their benefits. The code will be released on Github."
 }

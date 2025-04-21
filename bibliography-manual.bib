@@ -1,0 +1,542 @@
+@InProceedings{prompt-sums,
+author="Onan, Aytu{\v{g}}
+and Alhumyani, Hesham",
+editor="Hu, Gongzhu
+and Kambhampaty, Krishna K.
+and Roy, Indranil",
+title="Assessing the Impact of Prompt Strategies on Text Summarization with Large Language Models",
+booktitle="Computer Applications in Industry and Engineering",
+year="2025",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="41--55",
+abstract="The advent of large language models (LLMs) has significantly advanced the field of text summarization, enabling the generation of coherent and contextually accurate summaries. This paper introduces a comprehensive framework for evaluating the performance of state-of-the-art LLMs in text summarization, with a particular focus on the impact of various prompt strategies, including zero-shot, one-shot, and few-shot learning. Our framework systematically examines how these prompting techniques influence summarization quality across diverse datasets, namely CNN/Daily Mail, XSum, TAC08, and TAC09. To provide a robust evaluation, we employ a range of intrinsic metrics such as ROUGE, BLEU, and BERTScore. These metrics allow us to quantify the quality of the generated summaries in terms of precision, recall, and semantic similarity. We evaluated three prominent LLMs: GPT-3, GPT-4, and LLaMA, each configured to optimize summarization performance under different prompting strategies. Our results reveal significant variations in performance depending on the chosen prompting strategy, highlighting the strengths and limitations of each approach. Furthermore, this study provides insights into the optimal conditions for employing different prompt strategies, offering practical guidelines for researchers and practitioners aiming to leverage LLMs for text summarization tasks. By delivering a thorough comparative analysis, we contribute to the understanding of how to maximize the potential of LLMs in generating high-quality summaries, ultimately advancing the field of natural language processing.",
+isbn="978-3-031-76273-4"
+}
+
+@article{news-sum,
+    author = {Zhang, Tianyi and Ladhak, Faisal and Durmus, Esin and Liang, Percy and McKeown, Kathleen and Hashimoto, Tatsunori B.},
+    title = {Benchmarking Large Language Models for News Summarization},
+    journal = {Transactions of the Association for Computational Linguistics},
+    volume = {12},
+    pages = {39-57},
+    year = {2024},
+    month = {01},
+    abstract = {Large language models (LLMs) have shown promise for automatic summarization but the reasons behind their successes are poorly understood. By conducting a human evaluation on ten LLMs across different pretraining methods, prompts, and model scales, we make two important observations. First, we find instruction tuning, not model size, is the key to the LLM’s zero-shot summarization capability. Second, existing studies have been limited by low-quality references, leading to underestimates of human performance and lower few-shot and finetuning performance. To better evaluate LLMs, we perform human evaluation over high-quality summaries we collect from freelance writers. Despite major stylistic differences such as the amount of paraphrasing, we find that LLM summaries are judged to be on par with human written summaries.},
+    issn = {2307-387X},
+    doi = {10.1162/tacl_a_00632},
+    url = {https://doi.org/10.1162/tacl\_a\_00632},
+    eprint = {https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00632/2325685/tacl\_a\_00632.pdf},
+}
+
+@article{SumSur2024,
+title = {A survey of text summarization: Techniques, evaluation and challenges},
+journal = {Natural Language Processing Journal},
+volume = {7},
+pages = {100070},
+year = {2024},
+issn = {2949-7191},
+doi = {https://doi.org/10.1016/j.nlp.2024.100070},
+url = {https://www.sciencedirect.com/science/article/pii/S2949719124000189},
+author = { Supriyono and Aji Prasetya Wibawa and  Suyono and Fachrul Kurniawan},
+keywords = {PRISMA, Natural language processing, Syntactic, Semantic, Text summarization, Transfer learning},
+abstract = {This paper explores the complex field of text summarization in Natural Language Processing (NLP), with particular attention to the development and importance of semantic understanding. Text summarization is a crucial component of natural language processing (NLP), which helps to translate large amounts of textual data into clear and understandable representations. As the story progresses, it demonstrates the dynamic transition from simple syntactic structures to sophisticated models with semantic comprehension. In order to effectively summarize, syntactic, semantic, and pragmatic concerns become crucial, highlighting the necessity of capturing not only grammar but also the context and underlying meaning. It examines the wide range of summarization models, from conventional extractive techniques to state-of-the-art tools like pre-trained models. Applications are found in many different fields, demonstrating how versatile summarizing techniques are. Semantic drift and domain-specific knowledge remain obstacles, despite progress. In the future, the study predicts developments like artificial intelligence integration and transfer learning, which motivates academics to investigate these prospects for advancement. The approach, which is based on the PRISMA framework, emphasizes a methodical and open literature review. The work attempts to further natural language processing (NLP) and text summarization by combining various research findings and suggesting future research directions in this dynamic subject.}
+}
+
+@misc{survayArxiv,
+      title={A Systematic Survey of Text Summarization: From Statistical Methods to Large Language Models}, 
+      author={Haopeng Zhang and Philip S. Yu and Jiawei Zhang},
+      year={2024},
+      eprint={2406.11289},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2406.11289}, 
+}
+
+@inproceedings{bert-score,
+  title={BERTScore: Evaluating Text Generation with BERT},
+  author={Tianyi Zhang* and Varsha Kishore* and Felix Wu* and Kilian Q. Weinberger and Yoav Artzi},
+  booktitle={International Conference on Learning Representations},
+  year={2020},
+  url={https://openreview.net/forum?id=SkeHuCVFDr}
+}
+
+@inproceedings{bert,
+    title = "{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+    author = "Devlin, Jacob  and
+      Chang, Ming-Wei  and
+      Lee, Kenton  and
+      Toutanova, Kristina",
+    editor = "Burstein, Jill  and
+      Doran, Christy  and
+      Solorio, Thamar",
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N19-1423/",
+    doi = "10.18653/v1/N19-1423",
+    pages = "4171--4186",
+    abstract = "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5 (7.7 point absolute improvement), MultiNLI accuracy to 86.7{\%} (4.6{\%} absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement)."
+}
+
+@inproceedings{gpt-3,
+ author = {Brown, Tom and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared D and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Agarwal, Sandhini and Herbert-Voss, Ariel and Krueger, Gretchen and Henighan, Tom and Child, Rewon and Ramesh, Aditya and Ziegler, Daniel and Wu, Jeffrey and Winter, Clemens and Hesse, Chris and Chen, Mark and Sigler, Eric and Litwin, Mateusz and Gray, Scott and Chess, Benjamin and Clark, Jack and Berner, Christopher and McCandlish, Sam and Radford, Alec and Sutskever, Ilya and Amodei, Dario},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {H. Larochelle and M. Ranzato and R. Hadsell and M.F. Balcan and H. Lin},
+ pages = {1877--1901},
+ publisher = {Curran Associates, Inc.},
+ title = {Language Models are Few-Shot Learners},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf},
+ volume = {33},
+ year = {2020}
+}
+
+@misc{huggingfaceModels url={https://huggingface.co/models}, journal={Models - hugging face}} 
+
+@inproceedings{transformer,
+ author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Attention is All you Need},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf},
+ volume = {30},
+ year = {2017}
+}
+
+@inproceedings{pointer-generator,
+    title = "Get To The Point: Summarization with Pointer-Generator Networks",
+    author = "See, Abigail  and
+      Liu, Peter J.  and
+      Manning, Christopher D.",
+    editor = "Barzilay, Regina  and
+      Kan, Min-Yen",
+    booktitle = "Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2017",
+    address = "Vancouver, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/P17-1099/",
+    doi = "10.18653/v1/P17-1099",
+    pages = "1073--1083",
+    abstract = "Neural sequence-to-sequence models have provided a viable new approach for abstractive text summarization (meaning they are not restricted to simply selecting and rearranging passages from the original text). However, these models have two shortcomings: they are liable to reproduce factual details inaccurately, and they tend to repeat themselves. In this work we propose a novel architecture that augments the standard sequence-to-sequence attentional model in two orthogonal ways. First, we use a hybrid pointer-generator network that can copy words from the source text via pointing, which aids accurate reproduction of information, while retaining the ability to produce novel words through the generator. Second, we use coverage to keep track of what has been summarized, which discourages repetition. We apply our model to the CNN / Daily Mail summarization task, outperforming the current abstractive state-of-the-art by at least 2 ROUGE points."
+}
+
+@inproceedings{MMR,
+author = {Carbonell, Jaime and Goldstein, Jade},
+title = {The use of MMR, diversity-based reranking for reordering documents and producing summaries},
+year = {1998},
+isbn = {1581130155},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/290941.291025},
+doi = {10.1145/290941.291025},
+booktitle = {Proceedings of the 21st Annual International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {335–336},
+numpages = {2},
+location = {Melbourne, Australia},
+series = {SIGIR '98}
+}
+
+@inproceedings{MDS-text-clasification,
+author = {Cao, Ziqiang and Li, Wenjie and Li, Sujian and Wei, Furu},
+title = {Improving multi-document summarization via text classification},
+year = {2017},
+publisher = {AAAI Press},
+abstract = {Developed so far, multi-document summarization has reached its bottleneck due to the lack of sufficient training data and diverse categories of documents. Text classification just makes up for these deficiencies. In this paper, we propose a novel summarization system called TCSum, which leverages plentiful text classification data to improve the performance of multi-document summarization. TCSum projects documents onto distributed representations which act as a bridge between text classification and summarization. It also utilizes the classification results to produce summaries of different styles. Extensive experiments on DUC generic multi-document summarization datasets show that, TCSum can achieve the state-of-the-art performance without using any hand-crafted features and has the capability to catch the variations of summary styles with respect to different text categories.},
+booktitle = {Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence},
+pages = {3053–3059},
+numpages = {7},
+location = {San Francisco, California, USA},
+series = {AAAI'17}
+}
+
+@inproceedings{MDS-opt-sentence-mod,
+author = {Yin, Wenpeng and Pei, Yulong},
+title = {Optimizing sentence modeling and selection for document summarization},
+year = {2015},
+isbn = {9781577357384},
+publisher = {AAAI Press},
+abstract = {Extractive document summarization aims to conclude given documents by extracting some salient sentences. Often, it faces two challenges: 1) how to model the information redundancy among candidate sentences; 2) how to select the most appropriate sentences. This paper attempts to build a strong summarizer DivSelect+CNNLM by presenting new algorithms to optimize each of them. Concretely, it proposes CNNLM, a novel neural network language model (NNLM) based on convolutional neural network (CNN), to project sentences into dense distributed representations, then models sentence redundancy by cosine similarity. Afterwards, it formulates the selection process as an optimization problem, constructing a diversified selection process (DivSelect) with the aim of selecting some sentences which have high prestige, meantime, are dissimilar with each other. Experimental results on DUC2002 and DUC2004 benchmark data sets demonstrate the effectiveness of our approach.},
+booktitle = {Proceedings of the 24th International Conference on Artificial Intelligence},
+pages = {1383–1389},
+numpages = {7},
+location = {Buenos Aires, Argentina},
+series = {IJCAI'15}
+}
+
+@inproceedings{coavoux-etal-2019-unsupervised,
+    title = "Unsupervised Aspect-Based Multi-Document Abstractive Summarization",
+    author = "Coavoux, Maximin  and
+      Elsahar, Hady  and
+      Gall{\'e}, Matthias",
+    editor = "Wang, Lu  and
+      Cheung, Jackie Chi Kit  and
+      Carenini, Giuseppe  and
+      Liu, Fei",
+    booktitle = "Proceedings of the 2nd Workshop on New Frontiers in Summarization",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-5405/",
+    doi = "10.18653/v1/D19-5405",
+    pages = "42--47",
+    abstract = "User-generated reviews of products or services provide valuable information to customers. However, it is often impossible to read each of the potentially thousands of reviews: it would therefore save valuable time to provide short summaries of their contents. We address opinion summarization, a multi-document summarization task, with an unsupervised abstractive summarization neural system. Our system is based on (i) a language model that is meant to encode reviews to a vector space, and to generate fluent sentences from the same vector space (ii) a clustering step that groups together reviews about the same aspects and allows the system to generate summary sentences focused on these aspects. Our experiments on the Oposum dataset empirically show the importance of the clustering step."
+}
+
+@article{LSTM,
+    author = {Hochreiter, Sepp and Schmidhuber, Jürgen},
+    title = {Long Short-Term Memory},
+    journal = {Neural Computation},
+    volume = {9},
+    number = {8},
+    pages = {1735-1780},
+    year = {1997},
+    month = {11},
+    abstract = {Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory (LSTM). Truncating the gradient where this does not do harm, LSTM can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. LSTM is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, LSTM leads to many more successful runs, and learns much faster. LSTM also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms.},
+    issn = {0899-7667},
+    doi = {10.1162/neco.1997.9.8.1735},
+    url = {https://doi.org/10.1162/neco.1997.9.8.1735},
+    eprint = {https://direct.mit.edu/neco/article-pdf/9/8/1735/813796/neco.1997.9.8.1735.pdf},
+}
+
+
+@inproceedings{amplayo-lapata-2021-informative,
+    title = "Informative and Controllable Opinion Summarization",
+    author = "Amplayo, Reinald Kim  and
+      Lapata, Mirella",
+    editor = "Merlo, Paola  and
+      Tiedemann, Jorg  and
+      Tsarfaty, Reut",
+    booktitle = "Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume",
+    month = apr,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.eacl-main.229/",
+    doi = "10.18653/v1/2021.eacl-main.229",
+    pages = "2662--2672",
+    abstract = "Opinion summarization is the task of automatically generating summaries for a set of reviews about a specific target (e.g., a movie or a product). Since the number of reviews for each target can be prohibitively large, neural network-based methods follow a two-stage approach where an extractive step first pre-selects a subset of salient opinions and an abstractive step creates the summary while conditioning on the extracted subset. However, the extractive model leads to loss of information which may be useful depending on user needs. In this paper we propose a summarization framework that eliminates the need to rely only on pre-selected content and waste possibly useful information, especially when customizing summaries. The framework enables the use of all input reviews by first condensing them into multiple dense vectors which serve as input to an abstractive model. We showcase an effective instantiation of our framework which produces more informative summaries and also allows to take user preferences into account using our zero-shot customization technique. Experimental results demonstrate that our model improves the state of the art on the Rotten Tomatoes dataset and generates customized summaries effectively."
+}
+
+@article{Bi-LSTM,
+author = {Schuster, Mike and Paliwal, Kuldip},
+year = {1997},
+month = {12},
+pages = {2673 - 2681},
+title = {Bidirectional recurrent neural networks},
+volume = {45},
+journal = {Signal Processing, IEEE Transactions on},
+doi = {10.1109/78.650093}
+}
+
+@inproceedings{yasunaga-etal-2017-graph,
+    title = "Graph-based Neural Multi-Document Summarization",
+    author = "Yasunaga, Michihiro  and
+      Zhang, Rui  and
+      Meelu, Kshitijh  and
+      Pareek, Ayush  and
+      Srinivasan, Krishnan  and
+      Radev, Dragomir",
+    editor = "Levy, Roger  and
+      Specia, Lucia",
+    booktitle = "Proceedings of the 21st Conference on Computational Natural Language Learning ({C}o{NLL} 2017)",
+    month = aug,
+    year = "2017",
+    address = "Vancouver, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/K17-1045/",
+    doi = "10.18653/v1/K17-1045",
+    pages = "452--462",
+    abstract = "We propose a neural multi-document summarization system that incorporates sentence relation graphs. We employ a Graph Convolutional Network (GCN) on the relation graphs, with sentence embeddings obtained from Recurrent Neural Networks as input node features. Through multiple layer-wise propagation, the GCN generates high-level hidden sentence features for salience estimation. We then use a greedy heuristic to extract salient sentences that avoid redundancy. In our experiments on DUC 2004, we consider three types of sentence relation graphs and demonstrate the advantage of combining sentence relations in graphs with the representation power of deep neural networks. Our model improves upon other traditional graph-based extractive approaches and the vanilla GRU sequence model with no graph, and it achieves competitive results against other state-of-the-art multi-document summarization systems."
+}
+
+@inproceedings{antognini-faltings-2019-learning,
+    title = "Learning to Create Sentence Semantic Relation Graphs for Multi-Document Summarization",
+    author = "Antognini, Diego  and
+      Faltings, Boi",
+    editor = "Wang, Lu  and
+      Cheung, Jackie Chi Kit  and
+      Carenini, Giuseppe  and
+      Liu, Fei",
+    booktitle = "Proceedings of the 2nd Workshop on New Frontiers in Summarization",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-5404/",
+    doi = "10.18653/v1/D19-5404",
+    pages = "32--41",
+    abstract = "Linking facts across documents is a challenging task, as the language used to express the same information in a sentence can vary significantly, which complicates the task of multi-document summarization. Consequently, existing approaches heavily rely on hand-crafted features, which are domain-dependent and hard to craft, or additional annotated data, which is costly to gather. To overcome these limitations, we present a novel method, which makes use of two types of sentence embeddings: universal embeddings, which are trained on a large unrelated corpus, and domain-specific embeddings, which are learned during training. To this end, we develop SemSentSum, a fully data-driven model able to leverage both types of sentence embeddings by building a sentence semantic relation graph. SemSentSum achieves competitive results on two types of summary, consisting of 665 bytes and 100 words. Unlike other state-of-the-art models, neither hand-crafted features nor additional annotated data are necessary, and the method is easily adaptable for other tasks. To our knowledge, we are the first to use multiple sentence embeddings for the task of multi-document summarization."
+}
+
+@inproceedings{MDS-scisummnet,
+author = {Yasunaga, Michihiro and Kasai, Jungo and Zhang, Rui and Fabbri, Alexander R. and Li, Irene and Friedman, Dan and Radev, Dragomir R.},
+title = {ScisummNet: a large annotated corpus and content-impact models for scientific paper summarization with citation networks},
+year = {2019},
+isbn = {978-1-57735-809-1},
+publisher = {AAAI Press},
+url = {https://doi.org/10.1609/aaai.v33i01.33017386},
+doi = {10.1609/aaai.v33i01.33017386},
+abstract = {Scientific article summarization is challenging: large, annotated corpora are not available, and the summary should ideally include the article's impacts on research community. This paper provides novel solutions to these two challenges. We 1) develop and release the first large-scale manually-annotated corpus for scientific papers (on computational linguistics) by enabling faster annotation, and 2) propose summarization methods that integrate the authors' original highlights (abstract) and the article's actual impacts on the community (citations), to create comprehensive, hybrid summaries. We conduct experiments to demonstrate the efficacy of our corpus in training data-driven models for scientific paper summarization and the advantage of our hybrid summaries over abstracts and traditional citation-based summaries. Our large annotated corpus and hybrid methods provide a new framework for scientific paper summarization research.},
+booktitle = {Proceedings of the Thirty-Third AAAI Conference on Artificial Intelligence and Thirty-First Innovative Applications of Artificial Intelligence Conference and Ninth AAAI Symposium on Educational Advances in Artificial Intelligence},
+articleno = {907},
+numpages = {8},
+location = {Honolulu, Hawaii, USA},
+series = {AAAI'19/IAAI'19/EAAI'19}
+}
+
+@inproceedings{fabbri-etal-2019-multi,
+    title = "Multi-News: A Large-Scale Multi-Document Summarization Dataset and Abstractive Hierarchical Model",
+    author = "Fabbri, Alexander  and
+      Li, Irene  and
+      She, Tianwei  and
+      Li, Suyi  and
+      Radev, Dragomir",
+    editor = "Korhonen, Anna  and
+      Traum, David  and
+      M{\`a}rquez, Llu{\'i}s",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/P19-1102/",
+    doi = "10.18653/v1/P19-1102",
+    pages = "1074--1084",
+    abstract = "Automatic generation of summaries from multiple news articles is a valuable tool as the number of online publications grows rapidly. Single document summarization (SDS) systems have benefited from advances in neural encoder-decoder model thanks to the availability of large datasets. However, multi-document summarization (MDS) of news articles has been limited to datasets of a couple of hundred examples. In this paper, we introduce Multi-News, the first large-scale MDS news dataset. Additionally, we propose an end-to-end model which incorporates a traditional extractive summarization model with a standard SDS model and achieves competitive results on MDS datasets. We benchmark several methods on Multi-News and hope that this work will promote advances in summarization in the multi-document setting."
+}
+
+@inproceedings{lebanoff-etal-2018-adapting,
+    title = "Adapting the Neural Encoder-Decoder Framework from Single to Multi-Document Summarization",
+    author = "Lebanoff, Logan  and
+      Song, Kaiqiang  and
+      Liu, Fei",
+    editor = "Riloff, Ellen  and
+      Chiang, David  and
+      Hockenmaier, Julia  and
+      Tsujii, Jun{'}ichi",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D18-1446/",
+    doi = "10.18653/v1/D18-1446",
+    pages = "4131--4141",
+    abstract = "Generating a text abstract from a set of documents remains a challenging task. The neural encoder-decoder framework has recently been exploited to summarize single documents, but its success can in part be attributed to the availability of large parallel data automatically acquired from the Web. In contrast, parallel data for multi-document summarization are scarce and costly to obtain. There is a pressing need to adapt an encoder-decoder model trained on single-document summarization data to work with multiple-document input. In this paper, we present an initial investigation into a novel adaptation method. It exploits the maximal marginal relevance method to select representative sentences from multi-document input, and leverages an abstractive encoder-decoder model to fuse disparate sentences to an abstractive summary. The adaptation method is robust and itself requires no training data. Our system compares favorably to state-of-the-art extractive and abstractive approaches judged by automatic metrics and human assessors."
+}
+
+@inproceedings{MDS-wiki,
+  author       = {Peter J. Liu and
+                  Mohammad Saleh and
+                  Etienne Pot and
+                  Ben Goodrich and
+                  Ryan Sepassi and
+                  Lukasz Kaiser and
+                  Noam Shazeer},
+  title        = {Generating Wikipedia by Summarizing Long Sequences},
+  booktitle    = {6th International Conference on Learning Representations, {ICLR} 2018,
+                  Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track Proceedings},
+  publisher    = {OpenReview.net},
+  year         = {2018},
+  url          = {https://openreview.net/forum?id=Hyg0vbWC-},
+  timestamp    = {Thu, 25 Jul 2019 14:25:42 +0200},
+  biburl       = {https://dblp.org/rec/conf/iclr/LiuSPGSKS18.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{jin-etal-2020-multi,
+    title = "Multi-Granularity Interaction Network for Extractive and Abstractive Multi-Document Summarization",
+    author = "Jin, Hanqi  and
+      Wang, Tianming  and
+      Wan, Xiaojun",
+    editor = "Jurafsky, Dan  and
+      Chai, Joyce  and
+      Schluter, Natalie  and
+      Tetreault, Joel",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.556/",
+    doi = "10.18653/v1/2020.acl-main.556",
+    pages = "6244--6254",
+    abstract = "In this paper, we propose a multi-granularity interaction network for extractive and abstractive multi-document summarization, which jointly learn semantic representations for words, sentences, and documents. The word representations are used to generate an abstractive summary while the sentence representations are used to produce an extractive summary. We employ attention mechanisms to interact between different granularity of semantic representations, which helps to capture multi-granularity key information and improves the performance of both abstractive and extractive summarization. Experiment results show that our proposed model substantially outperforms all strong baseline methods and achieves the best results on the Multi-News dataset."
+}
+
+@inproceedings{MDS-dialog-sum,
+author = {Liu, Chunyi and Wang, Peng and Xu, Jiang and Li, Zang and Ye, Jieping},
+title = {Automatic Dialogue Summary Generation for Customer Service},
+year = {2019},
+isbn = {9781450362016},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3292500.3330683},
+doi = {10.1145/3292500.3330683},
+abstract = {Dialogue summarization extracts useful information from a dialogue. It helps people quickly capture the highlights of a dialogue without going through long and sometimes twisted utterances. For customer service, it saves human resources currently required to write dialogue summaries. A main challenge of dialogue summarization is to design a mechanism to ensure the logic, integrity, and correctness of the summaries. In this paper, we introduce auxiliary key point sequences to solve this problem. A key point sequence describes the logic of the summary. In our training procedure, a key point sequence acts as an auxiliary label. It helps the model learn the logic of the summary. In the prediction procedure, our model predicts the key point sequence first and then uses it to guide the prediction of the summary. Along with the auxiliary key point sequence, we propose a novel Leader-Writer network. The Leader net predicts the key point sequence, and the Writer net predicts the summary based on the decoded key point sequence. The Leader net ensures the summary is logical and integral. The Writer net focuses on generating fluent sentences. We test our model on customer service scenarios. The results show that our model outperforms other models not only on BLEU and ROUGE-L score but also on logic and integrity.},
+booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+pages = {1957–1965},
+numpages = {9},
+keywords = {leader-writer net, hierarchical encoder-decoder, dialogue summarization, customer service},
+location = {Anchorage, AK, USA},
+series = {KDD '19}
+}
+
+@inproceedings{li-etal-2020-leveraging-graph,
+    title = "Leveraging Graph to Improve Abstractive Multi-Document Summarization",
+    author = "Li, Wei  and
+      Xiao, Xinyan  and
+      Liu, Jiachen  and
+      Wu, Hua  and
+      Wang, Haifeng  and
+      Du, Junping",
+    editor = "Jurafsky, Dan  and
+      Chai, Joyce  and
+      Schluter, Natalie  and
+      Tetreault, Joel",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.555/",
+    doi = "10.18653/v1/2020.acl-main.555",
+    pages = "6232--6243",
+    abstract = "Graphs that capture relations between textual units have great benefits for detecting salient information from multiple documents and generating overall coherent summaries. In this paper, we develop a neural abstractive multi-document summarization (MDS) model which can leverage well-known graph representations of documents such as similarity graph and discourse graph, to more effectively process multiple input documents and produce abstractive summaries. Our model utilizes graphs to encode documents in order to capture cross-document relations, which is crucial to summarizing long documents. Our model can also take advantage of graphs to guide the summary generation process, which is beneficial for generating coherent and concise summaries. Furthermore, pre-trained language models can be easily combined with our model, which further improve the summarization performance significantly. Empirical results on the WikiSum and MultiNews dataset show that the proposed architecture brings substantial improvements over several strong baselines."
+}
+
+@inproceedings{pasunuru-etal-2021-efficiently,
+    title = "Efficiently Summarizing Text and Graph Encodings of Multi-Document Clusters",
+    author = "Pasunuru, Ramakanth  and
+      Liu, Mengwen  and
+      Bansal, Mohit  and
+      Ravi, Sujith  and
+      Dreyer, Markus",
+    editor = "Toutanova, Kristina  and
+      Rumshisky, Anna  and
+      Zettlemoyer, Luke  and
+      Hakkani-Tur, Dilek  and
+      Beltagy, Iz  and
+      Bethard, Steven  and
+      Cotterell, Ryan  and
+      Chakraborty, Tanmoy  and
+      Zhou, Yichao",
+    booktitle = "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    month = jun,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.naacl-main.380/",
+    doi = "10.18653/v1/2021.naacl-main.380",
+    pages = "4768--4779",
+    abstract = "This paper presents an efficient graph-enhanced approach to multi-document summarization (MDS) with an encoder-decoder Transformer model. This model is based on recent advances in pre-training both encoder and decoder on very large text data (Lewis et al., 2019), and it incorporates an efficient encoding mechanism (Beltagy et al., 2020) that avoids the quadratic memory growth typical for traditional Transformers. We show that this powerful combination not only scales to large input documents commonly found when summarizing news clusters; it also enables us to process additional input in the form of auxiliary graph representations, which we derive from the multi-document clusters. We present a mechanism to incorporate such graph information into the encoder-decoder model that was pre-trained on text only. Our approach leads to significant improvements on the Multi-News dataset, overall leading to an average 1.8 ROUGE score improvement over previous work (Li et al., 2020). We also show improvements in a transfer-only setup on the DUC-2004 dataset. The graph encodings lead to summaries that are more abstractive. Human evaluation shows that they are also more informative and factually more consistent with their input documents."
+}
+
+@article{gpt-2,
+  title={Language models are unsupervised multitask learners},
+  author={Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya and others},
+  journal={OpenAI blog},
+  volume={1},
+  number={8},
+  pages={9},
+  year={2019}
+}
+
+@INPROCEEDINGS {MDS-topic-centric,
+author = { Alambo, Amanuel and Lohstroh, Cori and Madaus, Erik and Padhee, Swati and Foster, Brandy and Banerjee, Tanvi and Thirunarayan, Krishnaprasad and Raymer, Michael },
+booktitle = { 2020 IEEE International Conference on Big Data (Big Data) },
+title = {{ Topic-Centric Unsupervised Multi-Document Summarization of Scientific and News Articles }},
+year = {2020},
+volume = {},
+ISSN = {},
+pages = {591-596},
+abstract = { Recent advances in natural language processing have enabled automation of a wide range of tasks, including machine translation, named entity recognition, and sentiment analysis. Automated summarization of documents, or groups of documents, however, has remained elusive, with many efforts limited to extraction of keywords, key phrases, or key sentences. Accurate abstractive summarization has yet to be achieved due to the inherent difficulty of the problem, and limited availability of training data. In this paper, we propose a topic-centric unsupervised multi-document summarization framework to generate extractive and abstractive summaries for groups of scientific articles across 20 Fields of Study (FoS) in Microsoft Academic Graph (MAG) and news articles from DUC-2004 Task 2. The proposed algorithm generates an abstractive summary by developing salient language unit selection and text generation techniques. Our approach matches the state-of-the-art when evaluated on automated extractive evaluation metrics and performs better for abstractive summarization on five human evaluation metrics (entailment, coherence, conciseness, readability, and grammar). We achieve a kappa score of 0.68 between two co-author linguists who evaluated our results. We plan to publicly share MAG- 20, a human-validated gold standard dataset of topic-clustered research articles and their summaries to promote research in abstractive summarization. },
+keywords = {Measurement;Sentiment analysis;Training data;Big Data;Grammar;Machine translation;Task analysis},
+doi = {10.1109/BigData50022.2020.9378403},
+url = {https://doi.ieeecomputersociety.org/10.1109/BigData50022.2020.9378403},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+month =Dec}
+
+@inproceedings{PEGASUS,
+author = {Zhang, Jingqing and Zhao, Yao and Saleh, Mohammad and Liu, Peter J.},
+title = {PEGASUS: pre-training with extracted gap-sentences for abstractive summarization},
+year = {2020},
+publisher = {JMLR.org},
+abstract = {Recent work pre-training Transformers with self-supervised objectives on large text corpora has shown great success when fine-tuned on downstream NLP tasks including text summarization. However, pre-training objectives tailored for abstractive text summarization have not been explored. Furthermore there is a lack of systematic evaluation across diverse domains. In this work, we propose pretraining large Transformer-based encoder-decoder models on massive text corpora with a new self-supervised objective. In PEGASUS, important sentences are removed/masked from an input document and are generated together as one output sequence from the remaining sentences, similar to an extractive summary. We evaluated our best PEGASUS model on 12 downstream summarization tasks spanning news, science, stories, instructions, emails, patents, and legislative bills. Experiments demonstrate it achieves state-of-the-art performance on all 12 downstream datasets measured by ROUGE scores. Our model also shows surprising performance on low-resource summarization, surpassing previous state-of-the-art results on 6 datasets with only 1000 examples. Finally we validated our results using human evaluation and show that our model summaries achieve human performance on multiple datasets.},
+booktitle = {Proceedings of the 37th International Conference on Machine Learning},
+articleno = {1051},
+numpages = {12},
+series = {ICML'20}
+}
+
+@inproceedings{wu-etal-2021-controllable,
+    title = "Controllable Abstractive Dialogue Summarization with Sketch Supervision",
+    author = "Wu, Chien-Sheng  and
+      Liu, Linqing  and
+      Liu, Wenhao  and
+      Stenetorp, Pontus  and
+      Xiong, Caiming",
+    editor = "Zong, Chengqing  and
+      Xia, Fei  and
+      Li, Wenjie  and
+      Navigli, Roberto",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL-IJCNLP 2021",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.findings-acl.454/",
+    doi = "10.18653/v1/2021.findings-acl.454",
+    pages = "5108--5122"
+}
+
+@inproceedings{multi-news-dataset,
+    title = "Multi-News: A Large-Scale Multi-Document Summarization Dataset and Abstractive Hierarchical Model",
+    author = "Fabbri, Alexander  and
+      Li, Irene  and
+      She, Tianwei  and
+      Li, Suyi  and
+      Radev, Dragomir",
+    editor = "Korhonen, Anna  and
+      Traum, David  and
+      M{\`a}rquez, Llu{\'i}s",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/P19-1102/",
+    doi = "10.18653/v1/P19-1102",
+    pages = "1074--1084",
+    abstract = "Automatic generation of summaries from multiple news articles is a valuable tool as the number of online publications grows rapidly. Single document summarization (SDS) systems have benefited from advances in neural encoder-decoder model thanks to the availability of large datasets. However, multi-document summarization (MDS) of news articles has been limited to datasets of a couple of hundred examples. In this paper, we introduce Multi-News, the first large-scale MDS news dataset. Additionally, we propose an end-to-end model which incorporates a traditional extractive summarization model with a standard SDS model and achieves competitive results on MDS datasets. We benchmark several methods on Multi-News and hope that this work will promote advances in summarization in the multi-document setting."
+}
+
+@inproceedings{arxiv-dataset,
+    title = "A Discourse-Aware Attention Model for Abstractive Summarization of Long Documents",
+    author = "Cohan, Arman  and
+      Dernoncourt, Franck  and
+      Kim, Doo Soon  and
+      Bui, Trung  and
+      Kim, Seokhwan  and
+      Chang, Walter  and
+      Goharian, Nazli",
+    editor = "Walker, Marilyn  and
+      Ji, Heng  and
+      Stent, Amanda",
+    booktitle = "Proceedings of the 2018 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers)",
+    month = jun,
+    year = "2018",
+    address = "New Orleans, Louisiana",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N18-2097/",
+    doi = "10.18653/v1/N18-2097",
+    pages = "615--621",
+    abstract = "Neural abstractive summarization models have led to promising results in summarizing relatively short documents. We propose the first model for abstractive summarization of single, longer-form documents (e.g., research papers). Our approach consists of a new hierarchical encoder that models the discourse structure of a document, and an attentive discourse-aware decoder to generate the summary. Empirical results on two large-scale datasets of scientific papers show that our model significantly outperforms state-of-the-art models."
+}
