@@ -93,7 +93,12 @@ abstract = {This paper explores the complex field of text summarization in Natur
  year = {2020}
 }
 
-@misc{huggingfaceModels url={https://huggingface.co/models}, journal={Models - hugging face}} 
+@misc{huggingfaceModels,
+   author = {Inc. Hugging Face},
+   title = {Models - Hugging Face},
+   url = {https://huggingface.co/models},
+   note = {Accessed: 23/03/2025}
+}
 
 @inproceedings{transformer,
  author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
@@ -539,4 +544,301 @@ series = {ICML'20}
     doi = "10.18653/v1/N18-2097",
     pages = "615--621",
     abstract = "Neural abstractive summarization models have led to promising results in summarizing relatively short documents. We propose the first model for abstractive summarization of single, longer-form documents (e.g., research papers). Our approach consists of a new hierarchical encoder that models the discourse structure of a document, and an attentive discourse-aware decoder to generate the summary. Empirical results on two large-scale datasets of scientific papers show that our model significantly outperforms state-of-the-art models."
+}
+
+@inproceedings{MDS-hetero-GNN,
+    title = "Heterogeneous Graph Neural Networks for Extractive Document Summarization",
+    author = "Wang, Danqing  and
+      Liu, Pengfei  and
+      Zheng, Yining  and
+      Qiu, Xipeng  and
+      Huang, Xuanjing",
+    editor = "Jurafsky, Dan  and
+      Chai, Joyce  and
+      Schluter, Natalie  and
+      Tetreault, Joel",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.553/",
+    doi = "10.18653/v1/2020.acl-main.553",
+    pages = "6209--6219",
+    abstract = "As a crucial step in extractive document summarization, learning cross-sentence relations has been explored by a plethora of approaches. An intuitive way is to put them in the graph-based neural network, which has a more complex structure for capturing inter-sentence relationships. In this paper, we present a heterogeneous graph-based neural network for extractive summarization (HETERSUMGRAPH), which contains semantic nodes of different granularity levels apart from sentences. These additional nodes act as the intermediary between sentences and enrich the cross-sentence relations. Besides, our graph structure is flexible in natural extension from a single-document setting to multi-document via introducing document nodes. To our knowledge, we are the first one to introduce different types of nodes into graph-based neural networks for extractive document summarization and perform a comprehensive qualitative analysis to investigate their benefits. The code will be released on Github."
+}
+
+@inproceedings{concat-embed,
+    title = "Automated Concatenation of Embeddings for Structured Prediction",
+    author = "Wang, Xinyu  and
+      Jiang, Yong  and
+      Bach, Nguyen  and
+      Wang, Tao  and
+      Huang, Zhongqiang  and
+      Huang, Fei  and
+      Tu, Kewei",
+    editor = "Zong, Chengqing  and
+      Xia, Fei  and
+      Li, Wenjie  and
+      Navigli, Roberto",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-long.206/",
+    doi = "10.18653/v1/2021.acl-long.206",
+    pages = "2643--2660",
+    abstract = "Pretrained contextualized embeddings are powerful word representations for structured prediction tasks. Recent work found that better word representations can be obtained by concatenating different types of embeddings. However, the selection of embeddings to form the best concatenated representation usually varies depending on the task and the collection of candidate embeddings, and the ever-increasing number of embedding types makes it a more difficult problem. In this paper, we propose Automated Concatenation of Embeddings (ACE) to automate the process of finding better concatenations of embeddings for structured prediction tasks, based on a formulation inspired by recent progress on neural architecture search. Specifically, a controller alternately samples a concatenation of embeddings, according to its current belief of the effectiveness of individual embedding types in consideration for a task, and updates the belief based on a reward. We follow strategies in reinforcement learning to optimize the parameters of the controller and compute the reward based on the accuracy of a task model, which is fed with the sampled concatenation as input and trained on a task dataset. Empirical results on 6 tasks and 21 datasets show that our approach outperforms strong baselines and achieves state-of-the-art performance with fine-tuned embeddings in all the evaluations."
+}
+
+@article{NER,
+   author = {Jing Li and Aixin Sun and Jianglei Han and Chenliang Li},
+   doi = {10.1109/TKDE.2020.2981314},
+   issn = {1041-4347},
+   issue = {1},
+   journal = {IEEE Transactions on Knowledge and Data Engineering},
+   month = {1},
+   pages = {50-70},
+   title = {A Survey on Deep Learning for Named Entity Recognition},
+   volume = {34},
+   year = {2022},
+}
+
+@inproceedings{timeline-sum,
+   abstract = {Timeline summarization (TLS) automatically identifies key dates of major events and provides short descriptions of what happened on these dates. Previous approaches to TLS have focused on extractive methods. In contrast, we suggest an abstractive timeline summarization system. Our system is entirely unsupervised, which makes it especially suited to TLS where there are very few gold summaries available for training of supervised systems. In addition, we present the first abstractive oracle experiments for TLS. Our system outperforms ex-tractive competitors in terms of ROUGE when the number of input documents is high and the output requires strong compression. In these cases, our oracle experiments confirm that our approach also has a higher upper bound for ROUGE scores than extractive methods. A study with human judges shows that our ab-stractive system also produces output that is easy to read and understand.},
+   author = {Julius Steen and Katja Markert},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/D19-5403},
+   booktitle = {Proceedings of the 2nd Workshop on New Frontiers in Summarization},
+   pages = {21-31},
+   publisher = {Association for Computational Linguistics},
+   title = {Abstractive Timeline Summarization},
+   url = {https://www.aclweb.org/anthology/D19-5403},
+   year = {2019},
+}
+@inproceedings{towards-timeline-sum,
+   abstract = {Timeline summarization targets at concisely summarizing the evolution trajectory along the timeline and existing timeline summarization approaches are all based on extractive methods. In this paper, we propose the task of abstractive timeline summa-rization, which tends to concisely paraphrase the information in the time-stamped events. Unlike traditional document summarization, timeline sum-marization needs to model the time series information of the input events and summarize important events in chronological order. To tackle this challenge , we propose a memory-based timeline sum-marization model (MTS). Concretely, we propose a time-event memory to establish a timeline, and use the time position of events on this timeline to guide generation process. Besides, in each decoding step, we incorporate event-level information into word-level attention to avoid confusion between events. Extensive experiments are conducted on a large-scale real-world dataset, and the results show that MTS achieves the state-of-the-art performance in terms of both automatic and human evaluations.},
+   author = {Xiuying Chen and Zhangming Chan and Shen Gao and Meng-Hsuan Yu and Dongyan Zhao and Rui Yan},
+   city = {California},
+   doi = {10.24963/ijcai.2019/686},
+   isbn = {978-0-9992411-4-1},
+   booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence},
+   keywords = {Natural Language Processing: Natural Language Generation,Natural Language Processing: Natural Language Summarization},
+   month = {8},
+   pages = {4939-4945},
+   publisher = {International Joint Conferences on Artificial Intelligence Organization},
+   title = {Learning towards Abstractive Timeline Summarization},
+   url = {https://www.ijcai.org/proceedings/2019/686},
+   year = {2019},
+}
+
+@article{event-extraction,
+   abstract = {Event extraction (EE) is a crucial research task for promptly apprehending event information from massive textual data. With the rapid development of deep learning, EE based on deep learning technology has become a research hotspot. Numerous methods, datasets, and evaluation metrics have been proposed in the literature, raising the need for a comprehensive and updated survey. This article fills the research gap by reviewing the state-of-the-art approaches, especially focusing on the general domain EE based on deep learning models. We introduce a new literature classification of current general domain EE research according to the task definition. Afterward, we summarize the paradigm and models of EE approaches, and then discuss each of them in detail. As an important aspect, we summarize the benchmarks that support tests of predictions and evaluation metrics. A comprehensive comparison among different approaches is also provided in this survey. Finally, we conclude by summarizing future research directions facing the research area.},
+   author = {Qian Li and Jianxin Li and Jiawei Sheng and Shiyao Cui and Jia Wu and Yiming Hei and Hao Peng and Shu Guo and Lihong Wang and Amin Beheshti and Philip S. Yu},
+   doi = {10.1109/TNNLS.2022.3213168},
+   issn = {21622388},
+   issue = {5},
+   journal = {IEEE Transactions on Neural Networks and Learning Systems},
+   keywords = {Deep learning,evaluation metrics,event extraction (EE),research trends},
+   month = {5},
+   pages = {6301-6321},
+   pmid = {36269921},
+   publisher = {Institute of Electrical and Electronics Engineers Inc.},
+   title = {A Survey on Deep Learning Event Extraction: Approaches and Applications},
+   volume = {35},
+   year = {2024},
+}
+
+
+@article{DeepEventMine,
+   abstract = {Motivation: Recent neural approaches on event extraction from text mainly focus on flat events in general domain, while there are less attempts to detect nested and overlapping events. These existing systems are built on given entities and they depend on external syntactic tools. Results: We propose an end-to-end neural nested event extraction model named DeepEventMine that extracts multiple overlapping directed acyclic graph structures from a raw sentence. On the top of the bidirectional encoder representations from transformers model, our model detects nested entities and triggers, roles, nested events and their modifications in an end-to-end manner without any syntactic tools. Our DeepEventMine model achieves the new state-of-the-art performance on seven biomedical nested event extraction tasks. Even when gold entities are unavailable, our model can detect events from raw text with promising performance. Availability and implementation: Our codes and models to reproduce the results are available at: https://github. com/aistairc/DeepEventMine.},
+   author = {Hai Long Trieu and Thy Thy Tran and Khoa N.A. Duong and Anh Nguyen and Makoto Miwa and Sophia Ananiadou},
+   doi = {10.1093/bioinformatics/btaa540},
+   issn = {14602059},
+   issue = {19},
+   journal = {Bioinformatics},
+   month = {10},
+   pages = {4910-4917},
+   pmid = {33141147},
+   publisher = {Oxford University Press},
+   title = {DeepEventMine: End-to-end neural nested event extraction from biomedical texts},
+   volume = {36},
+   year = {2020},
+}
+
+@article{coref-survay,
+  title={A brief survey on recent advances in coreference resolution},
+  author={Liu, Ruicheng and Mao, Rui and Luu, Anh Tuan and Cambria, Erik},
+  journal={Artificial Intelligence Review},
+  volume={56},
+  number={12},
+  pages={14439--14481},
+  year={2023},
+  publisher={Springer}
+}
+
+@inproceedings{clark-manning-2015-entity,
+    title = "Entity-Centric Coreference Resolution with Model Stacking",
+    author = "Clark, Kevin  and
+      Manning, Christopher D.",
+    editor = "Zong, Chengqing  and
+      Strube, Michael",
+    booktitle = "Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = jul,
+    year = "2015",
+    address = "Beijing, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/P15-1136/",
+    doi = "10.3115/v1/P15-1136",
+    pages = "1405--1415"
+}
+
+@inproceedings{lee-etal-2018-higher,
+    title = "Higher-Order Coreference Resolution with Coarse-to-Fine Inference",
+    author = "Lee, Kenton  and
+      He, Luheng  and
+      Zettlemoyer, Luke",
+    editor = "Walker, Marilyn  and
+      Ji, Heng  and
+      Stent, Amanda",
+    booktitle = "Proceedings of the 2018 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers)",
+    month = jun,
+    year = "2018",
+    address = "New Orleans, Louisiana",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N18-2108/",
+    doi = "10.18653/v1/N18-2108",
+    pages = "687--692",
+    abstract = "We introduce a fully-differentiable approximation to higher-order inference for coreference resolution. Our approach uses the antecedent distribution from a span-ranking architecture as an attention mechanism to iteratively refine span representations. This enables the model to softly consider multiple hops in the predicted clusters. To alleviate the computational cost of this iterative process, we introduce a coarse-to-fine approach that incorporates a less accurate but more efficient bilinear factor, enabling more aggressive pruning without hurting accuracy. Compared to the existing state-of-the-art span-ranking approach, our model significantly improves accuracy on the English OntoNotes benchmark, while being far more computationally efficient."
+}
+
+@inproceedings{wiseman-etal-2016-learning,
+    title = "Learning Global Features for Coreference Resolution",
+    author = "Wiseman, Sam  and
+      Rush, Alexander M.  and
+      Shieber, Stuart M.",
+    editor = "Knight, Kevin  and
+      Nenkova, Ani  and
+      Rambow, Owen",
+    booktitle = "Proceedings of the 2016 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    month = jun,
+    year = "2016",
+    address = "San Diego, California",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N16-1114/",
+    doi = "10.18653/v1/N16-1114",
+    pages = "994--1004"
+}
+
+@inproceedings{aralikatte-etal-2019-rewarding,
+    title = "Rewarding Coreference Resolvers for Being Consistent with World Knowledge",
+    author = "Aralikatte, Rahul  and
+      Lent, Heather  and
+      Gonzalez, Ana Valeria  and
+      Hershcovich, Daniel  and
+      Qiu, Chen  and
+      Sandholm, Anders  and
+      Ringaard, Michael  and
+      S{\o}gaard, Anders",
+    editor = "Inui, Kentaro  and
+      Jiang, Jing  and
+      Ng, Vincent  and
+      Wan, Xiaojun",
+    booktitle = "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-1118/",
+    doi = "10.18653/v1/D19-1118",
+    pages = "1229--1235",
+    abstract = "Unresolved coreference is a bottleneck for relation extraction, and high-quality coreference resolvers may produce an output that makes it a lot easier to extract knowledge triples. We show how to improve coreference resolvers by forwarding their input to a relation extraction system and reward the resolvers for producing triples that are found in knowledge bases. Since relation extraction systems can rely on different forms of supervision and be biased in different ways, we obtain the best performance, improving over the state of the art, using multi-task reinforcement learning."
+}
+
+@inproceedings{emami-etal-2018-generalized,
+    title = "A Generalized Knowledge Hunting Framework for the {W}inograd Schema Challenge",
+    author = "Emami, Ali  and
+      Trischler, Adam  and
+      Suleman, Kaheer  and
+      Cheung, Jackie Chi Kit",
+    editor = "Cordeiro, Silvio Ricardo  and
+      Oraby, Shereen  and
+      Pavalanathan, Umashanthi  and
+      Rim, Kyeongmin",
+    booktitle = "Proceedings of the 2018 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Student Research Workshop",
+    month = jun,
+    year = "2018",
+    address = "New Orleans, Louisiana, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N18-4004/",
+    doi = "10.18653/v1/N18-4004",
+    pages = "25--31",
+    abstract = "We introduce an automatic system that performs well on two common-sense reasoning tasks, the Winograd Schema Challenge (WSC) and the Choice of Plausible Alternatives (COPA). Problem instances from these tasks require diverse, complex forms of inference and knowledge to solve. Our method uses a knowledge-hunting module to gather text from the web, which serves as evidence for candidate problem resolutions. Given an input problem, our system generates relevant queries to send to a search engine. It extracts and classifies knowledge from the returned results and weighs it to make a resolution. Our approach improves F1 performance on the WSC by 0.16 over the previous best and is competitive with the state-of-the-art on COPA, demonstrating its general applicability."
+}
+
+@inproceedings{joshi-etal-2019-bert,
+    title = "{BERT} for Coreference Resolution: Baselines and Analysis",
+    author = "Joshi, Mandar  and
+      Levy, Omer  and
+      Zettlemoyer, Luke  and
+      Weld, Daniel",
+    editor = "Inui, Kentaro  and
+      Jiang, Jing  and
+      Ng, Vincent  and
+      Wan, Xiaojun",
+    booktitle = "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-1588/",
+    doi = "10.18653/v1/D19-1588",
+    pages = "5803--5808",
+    abstract = "We apply BERT to coreference resolution, achieving a new state of the art on the GAP (+11.5 F1) and OntoNotes (+3.9 F1) benchmarks. A qualitative analysis of model predictions indicates that, compared to ELMo and BERT-base, BERT-large is particularly better at distinguishing between related but distinct entities (e.g., President and CEO), but that there is still room for improvement in modeling document-level context, conversations, and mention paraphrasing. We will release all code and trained models upon publication."
+}
+
+@inproceedings{wu-etal-2020-corefqa,
+    title = "{C}oref{QA}: Coreference Resolution as Query-based Span Prediction",
+    author = "Wu, Wei  and
+      Wang, Fei  and
+      Yuan, Arianna  and
+      Wu, Fei  and
+      Li, Jiwei",
+    editor = "Jurafsky, Dan  and
+      Chai, Joyce  and
+      Schluter, Natalie  and
+      Tetreault, Joel",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2020.acl-main.622/",
+    doi = "10.18653/v1/2020.acl-main.622",
+    pages = "6953--6963",
+    abstract = "In this paper, we present CorefQA, an accurate and extensible approach for the coreference resolution task. We formulate the problem as a span prediction task, like in question answering: A query is generated for each candidate mention using its surrounding context, and a span prediction module is employed to extract the text spans of the coreferences within the document using the generated query. This formulation comes with the following key advantages: (1) The span prediction strategy provides the flexibility of retrieving mentions left out at the mention proposal stage; (2) In the question answering framework, encoding the mention and its context explicitly in a query makes it possible to have a deep and thorough examination of cues embedded in the context of coreferent mentions; and (3) A plethora of existing question answering datasets can be used for data augmentation to improve the model`s generalization capability. Experiments demonstrate significant performance boost over previous models, with 83.1 (+3.5) F1 score on the CoNLL-2012 benchmark and 87.5 (+2.5) F1 score on the GAP benchmark."
+}
+
+@inproceedings{caciularu-etal-2021-cdlm-cross,
+    title = "{CDLM}: Cross-Document Language Modeling",
+    author = "Caciularu, Avi  and
+      Cohan, Arman  and
+      Beltagy, Iz  and
+      Peters, Matthew  and
+      Cattan, Arie  and
+      Dagan, Ido",
+    editor = "Moens, Marie-Francine  and
+      Huang, Xuanjing  and
+      Specia, Lucia  and
+      Yih, Scott Wen-tau",
+    booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2021",
+    month = nov,
+    year = "2021",
+    address = "Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.findings-emnlp.225/",
+    doi = "10.18653/v1/2021.findings-emnlp.225",
+    pages = "2648--2662",
+    abstract = "We introduce a new pretraining approach geared for multi-document language modeling, incorporating two key ideas into the masked language modeling self-supervised objective. First, instead of considering documents in isolation, we pretrain over sets of multiple related documents, encouraging the model to learn cross-document relationships. Second, we improve over recent long-range transformers by introducing dynamic global attention that has access to the entire input to predict masked tokens. We release CDLM (Cross-Document Language Model), a new general language model for multi-document setting that can be easily applied to downstream tasks. Our extensive analysis shows that both ideas are essential for the success of CDLM, and work in synergy to set new state-of-the-art results for several multi-text tasks."
 }

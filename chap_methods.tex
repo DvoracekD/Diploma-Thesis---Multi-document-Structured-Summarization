@@ -1,1 +1,375 @@
 \chap Methodology
+
+\sec Pipeline
+
+\secc Preprocessing
+
+Data should be preprocessed before analysis.
+Before conducting any natural language analysis, it is advisable to apply certain filters and transformations to the data that facilitate later machine processing and reduce potential biases arising from the syntax of the original language used\cite[preprocessing]. Traditional natural language preprocessing typically includes techniques such as lemmatization and stemming, which are employed and discussed in greater detail in the chapter \ref[dataset-analysis]. However, these techniques substantially alter the form of the text and could distort the outputs of the large language models.
+
+Dataset-specific preprocessing methods were applied.
+The applied preprocessing methods are tailored to the specific characteristics of the dataset. Individual newspaper articles contain foreign blocks intended to attract readers’ attention but which interrupt the text’s coherence. One such phenomenon involves image captions, which are included in the dataset in the following format:
+\begtt
+{title} | Foto: {author} | Zdroj: {source} \n\n
+\endtt
+
+Articles contain hyperlinks to related content.
+Another disruptive feature consists of embedded hyperlinks to related articles. These links follow a typical syntax:
+\begtt
+{title} \n\nČíst článek \n\n
+\endtt
+
+\medskip  \clabel[embedded-article]{Embedded article}
+\picw=12cm \cinspic figs/embeded-article.png
+\caption/f An example of such an inserted hyperlink in the article might appear as: "Zápas Česko - Slovensko jsme sledovali ONLINE \n\nČíst článek \n\n".
+\medskip
+
+Tweets are also embedded in the text.
+A further form of distraction comes from embedded tweets. Authors often include tweet panels as quotations or multimedia supplements. The structure of such tweet references is more complex:
+\begtt
+{tweet content} pic.twitter.com/{url}\n\n
+- {tweet author} (@{author’s slug}) {date} \n\n
+\endtt
+
+Disruptive blocks were removed using regular expressions.
+To maximize textual coherence, such disruptive elements were eliminated during preprocessing by detecting regular expressions matching the identified structural patterns. Additionally, redundant new-line characters, those that did not contribute semantic information, were removed.
+
+Meaningful components were merged into a single string.
+To simplify further processing, the individual article components were concatenated into a single textual string. The final string takes the following form:
+\begtt
+{date}
+{title}
+{abstract}
+{text}
+\endtt
+The original date, formatted as "YYYY-MM-DDTHH:MM:SS", is converted to the Czech date format to prevent ambiguity between days and months and to align with the language of the text. Article titles and abstracts are included as they may contain supplementary semantic information.
+
+\secc Baseline implementation 
+
+\label[data-schema]
+\sec Evaluation Dataset 
+
+It was necessary to construct an evaluation dataset. In order to evaluate the quality of the implemented solution and at the same time obtain an objective metric for iterating over the individual principal decisions of the data extraction and summarization process, it was necessary to construct an evaluation dataset. Given that the entire provided original dataset is not the subject of the final analysis, it is possible to use the unused articles to create ground truth data.
+
+The principle of the problem is structure extraction. It is a matter of extracting persons, organizations, and locations from mutually connected articles related to a single media case or topic. The individual entities further contain associated information. In the case of persons, it is the roles they occupy across the examined set of articles. In the case of organizations and locations, we try to extract their type for further potential categorization and filtering. Furthermore, it is necessary to extract the objective events that the articles describe and their temporal validity, which can be derived both from the text of the article from which the event is extracted and from all available information across the articles.
+
+A fundamental part of the resulting structure are mutual relations. Therefore, each event additionally contains a list of relevant entities (actors). At the same time, the relation between the entities, events, and individual articles is recorded. It is necessary to capture in which articles the extracted events appear and which reference them. Furthermore, it is necessary to capture a list of persons, organizations, and locations that appear in the given article.
+
+The list of entities and events is shared for the whole case. It is therefore necessary to identify duplicates across the dataset—entities and events that are referenced from multiple articles within the case. Individual entities and events are thus atomic and unique units. The mentioned relations between them and the articles are then recorded using references (usage of unique identifiers, keys). Each entity (person, organization) and event has a unique private key in the dataset. Events then consist, apart from their description, of foreign keys of relevant entities. The list of events consists of foreign keys of contained entities and also of events from which the given article is composed.
+
+Another component of the dataset is also a list of event summaries. These are clusters of events that serve for easier orientation within the case. These higher-level events contain, apart from the identifier, also, just like atomic events, a textual description and temporal validity given by a starting and ending timestamp. Descriptions of these event summaries are usually longer than those of atomic events, which tend to be shorter precisely due to their atomicity. The descriptions of event summaries must capture greater variance among the subordinated atomic events. Furthermore, these summaries contain lists of foreign keys of the events from which they are composed.
+
+The structure of the ground truth dataset for individual cases is as follows:
+
+\begitems
+* "people" (array of objects): This array serves as a comprehensive catalog of all unique individuals mentioned in the dataset.
+    \begitems
+  * "id" (integer): A unique identifier assigned to each individual.
+  * "name" (string): The full name of the individual.
+  * "roles" (array of strings): A list detailing the various roles or professions held by the individual.
+    \enditems
+    
+* "organizations" (array of objects): This array lists all distinct organizations identified in the data.
+
+    \begitems
+  * "id" (integer): A unique identifier for an organization.
+  * "name" (string): The full name of the organization.
+  * "types" (array of strings): A list specifying the categories or functions of the organization.
+    \enditems
+    
+* "locations" (array of objects): This array contains all unique geographical or political locations referenced.
+
+    \begitems
+  * "id" (integer): A unique identifier for a location.
+  * "name" (string): The name of the location.
+  * "types" (array of strings): A list describing the nature or significance of the location (e.g., city, country, region).
+    \enditems
+
+* "events" (array of objects): This array details specific occurrences or actions.
+
+    \begitems
+  * "id" (integer): A unique identifier for a specific event.
+  * "text" (string): A descriptive sentence or phrase detailing the event.
+  * "people" (array of integers): A list of IDs referencing individuals involved in this event from the people array.
+  * "organizations" (array of integers): A list of IDs referencing organizations associated with this event from the organizations array.
+  * "locations" (array of integers): A list of IDs referencing locations pertinent to this event from the locations array.
+  * "time_start" (string): The commencement time or date of the event, formatted as "yyyy", "yyyy-mm", "yyyy-mm-dd", or "NA" if unknown.
+  * "time_end" (string): The conclusion time or date of the event, formatted as "yyyy", "yyyy-mm", "yyyy-mm-dd", or "NA" if unknown.
+    \enditems
+    
+* "articles" (array of objects): This object functions as a cross-reference between source articles and the entities and events they contain.
+
+    \begitems
+  * "id" (integer, optional): An identifier for the article.
+  * "people" (array of integers): A list of IDs referencing individuals mentioned within this article.
+  * "organizations" (array of integers): A list of IDs referencing organizations mentioned within this article.
+  * "locations" (array of integers): A list of IDs referencing locations mentioned within this article.
+  * "events" (array of integers): A list of IDs referencing events discussed within this article.
+    \enditems
+* "event_summaries" (array of objects): This array provides a higher level of abstraction by grouping related events into broader summaries.
+
+    \begitems
+  * "id" (integer): A unique identifier for an event summary.
+  * "text" (string): A concise narrative summarizing a group of related events.
+  * "sub_events" (array of integers): A list of IDs referencing the specific events included in this summary from the events array.
+  * "time_start" (string): The commencement time or date of the period covered by the summary, formatted as "yyyy", "yyyy-mm", "yyyy-mm-dd", or "NA" if unknown.
+  * "time_end" (string): The conclusion time or date of the period covered by the summary, formatted as "yyyy", "yyyy-mm", "yyyy-mm-dd", or "NA" if unknown.
+    \enditems
+\enditems
+
+The dataset consists of five cases. The cases were selected to cover the widest possible range of different article types. The extracted topic hierarchy was used for this purpose. Subsections of different main sections were randomly selected. The final selection includes the following cases/topics:
+
+\begitems
+* {\bf Český lev Film Award}
+\begitems
+  * Section: Culture
+  * The set of articles focuses on contemporary Czech film production, dominated by the topic of the Český lev film awards, director and actor portraits, analysis of selected films, and reflections on social themes in film. The texts combine historical and cultural memory, film aesthetics, and critical responses.
+  * The dataset consists of five randomly selected articles out of a total of 62, from the period between 2017 and 2022.
+\enditems
+* {\bf Senate Elections 2018}
+\begitems
+  * Section: Domestic News
+  * The articles address topics related to the Senate elections of the Czech Republic held in 2018. The articles include pre-election campaign coverage, forecasts, election proceedings with real-time commentary, and post-election analyses. A minority of the texts also analyze the 2018 municipal elections, which were held alongside the first round of Senate elections.
+  * The dataset consists of five randomly selected articles out of 113, from the period between August 3, 2018, and November 11, 2018.
+\enditems
+* {\bf Olympic Games Beijing 2022}
+\begitems
+  * Section: Sports
+  * The articles analyze the preparations of the Czech Olympic Committee and individual athletes for the 2022 Winter Olympics in Beijing. They also review the athletes’ performance during the games. A substantial portion discusses anti-COVID measures and other complications tied to the global pandemic, which was still a major issue at the time.
+  * The dataset consists of five randomly selected articles out of a total of 109, from the period between July 2018 and March 2022, with most articles falling in February 2022, when the Games were held.
+\enditems
+* {\bf COVID-19}
+\begitems
+  * Section: Society
+  * The articles reflect on the multifaceted impacts of the COVID-19 pandemic on society, healthcare, education, and interpersonal relations, emphasizing both crisis moments and expressions of solidarity and adaptation. The texts also reveal deeper social issues, such as the spread of misinformation, loss of trust in the state, and public polarization.
+  * The dataset consists of five selected articles out of a total of 72, from the period between March 17, 2020, and April 17, 2022.
+\enditems
+* {\bf Trump-Kim Summit}
+\begitems
+  * Section: World News
+  * The articles map diplomatic efforts toward denuclearization of the Korean Peninsula through summits between Donald Trump and Kim Jong-un, including preparations, proceedings, and reactions. The texts reflect the tension between the effort for a peaceful resolution and repeated failures or escalations, while both the DPRK and USA used the meetings to strengthen their international image.
+  * The dataset consists of five randomly selected articles out of a total of 87, from the period between April 28, 2018, and September 24, 2019.
+\enditems
+\enditems
+
+The data was manually annotated. For easier orientation in the annotated data, entities and events were first manually detected for individual articles. To assist in subsequently linking entities across articles, it is necessary to detect which ones correspond to each other. The relevant identifiers must then be remapped. For this purpose, a helper script was created.
+
+The script is based on semantic and approximate string matching. Individual entity names are compared with the ground truth entities step by step. For name comparison, Jaro-Winkler similarity is used\cite[jaro-winkler]. Only entities whose names match sufficiently—i.e., their Jaro-Winkler similarity exceeds a given threshold—are considered corresponding. If no entity with sufficient similarity is found, the entity is added to the global entity list with a new free identifier. The mapping between local and global identifiers is recorded.
+
+Events are matched semantically. Descriptions of atomic events are converted into semantic embeddings using the SentenceTransformers library\cite[sentence-transformer], employing the embedding model "paraphrase-multilingual-MiniLM-L12-v2"\cite[multilingual-sentence-bert]. Events are considered identical when the cosine similarity of their textual representation exceeds a configurable threshold. If no corresponding event is found in the global list of events, the tested event is added with a new identifier. The mapping between identifiers is again recorded. At the same time, the foreign keys of entities associated with the event are remapped according to the previously inferred entity mapping. Finally, a relational object for articles is constructed using the identifier mapping.
+
+The described script serves as a helper tool. The resulting structure is finally checked and edited by a human annotator, who verifies that appropriate entities and events were connected and that relational links correspond to reality.
+
+
+\sec Evaluation
+Evaluation is conducted through a custom evaluation pipeline.
+An evaluation pipeline was developed to assess the quality of the proposed solution. The purpose of the evaluation process is to compare the similarity of the extracted structure to the ground truth data using evaluation metrics. Given the uncommon nature of the problem, the thesis proposes a custom evaluation process to quantify similarity. The data structures being compared are composed as described in Chapter \ref[data-schema].
+
+Entity correctness is assessed using information retrieval metrics.
+Correct inference of entities (persons, organizations, and events) is reduced to an information retrieval problem. Therefore, standard metrics such as precision and recall can be applied. All entity types include additional information — roles in the case of persons, and types for other entities. The atomic element is defined as a pair consisting of the entity name and its role. If a predicted pair is successfully matched with a ground truth name-role pair, it is considered a true positive (TP). If the pair cannot be matched with any ground truth pair, it is classified as a false positive (FP). Ground truth pairs for which no prediction exists are counted as false negatives (FN).
+
+Entity matching is performed using fuzzy string comparison.
+Fuzzy matching is employed for pair matching, as in the auxiliary deduplication script, using approximate (fuzzy) string matching to determine correspondence between pairs. A minimal change in entity names is assumed, and even word order changes are considered undesirable. Likewise, role or type names must match literally, though variation in affixes (prefixes and suffixes) is permitted. Deterministic similarity metrics based on character-level or edit distance comparison are used. The Jaro-Winkler similarity\cite[jaro-winkler] method was selected for the final approach, due to its significantly higher comparison speed compared to current semantically-based methods built on large neural models. Whether a predicted pair and a ground truth pair correspond is decided by thresholding the final similarity. The thresholds were empirically set to 0.9 for names, requiring stricter similarity, and to 0.8 for roles or types, allowing more flexibility.
+
+\midinsert \clabel[jaro-winkler-similarity]{Jaro-Winkler similarity demonstration}
+\ctable{ll|c}{
+\hfil String 1 & \hfil String 2 & Jaro-Winkler similarity \crl \tskip4pt
+Petr Pavel & Petr Pave & 0.98 \cr
+Petr Pavel & Petra Pavlová & 0.89 \cr
+herec & herečka & 0.87 \cr
+státní úřad & statistický úřad & 0.66 \cr
+}
+\caption/t The table demonstrates similarity values for various strings. For names, a threshold of 0.9 was chosen to allow minor typographical errors while minimizing incorrect assignments to different individuals. For roles and types, a more lenient threshold of 0.8 was selected. For example, the similarity between herec and herečka illustrates a case we aim to accept (misidentified gender), while still minimizing incorrect mappings between different entities as in the last example.
+\endinsert
+
+The next step evaluates entity assignment to articles.
+Each article contains a list of persons, organizations, and locations mentioned. During entity evaluation, a mapping is established between predicted entity identifiers and their ground truth counterparts. This mapping is then used to assess the accuracy of entity-to-article assignments. For each article and each entity type (person, organization, event), precision, recall, and F1-score can be computed. These precision and recall values are then averaged across entity types, yielding overall precision, recall, and F1-score for the assignment of entities to articles.
+
+Event detection is evaluated similarly to entity detection.
+The same principles applied to entity detection are used to evaluate event detection. Detected events are sequentially matched to ground truth events, recording the counts of TP, FP, and FN events. Since textual descriptions of events can vary significantly, the evaluation prioritizes semantic similarity of the compared texts. The "paraphrase-multilingual-MiniLM-L12-v2" model\cite[multilingual-sentence-bert] is used for this purpose, offering relatively fast, language-agnostic semantic embedding extraction. The resulting embeddings are then compared using cosine similarity.
+
+\midinsert \clabel[semantic-similarity]{Semantic similarity demonstration}
+\ctable{p{5cm}p{5.2cm}|c}{
+\hfil String 1 & \hfil String 2 & Similarity \crl \tskip5pt
+Jiří Drahoš získal 52,65 procenta hlasů. & Jiří Drahoše volilo 52,65 procenta voličů. & 0.97 \crl \tskip5pt
+Václav Kopta moderoval ve\-černí u\-dílení cen Čes\-kého lva.
+ & Konal se slavnostní ve\-čer udíle\-ní cen Českého lva. & 0.81 \crl \tskip5pt
+ODS pro letošní volby dala přednost právníkovi Milanovi Golasovi. &  Komunální volby se konaly minulý víkend. & 0.41 \cr
+}
+\caption/t The table presents two event descriptions and their cosine similarity score based on embeddings from the "paraphrase-multilingual-MiniLM-L12-v2" model\cite[multilingual-sentence-bert]. Shows that semantically equivalent strings yield high similarity scores, while texts with lower semantic overlap yield a significantly lower similarity value.
+\endinsert
+
+Subsequent evaluation assesses event-entity and event-article relations.
+As with articles, precision and recall are now calculated for the assignment of entities to events in which they appear. Additionally, precision and recall are computed for the assignment of events to the articles in which they are mentioned. The evaluation process thus yields precision and recall from the following stages: entity detection, event detection, entity-to-event assignment, entity-to-article assignment, and event-to-article assignment. All metrics are logged together with the experiment in MLflow. Since these problem aspects are considered equally important, the final metric for a given case is computed by averaging precision and recall across all tasks. This result is also attached to the experiment log. The final evaluation score is obtained by averaging all precision and recall values across all evaluation media cases, followed by computing the harmonic mean—i.e., the final F1 score.
+
+\sec Experiments
+\secc Implementation
+The experiments share a unified script.
+The individual runs of the experiment differ only in input parameters: the used model, model parameters, the "predict_structure" method representing the current version of the pipeline, and the current versions of prompts in the prompt repository. The experiment script consists of the following components:
+
+\begtt
+mlflow.set_tracking_uri(uri="http://localhost:8080")
+mlflow.set_experiment(MODEL)
+mlflow.litellm.autolog()
+
+data_names, data, gt = load_dataset()
+\endtt
+
+This section initializes integration with a running MLflow server, sets the experiment name based on the model name, and enables automatic logging of API call traces. Subsequently, the input data and ground truth data for each media case are loaded.
+
+\begtt
+with mlflow.start_run():
+    log_git_info()  
+    dataset_metrics = pd.DataFrame(  
+        columns=["dataset", "Precision", "Recall", "F1 Score"]  
+    )  
+\endtt
+
+The experiment run is encapsulated within the context manager "start_run()". Git metadata for the current repository state are logged using a custom function. A results table for individual media cases is then initialized.
+
+\begtt
+    for name, articles, gt_data in zip(data_names, data, gt):
+        dataset = mlflow.data.from_pandas(pd.DataFrame(articles))  
+        mlflow.log_input(dataset)  
+        mlflow.log_params(params)  
+\endtt
+
+For each case, the input dataset and input parameters are logged.
+
+\begtt
+        pred = predict_structure(articles, create_completion)
+        mlflow.log_dict(pred, name+"_prediction.json")
+\endtt
+
+A prediction is performed using the tested pipeline and the current versions of the prompts in use. The resulting predicted JSON structure is then logged.
+
+\begtt
+        perf_met, articles_met, event_met, total_met = \
+        eval_predictions(pred, gt_data)
+    
+        mlflow.log_table(perf_met, name+"_entity_metrics.json")  
+        mlflow.log_table(articles_met, name+"_articles_metrics.json")  
+        mlflow.log_table(event_met, name+"_event_metrics.json")  
+        mlflow.log_table(total_met, name+"_total_metrics.json")  
+      
+        dataset_metrics.loc[name] = [  
+            name,  
+            *list(total_metrics.loc['total'])  
+        ]  
+\endtt
+
+Next, evaluation is conducted and all evaluation components in the form of pandas DataFrames are logged as MLflow tables using the "log_table" function. The result for the current case is appended to the overall results table.
+
+\begtt
+    mlflow.log_table(dataset_metrics, "dataset_metrics.json")
+    mlflow.log_metrics({  
+        "precision": dataset_metrics["Precision"].fillna(0).mean(),  
+        "recall": dataset_metrics["Recall"].fillna(0).mean(),  
+        "f1": dataset_metrics["F1 Score"].fillna(0).mean()  
+    })  
+\endtt
+
+After processing all cases, the results table is logged, the results are aggregated, and the final metrics are sent to the server.
+
+\sec Logging
+
+All experiments are recorded.
+This is done in order to maximize experiment repeatability and ensure sustainable orientation among individual runs. For this purpose, the MLflow application\cite[mlflow] was used. MLflow (see \ref[mlflow]) is an open-source application designed for managing experiments in machine learning workflows. The tool has recently received integrations for various frameworks based on API call management for services providing access to large language model inference (such as the OpenAI SDK\cite[openai-sdk] or LiteLLM\cite[litellm]). This allows automatic tracing and logging of API requests, their inputs and outputs, and linking them to the running experiment. This significantly facilitates orientation and enhances the clarity of experiments based on language model inference. The MLflow application runs as a local web server. The data from individual runs are stored in the directory from which the application is launched.
+
+The structure of experiments was defined.
+The systematization in MLflow is as follows. The tool records experiments. Experiments consist of multiple runs, which can be compared with each other. Runs may have either a custom name or a randomly generated human-readable name. In this work, individual tested models are considered as experiments. The version of the tested pipeline is subsequently logged as a run tag. This enables comparison of results both across runs of a single model and comparison of the performance of different models under the same version of the extraction pipeline, thanks to filtering by tag.
+
+MLflow offers two interface modes for run management.
+The first is a table mode that enables an organized view of experiment runs with filtering capabilities. The second is a visualization dashboard. In this dashboard, users can create custom visualizations from selected run data. Available options include bar chart (for visualizing 1D categorical data), line chart (1D continuous data), parallel coordinates (multidimensional data visualization), scatter plot (2D planar data), contour chart (surface visualization of 3D data), difference view (differences in tabular data), and image grid for computer vision applications. For the purposes of this work, evaluation metrics of the best runs are monitored using bar charts. Additionally, the difference view is used to observe exact differences in these values.
+
+\medskip  \clabel[experiments-tabular]{MLflow table experiments view}
+\picw=14cm \cinspic figs/mlflow/experiment-tabular.png
+\caption/f Sample table interface for run management. The interface offers a variety of tools for working with experiments. It is possible to select experiments whose runs are to be compared. A table with corresponding runs appears on the right side. Individual runs can be filtered by creation time, evaluation metrics, parameters, tags, and also attributes from associated API trace calls. Furthermore, the tabular interface can be customized for quicker navigation among runs.
+\medskip
+
+\medskip  \clabel[experiments-visual]{MLflow visualization experiments view}
+\picw=14cm \cinspic figs/mlflow/experiment-visual.png
+\caption/f Sample of visualization interface for run management. This section allows users to create custom visualizations from selected data of selected runs. The layout, position, and size of the visualization panels can also be adjusted.
+\medskip
+
+\medskip  \clabel[difference-view]{MLflow difference view}
+\picw=10cm \cinspic figs/mlflow/difference-view.png
+\caption/f Example of the Difference View visualization in the visualization interface. It is possible to select one baseline run and then easily observe the improvement or deterioration of subsequent runs.
+\medskip
+
+
+Numerous values are logged within each run.
+Upon opening a run detail, the interface provides several tabs. The {\it Overview} tab displays data such as the start time and duration of the run, the input dataset, and tags that refer to the run type and also record Git metadata for the code that executed the experiments. This allows users to return to the specific version of the code for potential reproduction. It also logs the exact versions of prompts used for the inference of instruction-tuned models (see \ref[prompt-management]). In the “Model metrics” tab, the values of tracked metrics can be observed.
+
+\medskip  \clabel[run-detail]{MLflow run detail}
+\picw=10cm \cinspic figs/mlflow/run-detail.png
+\caption/f Sample Overview tab in run detail view.
+This includes a variety of logged parameters. Some are logged automatically, while others are specified directly by the user.
+\medskip
+
+\medskip  \clabel[run-traces]{MLflow traces tab}
+\picw=14cm \cinspic figs/mlflow/run-traces.png
+\caption/f Example of the traces tab, which contains a list of individual calls to the large language model API.
+The tabular overview shows the creation time and runtime. Additionally, the original form of the Request and the Response received from the server are recorded here.
+\medskip
+
+\medskip  \clabel[run-artifacts]{MLflow artifacts tab}
+\picw=14cm \cinspic figs/mlflow/run-artifacts.png
+\caption/f The Artifact tab contains various files logged during the experiment run.
+The files may be binary or tabular in nature. JSON structures can also be logged. For each media case in the evaluation dataset, partial evaluation results are logged. The final JSON structure from the prediction step is also recorded.
+\medskip
+
+\medskip  \clabel[run-completion]{MLflow LLM trace detail}
+\picw=14cm \cinspic figs/mlflow/run-completion.png
+\caption/f Example interface of an individual LLM trace detail.
+Here, the message structure can be seen in a user-friendly and readable format. If any record is formatted using Markdown, it is rendered accordingly. In the Inputs/Outputs and Attributes tabs, additional request and response properties are available. For example, if the model uses a thinking process, the output of this process can be found here. In the Events table, error messages can be located if the request fails.
+\medskip
+
+\label[prompt-management]
+\sec Prompt management
+MLflow offers a system for prompt management. Prompts are instructional texts used to guide instruction-based language models. A high-quality formulation of the desired task and expected output is one of the key factors for improving language model performance \cite[prompt-engineering]. To organize the prompts used and their versions, the prompt repository provided by MLflow was utilized in this thesis.
+
+Prompts are maintained in a single location.
+The resulting prompts are not merely static texts. They are implemented as mustache templates\cite[moustache]. The text may therefore contain variables. It defines the textual output that results from rendering the template with applied variables. Each prompt in MLflow stores, in addition to its text, various metadata in the form of key-value pairs. In addition, each prompt contains a list of versions. Versions can be created through either the user interface or from code, and, similarly to version control systems, each change can be accompanied by an optional commit message. The UI provides a convenient way to compare individual versions. MLflow also automatically captures the prompts used and links the applied version to the executed experiment runs. A prompt version then contains a reference to the run in which it was used, and the run itself includes a list of used prompts and their respective versions.
+
+The prompts can be accessed directly from the code.
+Once connected to an MLflow server, a prompt version can be accessed via 
+
+\begtt
+prompt = mlflow.load_prompt("prompts:/llama4_events/3")
+\endtt
+
+The resulting string can be rendered using 
+\begtt
+prompt.format(variable_name=variable)
+\endtt 
+
+The value of the {\tt variable} is inserted into the placeholder at the location of {\tt variable\char`_name} within the rendered prompt. The variable identifier follows the format "prompts:/{prompt_name}/{version}". The version can be a numeric version identifier or "latest" for dynamic usage of the most recently created prompt version.
+
+\medskip  \clabel[prompt-management]{MLflow prompt management}
+\picw=14cm \cinspic figs/mlflow/prompt-management.png
+\caption/f An illustration of version comparison in the detail view of a saved prompt. Two versions can be compared at the same time. One is used as the baseline (left side) and the other as the update (right side). The edit differences between the two prompt texts are highlighted in color.
+\medskip
+
+\sec Implementation
+
+\secc Infractructure
+The experiments run on a computing cluster. The {\it RCI compute cluster}\cite[rci]{} is used to provide access to opensource large language models. The cluster is an HPC (High Performance Computing) infrastructure designed for scientific purposes in the field of computationally intensive tasks such as large language models. The cluster consists of two subclusters, one based on Intel processors, the other on AMD processors. Each cluster consists of compute and management nodes. At the same time, a common data store takes care of persistence across nodes. The compute nodes of Intel clusters are divided into CPU, GPU and multi-CPU. GPU nodes have access to up to four NVIDIA Tesla V100 GPUs. In total, therefore, 48 Tesla V100 graphics cards are available. AMD subcluster nodes are divided into CPU, 4GPU, 8GPU and one node with access to a Graphcore M2000 IPU (Intelligence Processing Unit). Graphics nodes use graphics cards NVIDIA Tesla A100 with 40 GB of graphics operating memory. Thus, a total of 56 Tesla A100 GPUs available. Job scheduling is taken care of by the Slurm workload manager\cite[slurm]{}.
+
+\secc Libraries
+{\it Hugging Face} helps with the development of generative language models. Hugging Face offers a platform \cite[huggingface]{} for sharing source code, trained weights of individual deep learning models, and datasets for performance testing and comparison of trained models.
+
+{\it The Transformers library} \cite[hf-transformers]{} is part of the Hugging Face platform. It is an interface for a unified approach to inference, training and retraining pre-trained models. The library is based on Python and supports deep learning libraries such as PyTorch, TensorFlow and Flax.
+
+The {\it vLLM}\cite[vllm]{}\cite[vllm-github]{} library helps with inference. The vLLM library takes care of optimizing inference and serving inference http endpoints for large language models. It introduces Pipelined Execution with Distributed Shared Memory (PDS) memory management paradigm, which enables the concurrent processing of multiple requests by sharing memory across different inference tasks. This design minimizes redundant computation and memory overhead, enhancing throughput and reducing latency. Compatible with various model repositories like Hugging Face Transformers, vLLM supports diverse architectures.
+
+\label[mlflow]
+mlflow
+
+mustache
+
+LiteLLM
+
+\secc Tools
+
+

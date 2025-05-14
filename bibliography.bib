@@ -1,12 +1,16 @@
-@misc{summarizationIBM,
-   author = {Jacob Murel Ph.D. and Eda Kavlakoglu},
-   journal = {IBM.com},
-   month = {5},
-   title = {What is text summarization?},
-   url = {https://www.ibm.com/think/topics/text-summarization},
-   year = {2024}
+@article{RNN,
+   author = {David E. Rumelhart and Geoffrey E. Hinton and Ronald J. Williams},
+   doi = {10.1038/323533a0},
+   issn = {0028-0836},
+   issue = {6088},
+   journal = {Nature},
+   month = {10},
+   pages = {533-536},
+   title = {Learning representations by back-propagating errors},
+   volume = {323},
+   year = {1986}
 }
-@article{Ma2022,
+@article{multi-survay,
    abstract = {Multi-document summarization (MDS) is an effective tool for information aggregation that generates an informative and concise summary from a cluster of topic-related documents. Our survey, the first of its kind, systematically overviews the recent deep-learning-based MDS models. We propose a novel taxonomy to summarize the design strategies of neural networks and conduct a comprehensive summary of the state of the art. We highlight the differences between various objective functions that are rarely discussed in the existing literature. Finally, we propose several future directions pertaining to this new and exciting field.},
    author = {Congbo Ma and Wei Emma Zhang and Mingyu Guo and Hu Wang and Quan Z. Sheng},
    doi = {10.1145/3529754},
@@ -182,7 +186,7 @@ Wikipedia},
 }
 @article{clustering-benchmark,
    abstract = {Text embeddings are commonly evaluated on a small set of datasets from a single task not covering their possible applications to other tasks. It is unclear whether state-of-the-art embeddings on semantic textual similarity (STS) can be equally well applied to other tasks like clustering or reranking. This makes progress in the field difficult to track, as various models are constantly being proposed without proper evaluation. To solve this problem, we introduce the Massive Text Embedding Benchmark (MTEB). MTEB spans 8 embedding tasks covering a total of 58 datasets and 112 languages. Through the benchmarking of 33 models on MTEB, we establish the most comprehensive benchmark of text embeddings to date. We find that no particular text embedding method dominates across all tasks. This suggests that the field has yet to converge on a universal text embedding method and scale it up sufficiently to provide state-of-the-art results on all embedding tasks. MTEB comes with open-source code and a public leaderboard at https://github.com/embeddings-benchmark/mteb.},
-   author = {Niklas Muennighoff and Nouamane Tazi and Loïc Magne and Nils Reimers},
+   author = {Niklas Muennighoff and Nouamane Tazi and Lo\"{\i}c Magne and Nils Reimers},
    month = {10},
    title = {MTEB: Massive Text Embedding Benchmark},
    url = {http://arxiv.org/abs/2210.07316},
@@ -270,15 +274,18 @@ Wikipedia},
    title = {Timelines...},
    url = {https://fcheck.fel.cvut.cz/static/timelines/becva/}
 }
-@book{stanfortNLP,
-   author = {Daniel Jurafsky and James H Martin},
-   edition = {3rd},
-   title = {Speech and Language Processing An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition with Language Models Third Edition draft Summary of Contents},
-   url = {https://web.stanford.edu/~jurafsky/slp3/},
-   year = {2025}
-}
+@Book{stanfordNLP,
+  author =       "Daniel Jurafsky and James H. Martin",
+  title =        "Speech and Language Processing: An Introduction to
+                 Natural Language Processing, Computational Linguistics,
+                 and Speech Recognition with Language Models",
+  year =         "2025",
+  url = {https://web.stanford.edu/~jurafsky/slp3/},
+  note = "Online manuscript released January 12, 2025",
+  edition =         "3rd",
+  }
 @book{fundAI,
-   abstract = {Fundamentals of Artificial Intelligence introduces the foundations of present day AI and provides coverage to recent developments in AI such as Constraint Satisfaction Problems, Adversarial Search and Game Theory, Statistical Learning Theory, Automated Planning, Intelligent Agents, Information Retrieval, Natural Language \& Speech Processing, and Machine Vision. The book features a wealth of examples and illustrations, and practical approaches along with the theoretical concepts. It covers all major areas of AI in the domain of recent developments. The book is intended primarily for students who major in computer science at undergraduate and graduate level but will also be of interest as a foundation to researchers in the area of AI.},
+   abstract = {Fundamentals of Artificial Intelligence introduces the foundations of present day AI and provides coverage to recent developments in AI such as Constraint Satisfaction Problems, Adversarial Search and Game Theory, Statistical Learning Theory, Automated Planning, Intelligent Agents, Information Retrieval, Natural Language & Speech Processing, and Machine Vision. The book features a wealth of examples and illustrations, and practical approaches along with the theoretical concepts. It covers all major areas of AI in the domain of recent developments. The book is intended primarily for students who major in computer science at undergraduate and graduate level but will also be of interest as a foundation to researchers in the area of AI.},
    author = {K. R. Chowdhary},
    doi = {10.1007/978-81-322-3972-7},
    isbn = {9788132239727},
@@ -339,106 +346,46 @@ Wikipedia},
    volume = {14078 LNAI},
    year = {2023}
 }
-@techReport{,
-   abstract = {An automatic text summarization system can automatically generate a short and brief summary that contains a main concept of an original document. In this work, we explore the advantages of simple embedding features in Reinforcement leaning approach to automatic text summarization tasks. In addition, we propose a novel deep learning network for estimating Q-values used in Reinforcement learning. We evaluate our model by using ROUGE scores with DUC 2001, 2002, Wikipedia, ACL-ARC data. Evaluation results show that our model is competitive with the previous models.},
-   author = {Gyoung Ho Lee and Kong Joo Lee},
-   pages = {193-197},
-   title = {Automatic Text Summarization Using Reinforcement Learning with Embedding Features}
-}
-@inproceedings{ted,
-   author = {Ziyi Yang and Chenguang Zhu and Robert Gmyr and Michael Zeng and Xuedong Huang and Eric Darve},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/2020.findings-emnlp.168},
-   booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2020},
-   pages = {1865-1874},
-   publisher = {Association for Computational Linguistics},
-   title = {TED: A Pretrained Unsupervised Summarization Model with Theme Modeling and Denoising},
-   year = {2020}
-}
-@inproceedings{seq3,
-   author = {Christos Baziotis and Ion Androutsopoulos and Ioannis Konstas and Alexandros Potamianos},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/N19-1071},
-   booktitle = {Proceedings of the 2019 Conference of the North},
-   pages = {673-681},
-   publisher = {Association for Computational Linguistics},
-   title = {SEQˆ3: Differentiable Sequence-to-Sequence-to-Sequence Autoencoder for Unsupervised Abstractive Sentence Compression},
-   year = {2019}
-}
-@techReport{meansum,
-   abstract = {ive summarization has been studied using neural sequence transduction methods with datasets of large, paired document-summary examples. However, such datasets are rare and the models trained from them do not generalize to other domains. Recently, some progress has been made in learning sequence-to-sequence mappings with only unpaired examples. In our work, we consider the setting where there are only documents (product or business reviews) with no summaries provided, and propose an end-to-end, neu-ral model architecture to perform unsupervised abstractive summarization. Our proposed model consists of an auto-encoder where the mean of the representations of the input reviews decodes to a reasonable summary-review while not relying on any review-specific features. We consider variants of the proposed architecture and perform an ablation study to show the importance of specific components. We show through automated metrics and human evaluation that the generated summaries are highly abstractive, fluent, relevant, and representative of the average sentiment of the input reviews. Finally, we collect a reference evaluation dataset and show that our model out-performs a strong extractive baseline.},
-   author = {Eric Chu and Peter J Liu},
-   title = {MeanSum : A Neural Model for Unsupervised Multi-Document Abstractive Summarization},
-   url = {https://github.com/sosuperic/MeanSum}
-}
-@inproceedings{dohare,
-   author = {Shibhansh Dohare and Vivek Gupta and Harish Karnick},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/P18-3011},
-   booktitle = {Proceedings of ACL 2018, Student Research Workshop},
-   pages = {74-83},
-   publisher = {Association for Computational Linguistics},
-   title = {Unsupervised Semantic Abstractive Summarization},
-   url = {http://aclweb.org/anthology/P18-3011},
-   year = {2018}
-}
-@inproceedings{Bhagchandani2019,
-   author = {Gaurav Bhagchandani and Deep Bodra and Abhishek Gangan and Nikahat Mulla},
-   doi = {10.1109/ICCS45141.2019.9065724},
-   isbn = {978-1-5386-8113-8},
-   booktitle = {2019 International Conference on Intelligent Computing and Control Systems (ICCS)},
+@misc{summarizationIBM,
+   author = {Jacob Murel Ph.D. and Eda Kavlakoglu},
+   journal = {IBM.com},
    month = {5},
-   pages = {566-570},
-   publisher = {IEEE},
-   title = {A Hybrid Solution To Abstractive Multi-Document Summarization Using Supervised and Unsupervised Learning},
+   title = {What is text summarization?},
+   url = {https://www.ibm.com/think/topics/text-summarization},
+   year = {2024}
+}
+@inproceedings{pacsumm,
+   author = {Hao Zheng and Mirella Lapata},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/P19-1628},
+   booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics},
+   pages = {6236-6247},
+   publisher = {Association for Computational Linguistics},
+   title = {Sentence Centrality Revisited for Unsupervised Summarization},
    year = {2019}
 }
-@article{eduSum,
-   author = {Natalia Vanetik and Marina Litvak and Elena Churkin and Mark Last},
-   doi = {10.1016/j.ins.2019.08.079},
-   issn = {00200255},
-   journal = {Information Sciences},
-   month = {1},
-   pages = {22-35},
-   title = {An unsupervised constrained optimization approach to compressive summarization},
-   volume = {509},
-   year = {2020}
-}
-@article{bayessum,
-   abstract = {<p>Text classification categorizes web documents in large collections into predefined classes based on their contents. Unfortunately, the classification process can be time-consuming and users are still required to spend considerable amount of time scanning through the classified web documents to identify the ones with contents that satisfy their information needs. In solving this problem, we first introduce CorSum, an extractive single-document summarization approach, which is simple and effective in performing the summarization task, since it only relies on word similarity to generate high-quality summaries. We further enhance CorSum by considering the significance factor of sentences in documents, in addition to using word-correlation factors, for document summarization. We denote the enhanced approach CorSum-SF and use the summaries generated by CorSum-SF to train a Multinomial Naïve Bayes classifier for categorizing web document summaries into predefined classes. Experimental results on the DUC-2002 and 20 Newsgroups datasets show that CorSum-SF outperforms other extractive summarization methods, and classification time (accuracy, respectively) is significantly reduced (compatible, respectively) using CorSum-SF generated summaries compared with using the entire documents. More importantly, browsing summaries, instead of entire documents, which are assigned to predefined categories, facilitates the information search process on the Web.</p>},
-   author = {Maria Soleda Pera and Yiu-Kai Ng},
-   doi = {10.1142/S0218213010000285},
-   issn = {0218-2130},
-   issue = {04},
-   journal = {International Journal on Artificial Intelligence Tools},
-   month = {8},
-   pages = {465-486},
-   title = {A na\"ve bayes classifier for web document summaries created by using word similarity and significant factors},
-   volume = {19},
-   year = {2010}
-}
-@inproceedings{supervisedsum,
-   abstract = {It is difficult to identify sentence importance from a single point of view. In this paper, we propose a learning-based approach to combine various sentence features. They are categorized as surface, content, relevance and event features. Surface features are related to extrinsic aspects of a sentence. Content features measure a sentence based on content-conveying words. Event features represent sentences by events they contained. Relevance features evaluate a sentence from its relatedness with other sentences. Experiments show that the combined features improved summarization performance significantly. Although the evaluation results are encouraging, supervised learning approach requires much labeled data. Therefore we investigate co-training by combining labeled and unlabeled data. Experiments show that this semi-supervised learning approach achieves comparable performance to its supervised counterpart and saves about half of the labeling time cost.},
-   author = {Kam-Fai Wong and Mingli Wu and Wenjie Li},
-   city = {Manchester, United Kingdom},
-   doi = {10.5555/1599081.1599205},
-   isbn = {9781905593446},
-   pages = {985-992},
+@inproceedings{bert,
+   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/N19-1423},
+   booktitle = {Proceedings of the 2019 Conference of the North},
+   pages = {4171-4186},
    publisher = {Association for Computational Linguistics},
-   title = {Extractive Summarization Using Supervised and Semi-supervised Learning},
-   year = {2008}
+   title = {BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding},
+   year = {2019}
 }
-@article{fuzzySum,
-   author = {Wei Song and Lim Cheon Choi and Soon Cheol Park and Xiao Feng Ding},
-   doi = {10.1016/j.eswa.2010.12.102},
-   issn = {09574174},
-   issue = {8},
-   journal = {Expert Systems with Applications},
-   month = {8},
-   pages = {9112-9121},
-   title = {Fuzzy evolutionary optimization modeling and its applications to unsupervised categorization and extractive summarization},
-   volume = {38},
-   year = {2011}
+@article{edgeSum,
+   author = {Wafaa S. El-Kassas and Cherif R. Salama and Ahmed A. Rafea and Hoda K. Mohamed},
+   doi = {10.1016/j.ipm.2020.102264},
+   issn = {03064573},
+   issue = {6},
+   journal = {Information Processing & Management},
+   month = {11},
+   pages = {102264},
+   title = {EdgeSumm: Graph-based framework for automatic text summarization},
+   volume = {57},
+   year = {2020}
 }
 @article{summaryLSA,
    abstract = {<p>Text summarization solves the problem of presenting the information needed by a user in a compact form. There are different approaches to creating well-formed summaries. One of the newest methods is the Latent Semantic Analysis (LSA). In this paper, different LSA-based summarization algorithms are explained, two of which are proposed by the authors of this paper. The algorithms are evaluated on Turkish and English documents, and their performances are compared using their ROUGE scores. One of our algorithms produces the best scores and both algorithms perform equally well on Turkish and English document sets.</p>},
@@ -453,58 +400,155 @@ Wikipedia},
    volume = {37},
    year = {2011}
 }
-@article{edgeSum,
-   author = {Wafaa S. El-Kassas and Cherif R. Salama and Ahmed A. Rafea and Hoda K. Mohamed},
-   doi = {10.1016/j.ipm.2020.102264},
-   issn = {03064573},
-   issue = {6},
-   journal = {Information Processing \& Management},
-   month = {11},
-   pages = {102264},
-   title = {EdgeSumm: Graph-based framework for automatic text summarization},
-   volume = {57},
+@article{fuzzySum,
+   author = {Wei Song and Lim Cheon Choi and Soon Cheol Park and Xiao Feng Ding},
+   doi = {10.1016/j.eswa.2010.12.102},
+   issn = {09574174},
+   issue = {8},
+   journal = {Expert Systems with Applications},
+   month = {8},
+   pages = {9112-9121},
+   title = {Fuzzy evolutionary optimization modeling and its applications to unsupervised categorization and extractive summarization},
+   volume = {38},
+   year = {2011}
+}
+@inproceedings{supervisedsum,
+   abstract = {It is difficult to identify sentence importance from a single point of view. In this paper, we propose a learning-based approach to combine various sentence features. They are categorized as surface, content, relevance and event features. Surface features are related to extrinsic aspects of a sentence. Content features measure a sentence based on content-conveying words. Event features represent sentences by events they contained. Relevance features evaluate a sentence from its relatedness with other sentences. Experiments show that the combined features improved summarization performance significantly. Although the evaluation results are encouraging, supervised learning approach requires much labeled data. Therefore we investigate co-training by combining labeled and unlabeled data. Experiments show that this semi-supervised learning approach achieves comparable performance to its supervised counterpart and saves about half of the labeling time cost.},
+   author = {Kam-Fai Wong and Mingli Wu and Wenjie Li},
+   city = {Manchester, United Kingdom},
+   doi = {10.5555/1599081.1599205},
+   isbn = {9781905593446},
+   pages = {985-992},
+   publisher = {Association for Computational Linguistics},
+   title = {Extractive Summarization Using Supervised and Semi-supervised Learning},
+   year = {2008}
+}
+@article{bayessum,
+   abstract = {<p>Text classification categorizes web documents in large collections into predefined classes based on their contents. Unfortunately, the classification process can be time-consuming and users are still required to spend considerable amount of time scanning through the classified web documents to identify the ones with contents that satisfy their information needs. In solving this problem, we first introduce CorSum, an extractive single-document summarization approach, which is simple and effective in performing the summarization task, since it only relies on word similarity to generate high-quality summaries. We further enhance CorSum by considering the significance factor of sentences in documents, in addition to using word-correlation factors, for document summarization. We denote the enhanced approach CorSum-SF and use the summaries generated by CorSum-SF to train a Multinomial Naïve Bayes classifier for categorizing web document summaries into predefined classes. Experimental results on the DUC-2002 and 20 Newsgroups datasets show that CorSum-SF outperforms other extractive summarization methods, and classification time (accuracy, respectively) is significantly reduced (compatible, respectively) using CorSum-SF generated summaries compared with using the entire documents. More importantly, browsing summaries, instead of entire documents, which are assigned to predefined categories, facilitates the information search process on the Web.</p>},
+   author = {Maria Soleda Pera and Yiu-Kai Ng},
+   doi = {10.1142/S0218213010000285},
+   issn = {0218-2130},
+   issue = {04},
+   journal = {International Journal on Artificial Intelligence Tools},
+   month = {8},
+   pages = {465-486},
+   title = {A na\"{\i}ve bayes classifier for web document summaries created by using word similarity and significant factors},
+   volume = {19},
+   year = {2010}
+}
+@article{eduSum,
+   author = {Natalia Vanetik and Marina Litvak and Elena Churkin and Mark Last},
+   doi = {10.1016/j.ins.2019.08.079},
+   issn = {00200255},
+   journal = {Information Sciences},
+   month = {1},
+   pages = {22-35},
+   title = {An unsupervised constrained optimization approach to compressive summarization},
+   volume = {509},
    year = {2020}
 }
-@inproceedings{bert,
-   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
-   city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/N19-1423},
-   booktitle = {Proceedings of the 2019 Conference of the North},
-   pages = {4171-4186},
-   publisher = {Association for Computational Linguistics},
-   title = {BERT: Pre-training of Deep Bidirectional Transformers for
-Language Understanding},
+@inproceedings{Bhagchandani2019,
+   author = {Gaurav Bhagchandani and Deep Bodra and Abhishek Gangan and Nikahat Mulla},
+   doi = {10.1109/ICCS45141.2019.9065724},
+   isbn = {978-1-5386-8113-8},
+   booktitle = {2019 International Conference on Intelligent Computing and Control Systems (ICCS)},
+   month = {5},
+   pages = {566-570},
+   publisher = {IEEE},
+   title = {A Hybrid Solution To Abstractive Multi-Document Summarization Using Supervised and Unsupervised Learning},
    year = {2019}
 }
-@inproceedings{pacsumm,
-   author = {Hao Zheng and Mirella Lapata},
+@inproceedings{dohare,
+   author = {Shibhansh Dohare and Vivek Gupta and Harish Karnick},
    city = {Stroudsburg, PA, USA},
-   doi = {10.18653/v1/P19-1628},
-   booktitle = {Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics},
-   pages = {6236-6247},
+   doi = {10.18653/v1/P18-3011},
+   booktitle = {Proceedings of ACL 2018, Student Research Workshop},
+   pages = {74-83},
    publisher = {Association for Computational Linguistics},
-   title = {Sentence Centrality Revisited for Unsupervised Summarization},
+   title = {Unsupervised Semantic Abstractive Summarization},
+   url = {http://aclweb.org/anthology/P18-3011},
+   year = {2018}
+}
+@techReport{meansum,
+   abstract = {ive summarization has been studied using neural sequence transduction methods with datasets of large, paired document-summary examples. However, such datasets are rare and the models trained from them do not generalize to other domains. Recently, some progress has been made in learning sequence-to-sequence mappings with only unpaired examples. In our work, we consider the setting where there are only documents (product or business reviews) with no summaries provided, and propose an end-to-end, neu-ral model architecture to perform unsupervised abstractive summarization. Our proposed model consists of an auto-encoder where the mean of the representations of the input reviews decodes to a reasonable summary-review while not relying on any review-specific features. We consider variants of the proposed architecture and perform an ablation study to show the importance of specific components. We show through automated metrics and human evaluation that the generated summaries are highly abstractive, fluent, relevant, and representative of the average sentiment of the input reviews. Finally, we collect a reference evaluation dataset and show that our model out-performs a strong extractive baseline.},
+   author = {Eric Chu and Peter J Liu},
+   title = {MeanSum : A Neural Model for Unsupervised Multi-Document Abstractive Summarization},
+   url = {https://github.com/sosuperic/MeanSum}
+}
+@inproceedings{seq3,
+   author = {Christos Baziotis and Ion Androutsopoulos and Ioannis Konstas and Alexandros Potamianos},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/N19-1071},
+   booktitle = {Proceedings of the 2019 Conference of the North},
+   pages = {673-681},
+   publisher = {Association for Computational Linguistics},
+   title = {SEQˆ3: Differentiable Sequence-to-Sequence-to-Sequence Autoencoder for Unsupervised Abstractive Sentence Compression},
    year = {2019}
+}
+@inproceedings{ted,
+   author = {Ziyi Yang and Chenguang Zhu and Robert Gmyr and Michael Zeng and Xuedong Huang and Eric Darve},
+   city = {Stroudsburg, PA, USA},
+   doi = {10.18653/v1/2020.findings-emnlp.168},
+   booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2020},
+   pages = {1865-1874},
+   publisher = {Association for Computational Linguistics},
+   title = {TED: A Pretrained Unsupervised Summarization Model with Theme Modeling and Denoising},
+   year = {2020}
+}
+@inproceedings{autoRL,
+   abstract = {An automatic text summarization system can automatically generate a short and brief summary that contains a main concept of an original document. In this work, we explore the advantages of simple embedding features in Reinforcement leaning approach to automatic text summarization tasks. In addition, we propose a novel deep learning network for estimating Q-values used in Reinforcement learning. We evaluate our model by using ROUGE scores with DUC 2001, 2002, Wikipedia, ACL-ARC data. Evaluation results show that our model is competitive with the previous models.},
+   author = {Gyoung Ho Lee and Kong Joo Lee},
+   booktitle = {International Journal of Artificial Intelligence Tools},
+   pages = {193-197},
+   title = {Automatic Text Summarization Using Reinforcement Learning with Embedding Features},
+   year = {2010}
+}
+@article{DQN,
+   author = {Volodymyr Mnih and Koray Kavukcuoglu and David Silver and Andrei A. Rusu and Joel Veness and Marc G. Bellemare and Alex Graves and Martin Riedmiller and Andreas K. Fidjeland and Georg Ostrovski and Stig Petersen and Charles Beattie and Amir Sadik and Ioannis Antonoglou and Helen King and Dharshan Kumaran and Daan Wierstra and Shane Legg and Demis Hassabis},
+   doi = {10.1038/nature14236},
+   issn = {0028-0836},
+   issue = {7540},
+   journal = {Nature},
+   month = {2},
+   pages = {529-533},
+   title = {Human-level control through deep reinforcement learning},
+   volume = {518},
+   year = {2015}
+}
+@inproceedings{SAAR,
+   author = {Chandra Prakash and Anupam Shukla},
+   doi = {10.1109/ISCMI.2014.22},
+   isbn = {978-1-4673-6751-6},
+   booktitle = {2014 International Conference on Soft Computing and Machine Intelligence},
+   month = {9},
+   pages = {83-87},
+   publisher = {IEEE},
+   title = {Human Aided Text Summarizer "SAAR" Using Reinforcement Learning},
+   year = {2014}
+}
+@inproceedings{hybrid1,
+   author = {Gaurav Bhagchandani and Deep Bodra and Abhishek Gangan and Nikahat Mulla},
+   doi = {10.1109/ICCS45141.2019.9065724},
+   isbn = {978-1-5386-8113-8},
+   booktitle = {2019 International Conference on Intelligent Computing and Control Systems (ICCS)},
+   month = {5},
+   pages = {566-570},
+   publisher = {IEEE},
+   title = {A Hybrid Solution To Abstractive Multi-Document Summarization Using Supervised and Unsupervised Learning},
+   year = {2019}
+}
+@techReport{hybrid2,
+   abstract = {It is difficult to identify sentence importance from a single point of view. In this paper, we propose a learning-based approach to combine various sentence features. They are categorized as surface, content, relevance and event features. Surface features are related to extrinsic aspects of a sentence. Content features measure a sentence based on content-conveying words. Event features represent sentences by events they contained. Relevance features evaluate a sentence from its relatedness with other sentences. Experiments show that the combined features improved summarization performance significantly. Although the evaluation results are encouraging, supervised learning approach requires much labeled data. Therefore we investigate co-training by combining labeled and unlabeled data. Experiments show that this semi-supervised learning approach achieves comparable performance to its supervised counterpart and saves about half of the labeling time cost.},
+   author = {Kam-Fai Wong and Mingli Wu and Wenjie Li},
+   pages = {985-992},
+   publisher = {Manchester},
+   title = {Extractive Summarization Using Supervised and Semi-supervised Learning},
+   year = {2008}
 }
 
-@inproceedings{MDS-hetero-GNN,
-    title = "Heterogeneous Graph Neural Networks for Extractive Document Summarization",
-    author = "Wang, Danqing  and
-      Liu, Pengfei  and
-      Zheng, Yining  and
-      Qiu, Xipeng  and
-      Huang, Xuanjing",
-    editor = "Jurafsky, Dan  and
-      Chai, Joyce  and
-      Schluter, Natalie  and
-      Tetreault, Joel",
-    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2020",
-    address = "Online",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2020.acl-main.553/",
-    doi = "10.18653/v1/2020.acl-main.553",
-    pages = "6209--6219",
-    abstract = "As a crucial step in extractive document summarization, learning cross-sentence relations has been explored by a plethora of approaches. An intuitive way is to put them in the graph-based neural network, which has a more complex structure for capturing inter-sentence relationships. In this paper, we present a heterogeneous graph-based neural network for extractive summarization (HETERSUMGRAPH), which contains semantic nodes of different granularity levels apart from sentences. These additional nodes act as the intermediary between sentences and enrich the cross-sentence relations. Besides, our graph structure is flexible in natural extension from a single-document setting to multi-document via introducing document nodes. To our knowledge, we are the first one to introduce different types of nodes into graph-based neural networks for extractive document summarization and perform a comprehensive qualitative analysis to investigate their benefits. The code will be released on Github."
+@techReport{,
+   author = {Gang Li and Ashish Ghosh and Zhiwei Xu},
+   isbn = {978-3-031-76273-4},
+   title = {Communications in Computer and Information Science 2242 Series Editors},
+   url = {http://link.springer.com}
 }
