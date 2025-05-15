@@ -144,7 +144,7 @@ $$
 
 Recall:
 $$
-R_n = {{\sum_{gram_n \in S \cap R} \text{Count}_{S}(gram_n)}\over{\sum_{gram_n \in R} \text{Count}_{R}(gram_n)}}
+R_n = {{\sum_{gram_n \in S \cap R} \hbox{Count}_{S}(gram_n)}\over{\sum_{gram_n \in R} \hbox{Count}_{R}(gram_n)}}
 $$
 
 F1 Score:
@@ -158,12 +158,12 @@ Uses the length of the Longest Common Subsequence (LCS) between the candidate an
 
 Precision:
 $$
-P_L = {{LCS(S, R)}\over{\text{length}(S)}}
+P_L = {{LCS(S, R)}\over{\hbox{length}(S)}}
 $$
 
 Recall:
 $$
-R_L = {{LCS(S, R)}\over{\text{length}(R)}}
+R_L = {{LCS(S, R)}\over{\hbox{length}(R)}}
 $$
 
 F1 Score:
@@ -177,7 +177,7 @@ Typically, $\beta = 1$.
 BLEU focuses on precision. It measures the extent to which $n$-grams in the generated summary match those in the reference summary. A brevity penalty accounts for differences in length between the generated and reference summaries.
 
 $$
-\text{BLEU} = BP \cdot \exp \left( \sum_{n=1}^{N} w_n \log p_n \right) 
+\hbox{BLEU} = BP \cdot \exp \left( \sum_{n=1}^{N} w_n \log p_n \right) 
 $$
 
 Where:
@@ -187,9 +187,8 @@ Where:
     * $BP$ is the brevity penalty:
     $$
     BP = \cases{
-        1                         & \text{if} c $>$ r, \cr
-        e^{1 - {{r}\over{c}}}     & \text{if} c \leq r \cr
-        }
+        1                         & if $c > r$, \cr
+        e^{1 - {r \over c}}       & if $c \leq r$.}
     $$ 
     where $c$ is the length of the candidate summary and $r$ is the length of the reference.
 \enditems
@@ -202,12 +201,12 @@ Let $x_i$ be token embeddings from the candidate summary $S$ and $y_j$ from the 
 
 Precision:
 $$
-P = {1\over|S|} \sum_{x_i \in S} \max_{y_j \in R} \text{cosine}(x_i, y_j)
+P = {1\over|S|} \sum_{x_i \in S} \max_{y_j \in R} \hbox{cosine}(x_i, y_j)
 $$
 
 Recall:
 $$
-R = {1\over|R|} \sum_{y_j \in R} \max_{x_i \in S} \text{cosine}(x_i, y_j)
+R = {1\over|R|} \sum_{y_j \in R} \max_{x_i \in S} \hbox{cosine}(x_i, y_j)
 $$
 
 F1 Score:
