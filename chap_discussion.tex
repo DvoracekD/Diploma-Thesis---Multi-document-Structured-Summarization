@@ -1,5 +1,34 @@
 \chap Discussion
 
+This chapter provides a critical analysis of experimental results obtained in the preceding sections. The aim is to interpret model performance, assess the impact of pipeline improvements, and evaluate alternative inference strategies. Each section addresses a key aspect of system development and presents findings in the context of statistical rigor and practical relevance.
+
+The first section, summarizes the comparative evaluation of all tested models and pipeline versions. It highlights main performance trends, focusing on the strengths and weaknesses of commercial versus open-source models, as visualized in comprehensive heatmaps.
+
+The second section, investigates whether iterative prompt and pipeline refinements yield measurable benefits. This section describes the methodology for comparing baseline and improved solutions, presents summary statistics, and applies formal statistical tests to determine the significance of observed changes.
+
+The third section, examines the effect of processing articles individually rather than in batches. It compares the single-article and multi-article strategies using the same rigorous statistical framework, presenting both quantitative results and their visual interpretation.
+
+\sec Model Performance
+
+Model performance is compared across all pipeline versions using results from the previous chapter. The main trends are visible in the heatmap (Figure \ref[models-heatmap]), which displays Precision, Recall, and F1 scores for each model and pipeline version, with color intensity indicating performance from light (low) to dark blue (high).
+
+\medskip  \clabel[models-heatmap]{Heatmap of model performances}
+\picw=14cm \cinspic figs/discussion/model-performance-heatmaps.png
+\caption/f Heatmap of model performances across pipeline versions for Precision, Recall, and F1. Each cell displays the score achieved by a given model (row) for a specific pipeline version (column), with color intensity ranging from light blue (lower performance) to dark blue (higher performance). The three panels represent the different evaluation metrics. Darker blue cells correspond to stronger performance. The heatmap highlights that commercial models (e.g., Gemini 2.5 Flash, GPT 4.1) consistently achieve the highest scores across all metrics and pipeline versions, while open-source models tend to perform lower, especially in more complex extraction phases. Comparing columns shows the effect of pipeline improvements for each model; reading across rows allows quick assessment of relative model strength.
+\medskip
+
+
+Performance differences are primarily driven by model choice. Commercial models, especially Gemini 2.5 Flash and GPT 4.1, consistently outperform open-source models such as Llama 4 Scout and Qwen3 across all evaluation metrics. This is clearly visible in the heatmap, where the darkest blue cells cluster around commercial models in each metric panel, while open-source models remain in lighter blue regions, indicating weaker performance.
+
+Pipeline improvements generally increase performance. Most models show a trend of increasing precision and recall with each new pipeline version, resulting in higher F1 scores. The effect of prompt engineering and more structured extraction is most apparent for open-source models, where F1 scores improve between versions, confirming the positive impact of iterative pipeline refinement.
+
+However, Gemini 2.5 Flash demonstrates a different behavior. For Gemini, recall improves slightly with each pipeline update, but this is offset by a corresponding decrease in precision. As a result, the F1 score remains nearly constant across all pipeline versions, as shown by the stable, dark blue F1 cells for Gemini in Figure \ref[models-heatmap].
+
+Reducing batch size has minimal effect on the performance hierarchy. When the pipeline processes single articles rather than batches, the relative ranking of models does not change, and commercial models remain dominant.
+
+In summary, commercial models are consistently superior across all pipeline versions, and most models benefit from pipeline optimization. Gemini 2.5 Flash is an exception, with F1 score stagnating despite small shifts in recall and precision. The heatmap in Figure \ref[models-heatmap] offers a clear, visual summary of these trends, allowing quick assessment of both absolute performance and the effects of pipeline improvements for each model.
+
+
 \sec Assessment of baseline improvement
 
 We want to verify whether there has been an improvement in the extraction pipeline. In this stage, we compare the baseline implementation and prompts with the improved version obtained by iterating on the prompt design. The iterations were guided solely by the results of a single model (Llama 4) on the validation dataset. However, for the verification, we use a test dataset and a larger number of models. We designate the baseline solution as v1. We designate the improved solution as v2. Both versions were evaluated using four models across several datasets (media cases), measuring precision, recall, and F1-score for each (model, dataset) pair. The goal is to determine if the new version offers statistically significant improvements.
@@ -39,9 +68,9 @@ F1-score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
 \midinsert \clabel[statistics-v1-v2]{Statistical test results for metric differences}
 \ctable{l|cccc}{
 Metric & $\mu_{2-1}$ & $\sigma_{2-1}$ & t-test p-value & Wilcoxon p-value \crl \tskip4pt
-Precision & 0.004 & 0.082 & 0.84  & 0.70 \cr
-Recall    & 0.014 & 0.042 & 0.14  & 0.18 \cr
-F1-score  & 0.026 & 0.067 & 0.098 & 0.29 \cr
+Precision & 0.004 & 0.082 & 0.840 & 0.700 \cr
+Recall    & 0.014 & 0.042 & 0.140 & 0.180 \cr
+F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
 }
 \caption/t This table shows the results of both statistical tests for every metric. The Mean Diff ($\mu_{2-1}$) and Std Diff ($\sigma_{2-1}$) reflect the average and standard deviation of observed improvement. The p-values (t-test and Wilcoxon) indicate whether observed changes are statistically significant. To interpret, look for p-values below 0.05, which indicate strong evidence against the null hypothesis.
 \endinsert
@@ -116,9 +145,10 @@ Performance differences are minimal between system versions two and three.
 Descriptive statistics show only a negligible increase in mean F1-score from 0.459 to 0.465, with the mean difference (0.006) far smaller than the standard deviation (0.053). Mean precision actually declined slightly, while mean recall improved by a similarly small margin.
 
 Statistical tests support the absence of significant change.
-The paired t-test p-values for all metrics are substantially greater than 0.05 (precision: 0.36; recall: 0.73; F1: 0.67), as are the Wilcoxon signed-rank test p-values. This statistical evidence indicates that the observed differences could easily be due to random variation rather than any systematic effect of the new system version.
+The paired t-test p-values for all metrics are substantially greater than 0.05 (precision:~0.36; recall:~0.73; F1:~0.67), as are the Wilcoxon signed-rank test p-values. This statistical evidence indicates that the observed differences could easily be due to random variation rather than any systematic effect of the new system version.
 
 Figure analysis confirms the statistical result.
 In the grouped bar plots (\ref[v2-v3-bar-plot]), the bars representing system versions two and three are generally similar in height for all model-dataset pairs. In the difference bar plot (\ref[v2-v3-diff-bar-plot]), most bars cluster close to zero, with a nearly even balance of positive and negative values, further indicating the lack of consistent improvement or decline. The scatter plot (\ref[v2-v3-data-points]) shows that most points lie close to the diagonal, reinforcing that performance between the two versions is nearly equivalent for every tested combination.
 
 Overall, the empirical evidence from all metrics, tests, and visualizations demonstrates that system version three does not yield any substantial or statistically significant improvement over version two. The approach of extracting data article by article is not more efficient than batch inference.
+

@@ -1,7 +1,154 @@
 \chap Results
 
+This chapter presents the evaluation results of the proposed information extraction pipeline. The chapter is structured into several key sections, each addressing a distinct aspect of the experimental assessment.
+
+The first section, Baseline evaluation, establishes reference performance levels by applying the initial version of the extraction pipeline to the test dataset using several state-of-the-art language models. Next, the Pipeline optimization section details iterative improvements to the pipeline, focusing on prompt engineering and targeted adjustments, with performance tracked across iterations. The third section, Optimized pipeline, summarizes the evaluation of the final, enhanced extraction pipeline using selected models, facilitating a direct comparison with baseline results. In the Minimal batch evaluation section, the impact of reducing the batch size to one—forcing per-article inference—is investigated to assess its effect on model performance and output consistency. Finally, the Temperature influence section systematically analyzes the effect of the inference temperature parameter on key evaluation metrics, utilizing both visual and statistical methods.
+
+\sec Baseline evaluation
+
+The baseline quality was assessed. The baseline implementation of the extraction pipeline, together with the baseline instructional prompts, was evaluated using the evaluation process described earlier.
+
+The only controlled inference parameter for most models was temperature. The parameter was set to 0 to maximize the determinism of the experiments and to support structured output generation in JSON format. Based on the experiment (see \ref[temperature-influence]), it was also found that a value of 0 provides the best performance in terms of the overall recall of the process and yields comparable results in terms of precision and F1 score. Only for the Qwen3 model were the parameters recommended by the model authors used, namely "temperature": 0.6, "top_p": 0.95, and "top_k": 20. The model with zero temperature exhibited a marked tendency to endlessly repeat certain passages of the generated structure.
+
+Experiments were conducted on the models Qwen3, GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1, and Llama 4 Scout. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
+
+\medskip  \clabel[v1-barplot]{Baseline metrics}
+\picw=10cm \cinspic figs/results/pipeline-v1-precision-recall-bar.pdf
+\caption/f The bar plot offers a visualization of aggregated overall metrics across all test cases. For each model, the values of overall precision (blue), recall (red), and F1 score (green) are available.
+\medskip
+
+\medskip  \clabel[v1-metric]{Baseline model comparison by metric}
+\picw=12cm \cinspic figs/results/pipeline-v1-coord-per-metric.pdf
+\caption/f In the parallel coordinates graph, it is possible to observe changes in the ranking of individual models depending on the observed metric. The horizontal axis represents the model used and then the individual metrics (overall precision, overall recall, and overall F1 score). The vertical axis then describes the values of these parameters. For maximum information value within limited space, the individual axes do not have the same range and scale, even though all three metrics share the same range of 0 to 1. The colored lines in the graph represent individual experiments. The lines connect the vertical axes at the metric values measured in the corresponding experiment. The color of the line corresponds to the value of the F1 score in the given experiment.
+\medskip
+
+\medskip  \clabel[v1-stage]{Baseline model comparison by evaluation aspect}
+\picw=12cm \cinspic figs/results/pipeline-v1-coord-per-stage.pdf
+\caption/f The parallel coordinates diagram shows changes in the ranking of models depending on the F1 score value for individual aspects of the evaluation. These include the model's ability to detect entities in text (Entity Detection), the correct assignment of detected entities to the articles in which they appear (Entity-article Assignment), and the ability to detect entities (Entity Detection) and correctly assign these to events in the articles where they are mentioned. The color of the experiments is the overall value of the F1 score measured in the experiment.
+\medskip
+
+\medskip  \clabel[v1-dataset]{Baseline model comparison by dataset}
+\picw=12cm \cinspic figs/results/pipeline-v1-coord-per-dataset.pdf
+\caption/f The parallel coordinates diagram for F1 score values in individual media cases that make up the test dataset. The color of the experiment corresponds to the overall measured value of the F1 score.
+\medskip
 
 
+In \ref[v1-barplot], the dominance of the Gemini 2.5 model can be observed across all monitored metrics. For easier comparison of the individual models, we can use parallel coordinates graphs, which can help us better visualize the ranking of models based on different aspects. In \ref[v1-metric], the dominance of Gemini is observed across all global metrics. It is followed by Gemini 2.5 Pro and GPT 4.1. The results between DeepSeek R1 and Llama 4 Scout are then less conclusive. DeepSeek stands out more in precision, while Llama stands out more in recall. The ranking of the models is concluded by Qwen3.
+
+Similar trends can be observed in the graphs \ref[v1-stage] and \ref[v1-dataset]. In the diagram \ref[v1-stage], the movement of the F1 score for individual models and individual evaluation phases can be tracked. In the diagram \ref[v1-dataset], on the other hand, the F1 scores of the models can be tracked across the individual datasets. It can be observed that in both graphs, the Gemini models show very similar results. They are followed by the GPT 4.1 model, which surpasses the Gemini Pro version only on the {\it Senátní Volby 2018} dataset. The remaining open-source models perform quite similarly both across evaluation aspects and datasets. On all parallel coordinates diagrams, it is possible to observe a separation of the group of commercial models from the group of open-source models, with the commercial models being superior.
+
+\sec Pipeline optimization
+
+The baseline pipeline was improved. For iterations over the solution, the evaluation pipeline was applied to the validation dataset. Only one model, namely Llama 4 Scout, was used for the iterations. The improvement workflow was as follows:
+
+\begitems \style N
+* Evaluation of the pipeline on the validation dataset.
+* The weakness of the current version of the extraction pipeline was identified, either by inspecting the extracted structure or by comparing individual metrics. 
+* Modification of individual instruction prompts (addressing the identified weakness).
+* Repeat the process until a significant improvement is achieved.
+\enditems
+
+In the initial iterations, it was found that the model had, compared to precision, a very weak performance in terms of recall on entities and events. This means that it detected only a small proportion of the required entities or events. This finding was confirmed by examining the predicted structure. The model, it appears, tends to abstract the results and extract only those results that are globally more important. For example, in the case of the prompt for extracting persons, the following note was added:
+
+\begtt
+IMPORTANT:
+- Extract ALL people mentioned in the text, regardless 
+  of their importance or how briefly they are mentioned.
+- Do not skip any person mentioned in the articles, even if 
+  they seem minor or are only mentioned once.
+- Every individual mentioned by name must be included in the output.
+\endtt
+
+Further, examples were added. Given the proven effectiveness of using few-shot prompting\cite[prompt-engineering], fully developed examples were added to the original prompts, containing both the complete form of the input structures and texts as well as the exact form of the expected output. Some baseline prompts had already used examples, but these were more fragments of edge-case examples rather than a complete definition of input and output.
+
+\medskip  \clabel[v1-iter]{Progression of baseline optimization}
+\picw=14cm \cinspic figs/results/v1-iter-all.pdf
+\caption/f Changes in individual metrics. In all charts, the horizontal axis shows the order of improvement iterations, and the vertical axis shows the value of the metric. The bottom row presents the metrics calculated on individual datasets (media cases). In the lower left corner, the overall aggregated values of the tracked metrics are located. In the rest of the bottom row, the metrics calculated for individual evaluation phases are presented.
+\medskip
+
+
+We observe Figure \ref[v1-iter]. In the chart of overall values in the lower left corner, it is possible to see improvement in precision and F1 score, while recall remains more or less constant. Improvement in precision can be observed in all charts except for event detection. Recall increased only for Event Detection, the {\it Volby 2018} dataset, and the {\it Peking 2022} dataset, and in both cases only slightly. Due to the significant contribution of precision, the F1 score also increases in most charts.
+
+In the final system, unfortunately, there was no improvement in average recall, but it was possible to significantly improve the overall precision on the validation dataset (from 0.55 to 0.68), while recall remained nearly constant. Thus, it was also possible to improve the overall F1 score.
+
+\sec Optimized pipeline
+
+The optimized pipeline was evaluated. Only models Qwen3, Llama 4 Scout, GPT 4.1, and Gemini 2.5 Flash were included. The evaluation procedure remained as previously described to maintain comparability. Deterministic inference (temperature set to 0) was used except where otherwise recommended. Gemini 2.5 Pro was not used for financial reasons. DeepSeek R1 was not used due to the insufficient context window of the version used. The generated responses in this version of the extraction pipeline are on average longer than the baseline due to more detailed analysis enforced by updated prompts.
+
+\medskip \clabel[v2-barplot]{Enhanced pipeline metrics}
+\picw=10cm \cinspic figs/results/pipeline-v2-precision-recall-bar.pdf
+\caption/f The bar plot summarizes overall precision, recall, and F1 score across all models and test cases. Gemini 2.5 Flash shows leading performance in all metrics.
+
+\medskip
+
+The Gemini 2.5 Flash model reached the highest overall precision (0.68), recall (0.59), and F1 score (0.56). GPT 4.1 followed with 0.54 precision, 0.44 recall, and 0.38 F1. The open-source models, Llama 4 Scout and Qwen3, showed lower scores, with Qwen3 at the bottom for all metrics.
+
+Parallel coordinates visualization enables detailed comparison by metric. In \ref[v2-metric], Gemini 2.5 Flash clearly dominates precision, recall, and F1. The largest margin is observed in precision, where Gemini reaches 0.68, compared to GPT 4.1's 0.54. Model ranking remains consistent across all metrics.
+
+\medskip \clabel[v2-metric]{Enhanced pipeline comparison by metric}
+\picw=12cm \cinspic figs/results/pipeline-v2-coord-per-metric.pdf
+\caption/f Parallel coordinates graph for model performance by metric. Each colored line represents an experiment, colored by F1 score.
+
+\medskip
+
+Stage-wise evaluation examines F1 scores for four key extraction phases: Entity Detection, Entity-Article Assignment, Event Detection, and Event-Article Assignment. Gemini 2.5 Flash outperforms others at all stages. For example, event-article assignment reaches an F1 of 0.77. Open-source models, particularly Qwen3, are notably weaker in complex assignment phases, where F1 often falls below 0.30.
+
+\medskip \clabel[v2-stage]{Enhanced pipeline comparison by evaluation aspect}
+\picw=12cm \cinspic figs/results/pipeline-v2-coord-per-stage.pdf
+\caption/f Parallel coordinates for F1 scores by evaluation stage. Gemini consistently achieves the highest values.
+
+\medskip
+
+Dataset-level analysis reveals that Gemini 2.5 Flash leads in F1 score for every dataset. Its results range from 0.51 ({\it Český lev}) to 0.72 ({\it Volby 2018}). Llama 4 Scout and Qwen3 score considerably lower, with gaps exceeding 0.15 F1 on all datasets. The largest differences appear for {\it Summit Kim-Trump} and {\it Volby 2018}.
+
+\medskip \clabel[v2-dataset]{Enhanced pipeline comparison by dataset}
+\picw=12cm \cinspic figs/results/pipeline-v2-coord-per-dataset.pdf
+\caption/f Parallel coordinates plot for F1 scores by dataset. Performance advantage of commercial models is most evident for challenging cases.
+
+\medskip
+
+These results confirm previous findings. The performance gap persists across aggregate metrics, evaluation stages, and all datasets considered.
+
+\sec Minimal batch evaluation
+
+The pipeline from the previous chapter was re-evaluated with a key modification: batch size was reduced to one, so each model processed only a single article at a time. This experiment was designed to test the impact of sequential, article-by-article extraction, while keeping all other settings consistent with the previous evaluation. Only models Qwen3, Llama 4 Scout, and Gemini 2.5 Flash were included in this experiment. This extraction pipeline version consists of many inference requests. Therefore, GPT 4.1 was excluded from the experiment for financial reasons.
+
+\medskip \clabel[v3-barplot]{Batch size 1 pipeline metrics}
+\picw=8cm \cinspic figs/results/pipeline-v3-precision-recall-bar.pdf
+\caption/f The bar plot summarizes overall precision, recall, and F1 score for all included models when processing single articles.
+
+\medskip
+
+The results confirm the leading position of Gemini 2.5 Flash, which achieved the highest overall scores in all metrics. Precision was 0.67, recall 0.60, and F1 score 0.56. Llama 4 Scout reached 0.53 precision, 0.44 recall, and 0.40 F1. Qwen3 trailed behind, showing the lowest values in every metric.
+
+A parallel coordinates plot was used to compare model performance by metric. In \ref[v3-metric], Gemini 2.5 Flash maintained its clear advantage across all measured metrics. The margin over Llama 4 Scout and Qwen3 remained stable compared to the previous evaluation, particularly in precision and recall.
+
+\medskip \clabel[v3-metric]{Batch size 1 pipeline comparison by metric}
+\picw=12cm \cinspic figs/results/pipeline-v3-coord-per-metric.pdf
+\caption/f Parallel coordinates plot for model performance by metric when using batch size 1. The Gemini model consistently leads in all metrics.
+
+\medskip
+
+Stage-wise analysis of F1 scores for entity detection, entity-article assignment, event detection, and event-article assignment reveals a consistent trend. Gemini 2.5 Flash outperforms the open-source models at each stage. For event-article assignment, Gemini 2.5 Flash reached an F1 score of 0.78, with Llama 4 Scout following at 0.57 and Qwen3 at 0.52. Open-source models are particularly weaker in entity-article assignment and entity detection, where their F1 scores are frequently below 0.30.
+
+\medskip \clabel[v3-stage]{Batch size 1 pipeline comparison by evaluation aspect}
+\picw=12cm \cinspic figs/results/pipeline-v3-coord-per-stage.pdf
+\caption/f Parallel coordinates plot for F1 scores by evaluation stage. Gemini 2.5 Flash achieves the highest F1 at all stages.
+
+\medskip
+
+Dataset-level analysis again shows Gemini 2.5 Flash ahead in F1 score on every dataset, with results ranging from 0.53 on {\it Český lev} and 0.56 on {\it Covid} to 0.72 on {\it Volby 2018}. The advantage of Gemini 2.5 Flash is most pronounced on {\it Summit Kim-Trump} and {\it Volby 2018} datasets. Llama 4 Scout and Qwen3 continue to show lower performance across the board, with F1 gaps lower then 0.15.
+
+\medskip \clabel[v3-dataset]{Batch size 1 pipeline comparison by dataset}
+\picw=12cm \cinspic figs/results/pipeline-v3-coord-per-dataset.pdf
+\caption/f Parallel coordinates plot for F1 scores by dataset. Gemini 2.5 Flash again demonstrates clear superiority.
+
+\medskip
+
+These results demonstrate that reducing batch size to one does not fundamentally change the ranking or performance gap between models. Gemini 2.5 Flash remains the best-performing model under this more granular, single-article regime, and open-source models continue to lag behind across all metrics, stages, and datasets.
+
+
+\label[temperature-influence]
 \sec Temperature influence
 
 Model performance can be sensitive to the temperature parameter, which governs the stochasticity of the sampling process during inference. The influence of temperature on key evaluation metrics—precision, recall, and F1 score—was thoroughly investigated to inform optimal model configuration. The analysis combines both a visual and a statistical approach, ensuring a robust understanding of how temperature shapes the behavior of these metrics. The improved pipeline version v2 was used for testing. The evaluation was performed using the Llama 4 Scout model, with six discrete values of the temperature parameter, which were evenly distributed within the interval between 0 and 1. For each temperature value, ten evaluation runs were carried out. The relationship between temperature and each metric was explored using a comprehensive plot that integrates both distributional and trend-based information.
