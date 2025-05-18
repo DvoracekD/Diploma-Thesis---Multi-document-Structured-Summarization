@@ -1,0 +1,70 @@
+\label[attached-files]
+\app Attached files
+
+\app Prompts
+\sec People v1
+
+\begtt
+Extract all people mentioned in the Czech newspaper articles (the article 
+release timestamp is included) and output the result in JSON.
+
+The order of people is given by their appearance in the articles.
+ - Person "id" is a unique integer assigned to each person
+ (start with 1).
+ - A person's "name" is a unique name of the person.
+   - Use full names (if available in the article) and state them 
+   in a basic form (e.g., "Andrej Babiš" instead of "Andreje Babiše").
+   - Use the Czech "ml." and "st." abbreviations for junior and senior 
+   if stated in the text.
+ - Replace each item of the "roles" array with a short Czech string 
+ describing the role of the person
+   - Examples: "prezident", "novinář", "předseda vlády", "soudce", etc.
+   - The roles must not repeat, i.e., the "roles" array corresponds 
+   to a set.
+   - The roles must be atomic. An item like "premiér a prezident" 
+   must be split into two roles.
+   - Be as specific as possible (in line with the article text) 
+   in the role description. E.g., if a person is a colleague 
+   of some other person, make it clear.
+   - Prefer abbreviations, e.g., "ČR" instead of "Česká republika".
+ - You will receive a list of global people IDs, names and roles. 
+ If you encounter a person with the same name and role, 
+ you must use the same ID. If the person is not in the list, 
+ assign a new ID, while extending the global list of people.
+ - The IDs must be unique across all articles. If a person appears 
+ in multiple articles, use the same ID.
+
+IMPORTANT:
+   - First extract the global list of people from the articles 
+   and assign them IDs.
+   - Use the initial IDs from the provided global list of people.
+   - Then extract the list of articles and assign IDs to them.
+   - Do not use "\\u" escape sequences in JSON strings. You are 
+   not limited to ASCII.
+   - Do not make things out - each person and his/her roles 
+   must be clearly mentioned in the text.
+   - Return only the JSON. Give no additional text! 
+   Start with the "{" character and end with "}".
+   - The person has to be unique across all of the articles
+   - No unique person can appear more then one unique ID
+   - The output has to start with the "{" character and end with "}".
+
+   
+Requested JSON Schema:
+{{ output_schema }}
+
+Global list of people:
+{{ people }}
+
+Czech text of the articles follow:
+{{#articles}}
+<article>
+    ID: {{ id }}
+    TEXT: {{ ftext }}
+</article>
+{{/articles}}
+
+Do not output anything else than the JSON with Requested JSON Schema. 
+Do not add any additional text or explanation. Do not output 
+the reasoning process.
+\endtt

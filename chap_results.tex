@@ -1,1 +1,33 @@
 \chap Results
+
+
+
+\sec Temperature influence
+
+Model performance can be sensitive to the temperature parameter, which governs the stochasticity of the sampling process during inference. The influence of temperature on key evaluation metrics—precision, recall, and F1 score—was thoroughly investigated to inform optimal model configuration. The analysis combines both a visual and a statistical approach, ensuring a robust understanding of how temperature shapes the behavior of these metrics. The improved pipeline version v2 was used for testing. The evaluation was performed using the Llama 4 Scout model, with six discrete values of the temperature parameter, which were evenly distributed within the interval between 0 and 1. For each temperature value, ten evaluation runs were carried out. The relationship between temperature and each metric was explored using a comprehensive plot that integrates both distributional and trend-based information.
+
+\medskip  \clabel[temperature]{Temperature comparison}
+\picw=15cm \cinspic figs/results/temperature.pdf
+\caption/f Distribution and regression analysis of precision, recall, and F1 score as a function of the temperature parameter. For each metric, boxplots illustrate the distribution of scores at each temperature setting, with the solid and dashed lines representing linear and quadratic regression fits, respectively.
+\medskip
+
+
+In this visualization, the x-axis represents the temperature parameter ranging from 0.0 to 1.0, while the y-axis shows the value of the respective metric—precision, recall, or F1. Each temperature setting is associated with a boxplot reflecting the distribution of scores across multiple model runs. The boxplots indicate medians, interquartile ranges, and potential outliers, providing insight into the variability and stability of each metric at different temperatures. Superimposed on these boxplots are two regression curves: a solid line depicting the linear regression fit and a dashed line corresponding to the quadratic regression fit. These curves summarize the overall trend in metric values as a function of temperature, capturing both monotonic and potentially non-linear relationships.
+
+To interpret this plot, one should first compare the medians and spreads of the boxplots at each temperature, thereby gauging how the central tendency and variability of the metrics change with temperature. The regression lines then provide a succinct summary of global trends: a linear decline or increase suggests a straightforward relationship, while a curved (quadratic) fit may indicate an optimal temperature region where metric performance peaks. For instance, a quadratic regression with a maximum may reveal the existence of a temperature value that maximizes the metric, guiding the choice of parameter for deployment.
+
+To assess the statistical significance of these observed effects, a one-way analysis of variance (ANOVA) was conducted for each metric, testing the null hypothesis that mean metric values are equal across all temperatures. The results of these tests are provided in \ref[ANOVA-temperature].
+
+\midinsert \clabel[ANOVA-temperature]{ANOVA test summary for temperature significance}
+\ctable{l|ccc}{
+Metric & F-statistic & p-value & Significance \crl \tskip4pt
+Precision & 0.40 & 0.85 & No \cr
+Recall & 5.42 & 0.00045 & {\bf Yes} \cr
+F1 & 0.47 & 0.79 & No \cr
+}
+\caption/t Summary of ANOVA test results for the effect of temperature on model evaluation metrics. Statistically significant results $(p < 0.05)$ are highlighted in bold.
+\endinsert
+
+In Table \ref[ANOVA-temperature], the F-statistic and p-value are reported for each metric, along with an indication of statistical significance at the standard 0.05 threshold. Only recall was found to vary significantly with temperature ($F = 5.42$, p = $0.00045$), indicating that changes in the temperature parameter can lead to meaningful differences in recall. In contrast, precision ($F = 0.40$, $p = 0.85$) and F1 score ($F = 0.47$, $p = 0.79$) showed no statistically significant dependence on temperature, suggesting stability across the tested range. The summary table should be read such that a significant result denotes substantial differences in the mean value of the metric across temperature settings, while a non-significant result implies relative invariance.
+
+In summary, this analysis reveals that temperature tuning exerts a pronounced influence on recall but has negligible effects on precision and F1 score within the examined range. This finding is visually apparent from the combined plot, where recall displays clear shifts as temperature changes, and statistically confirmed by the ANOVA test. For practitioners, this implies that careful adjustment of the temperature parameter can optimize recall, while precision and F1 remain robust to temperature variation.

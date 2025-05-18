@@ -163,38 +163,63 @@ In the initial versions of the pipeline, prompts were versioned and pulled throu
 
 It was necessary to construct an evaluation dataset. In order to evaluate the quality of the implemented solution and at the same time obtain an objective metric for iterating over the individual principal decisions of the data extraction and summarization process, it was necessary to construct an evaluation dataset. Given that the entire provided original dataset is not the subject of the final analysis, it is possible to use the unused articles to create ground truth data.
 
-The dataset consists of five cases. The cases were selected to cover the widest possible range of different article types. The extracted topic hierarchy was used for this purpose. Subsections of different main sections were randomly selected. The final selection includes the following cases/topics:
+The dataset consists of five cases. The cases were selected to cover the widest possible range of different types of articles. The extracted topic hierarchy was used for this purpose. The sections of different main sections were randomly selected. The final selection includes the following cases/topics. A table of counts of unique entities within the dataset is given.
 
 \begitems
 * {\bf Český lev Film Award}
 \begitems
   * Section: Culture
   * The set of articles focuses on contemporary Czech film production, dominated by the topic of the Český lev film awards, director and actor portraits, analysis of selected films, and reflections on social themes in film. The texts combine historical and cultural memory, film aesthetics, and critical responses.
-  * The dataset consists of five randomly selected articles out of a total of 62, from the period between 2017 and 2022.
+  * The dataset consists of five randomly selected articles out of a total of 62, from the period between 2017 and 2022.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    45 & 10 & 6 & 74 & 8 \crl
+    }
 \enditems
 * {\bf Senate Elections 2018}
 \begitems
   * Section: Domestic News
   * The articles address topics related to the Senate elections of the Czech Republic held in 2018. The articles include pre-election campaign coverage, forecasts, election proceedings with real-time commentary, and post-election analyses. A minority of the texts also analyze the 2018 municipal elections, which were held alongside the first round of Senate elections.
-  * The dataset consists of five randomly selected articles out of 113, from the period between August 3, 2018, and November 11, 2018.
+  * The dataset consists of five randomly selected articles out of 113, from the period between August 3, 2018, and November 11, 2018.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    42 & 20 & 19 & 83 & 6 \crl
+    }
 \enditems
 * {\bf Olympic Games Beijing 2022}
 \begitems
   * Section: Sports
   * The articles analyze the preparations of the Czech Olympic Committee and individual athletes for the 2022 Winter Olympics in Beijing. They also review the athletes’ performance during the games. A substantial portion discusses anti-COVID measures and other complications tied to the global pandemic, which was still a major issue at the time.
-  * The dataset consists of five randomly selected articles out of a total of 109, from the period between July 2018 and March 2022, with most articles falling in February 2022, when the Games were held.
+  * The dataset consists of five randomly selected articles out of a total of 109, from the period between July 2018 and March 2022, with most articles falling in February 2022, when the Games were held.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    21 & 11 & 18 & 51 & 14 \crl
+    }
 \enditems
 * {\bf COVID-19}
 \begitems
   * Section: Society
   * The articles reflect on the multifaceted impacts of the COVID-19 pandemic on society, healthcare, education, and interpersonal relations, emphasizing both crisis moments and expressions of solidarity and adaptation. The texts also reveal deeper social issues, such as the spread of misinformation, loss of trust in the state, and public polarization.
-  * The dataset consists of five selected articles out of a total of 72, from the period between March 17, 2020, and April 17, 2022.
+  * The dataset consists of five selected articles out of a total of 72, from the period between March 17, 2020, and April 17, 2022.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    12 & 24 & 26 & 66 & 10 \crl
+    }
 \enditems
 * {\bf Trump-Kim Summit}
 \begitems
   * Section: World News
   * The articles map diplomatic efforts toward denuclearization of the Korean Peninsula through summits between Donald Trump and Kim Jong-un, including preparations, proceedings, and reactions. The texts reflect the tension between the effort for a peaceful resolution and repeated failures or escalations, while both the DPRK and USA used the meetings to strengthen their international image.
-  * The dataset consists of five randomly selected articles out of a total of 87, from the period between April 28, 2018, and September 24, 2019.
+  * The dataset consists of five randomly selected articles out of a total of 87, from the period between April 28, 2018, and September 24, 2019.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    17 & 19 & 15 & 61 & 6 \crl
+    }
 \enditems
 \enditems
 
@@ -458,7 +483,7 @@ rapidfuzz
 dotenv
 
 
-\label[mlfl
+\label[mlfl]
 \secc Tools
 
 MLflow
