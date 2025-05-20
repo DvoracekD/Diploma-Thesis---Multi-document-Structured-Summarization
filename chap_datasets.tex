@@ -1,7 +1,153 @@
 \label[dataset-analysis]
 \chap Dataset Analysis 
 
-\sec Description of the news corpus dataset
-\sec Data preprocessing and exploration
-\sec Tagging and topic selection
-\sec Challenges and considerations in the dataset
+This chapter provides a systematic analysis of the Český rozhlas news dataset and establishes the foundation for all subsequent empirical work. The chapter begins by describing the structure and contents of each article record, clarifying the nature and meaning of the available metadata fields. It then presents an in-depth exploratory analysis, including descriptive statistics on article lengths, temporal publishing patterns, section-level statistics, and hierarchical relationships inferred from section co-occurrence. Further, the chapter visualizes topical and geographic distributions using tag and location frequencies, and summarizes lexical characteristics through a word cloud. Finally, it discusses methodological challenges and key considerations inherent in the dataset, highlighting potential limitations and implications for downstream natural language processing and machine learning tasks.
+
+\sec Description
+The dataset is composed of individual records in JSON format. Each record represents a single news article and contains multiple structured fields. The structure of each record ensures consistency and allows for systematic data analysis.
+
+Each row includes several key fields. The "id" field is a unique identifier for the article. The "date" field stores the timestamp of publication in ISO 8601 format, enabling precise chronological ordering. The "url" field contains the link to the original online article. The "domicil" field specifies the location associated with the article, such as the city or country.
+
+Content categorization is achieved through additional fields. The "sections" field classifies the article into broader topics, and sections can be separated by semicolons. The "tags" field provides more granular thematic keywords, also separated by semicolons. The "title" field contains the headline of the article, and the "abstract" field provides a brief summary.
+
+The main body of the article is captured in the "text" field. This field contains the full textual content, which may include narrative sections, quotes, and embedded metadata. The overall structure is optimized for systematic extraction and analysis, as each component can be accessed independently or in relation to others.
+
+The structure of a single article is as follows:
+\begitems
+* "id": unique identifier for the article
+* "date": timestamp of publication in ISO 8601 format
+* "url": link to the original online article
+* "domicil": location associated with the article, such as city or country
+* "sections": broader topic classification; multiple sections can be separated by semicolons
+* "tags": granular thematic keywords, separated by semicolons
+* "title": headline of the article
+* "abstract": brief summary of the article
+* "text": full textual content of the article
+
+\enditems
+
+\sec Exploratory analysis
+
+The exploratory analysis provides a comprehensive overview of the Český rozhlas articles dataset. The dataset consists of 104,677 news articles in JSONL format, with each article containing metadata such as date, URL, domicil, section, tags, title, abstract, and main text. Initial assessment demonstrates high data quality, as the dataset contains no duplicate URLs and only 48 duplicate article titles, which suggests minimal redundancy and high data integrity.
+
+Article and abstract length statistics show notable variability in content size. The average article length is approximately 2,514 characters, with a standard deviation of about 2,367 characters, while abstracts average around 329 characters. Figure \ref[Fig1] illustrates the distribution of article text lengths. This figure is a histogram, where the x-axis represents the article text length measured in number of characters, and the y-axis displays the number of articles that fall into each length bin. The shape of the histogram shows the majority of articles clustering between 1,000 and 3,000 characters, with the distribution’s tail extending to over 100,000 characters. To interpret the histogram, one should examine the peak (mode), which corresponds to the most common article lengths, and observe the spread and existence of outliers on the right.
+
+Outliers, including exceptionally long or short articles, are further visualized in Figure \ref[Fig2], which presents a boxplot of article text lengths using a logarithmic y-axis. In this boxplot, the x-axis shows article index (or simply a single box for all articles), while the y-axis uses a logarithmic scale to represent article length in characters. The box represents the interquartile range (from the 25th to the 75th percentile), the horizontal line inside the box marks the median, and points outside the whiskers identify outliers. The use of a logarithmic scale allows better visualization of both the dense central region and the scattered extreme values that would otherwise be compressed.
+
+\medskip  \clabel[Fig1]{Distribution of article text lengths in the dataset}
+\picw=14cm \cinspic figs/analysis/text-length-histogram.pdf
+~\caption/f Distribution of article text lengths shorter then 10,000 characters. The x-axis shows the number of characters in an article. The y-axis shows the number of articles for each length bin. The highest bars represent the most typical article lengths, while rare, extremely long articles are visible as the tail on the right. Tail of the original distribution extends over 100,000 characters.
+\medskip
+
+\medskip  \clabel[Fig2]{Boxplot of article text lengths}
+\picw=14cm \cinspic figs/analysis/text-length-box.pdf
+~\caption/f Boxplot of article text lengths (logarithmic x-axis). The x-axis shows article length (in characters) on a log scale, so both short and long articles are visible. Solid vertical line within the box shows median length. The dashe    d line represents the average. Outlier points right the right-most whisker mark for unusually long articles.
+\medskip
+
+Temporal publishing trends are a key aspect of the dataset’s structure. Figure \ref[Fig3] displays the number of articles published per day, alongside a rolling monthly average. In this time series plot, the x-axis represents the date, while the y-axis indicates the number of articles published. The blue line shows the actual daily count of articles, with peaks indicating days of high publishing activity, and troughs representing lower activity. The red dashed line overlays a rolling monthly (30-day) average, smoothing out short-term fluctuations and revealing broader trends or seasonality. The reader should look for prominent peaks (possibly reflecting major events) and the general slope of the average line to understand overall publishing patterns.
+
+\medskip  \clabel[Fig3]{Daily article counts}
+\picw=14cm \cinspic figs/analysis/articles-per-day.pdf
+~\caption/f Daily article counts and monthly rolling average over time. The x-axis represents calendar date. The y-axis shows the number of articles published. The blue line gives the daily count, while the red dashed line shows the smoothed monthly average, highlighting broader temporal trends.
+\medskip
+
+Articles are categorized into sections, enabling thematic analysis. The most frequent sections, such as {\it Zprávy z domova} (Domestic News), {\it Zprávy ze světa} (World News), and {\it Sport}, are summarized in Table \ref[Tab1], which lists section names along with counts, average and median article lengths, and average abstract lengths. The first column provides the section name, followed by the number of articles (count), then the average and median lengths of the articles in characters, and finally the average abstract length. This table allows for quick comparison of both volume and typical size of articles across sections, helping to identify which themes dominate the dataset.
+
+\midinsert \clabel[Tab1]{Section-level statistics}
+\ctable{l|cccc}{
+Section & Articles & Average & Median & Average abstract\crl \tskip4pt
+Zprávy z domova & 31683 & 2906 & 2212 & 354 \cr
+Zprávy ze světa & 24393 & 2327 & 1750 & 338 \cr
+Sport & 23183 & 2072 & 1811 & 293 \cr
+Fotbal & 6795 & 2071 & 1827 & 291 \cr
+Ostatní sporty & 6236 & 1926 & 1781 & 293 \cr
+}
+~\caption/t Section-level statistics: counts and article lengths for the top sections. The table columns are: section name, article count, average text length, median text length, and average abstract length. This enables comparison of thematic coverage and content size.
+\endinsert
+
+Monthly trends for the most common sections reveal changing patterns of media focus. Figure \ref[Fig4] plots article counts per month for the top 20 sections. In this multi-line plot, the x-axis shows the month (e.g., in YYYY-MM format), and the y-axis shows the number of articles. Each colored line corresponds to a section. The reader should trace each line to see how the frequency of articles in that section changes over time, identifying bursts, declines, or persistent trends. Several notable domain-specific trends can be observed in this figure. There is a clear and significant peak for the sections {\it Olympijské hry} and {\it Sport} in 2018, which coincides with the Winter Olympics, reflecting heightened media attention during this global sporting event. The {\it Hokej} section displays a regular, sharp peak every May, corresponding to the annual Ice Hockey World Championship. The {\it Zimní sporty} section demonstrates a periodic pattern, with noticeable peaks every winter season, indicating recurring seasonal interest. A pronounced drop in sports coverage appears in 2020, and a lower, more moderate level persists throughout the remainder of the coronavirus pandemic. Furthermore, the figure reveals an interesting decline in the volume of world news ({\it Zprávy ze světa}) during the pandemic, while domestic news ({\it Zprávy z domova}) exhibits the opposite trend, with a notable increase, highlighting a shift in journalistic focus in response to the global situation.
+
+\medskip  \clabel[Fig4]{Section monthly trends}
+\picw=14cm \cinspic figs/analysis/section-trends.pdf
+    ~\caption/f Monthly trends for the top 20 sections by article count. The x-axis shows months. The y-axis is the article count. Each colored line represents a news section, and its trajectory shows changes in media attention over time.
+\medskip
+
+
+The hierarchical relationships between news sections were further explored by analyzing their co-occurrence in articles. The underlying principle is that if two sections frequently appear together within the same article, it may indicate a hierarchical or thematic connection between them. To reconstruct a possible section hierarchy, pairs of parent-child relationships were extracted from co-occurrence patterns, and a forest of trees was constructed using these relationships. Each root node represents a broad section, with child nodes denoting more specific subsections or related topics.
+
+\begitems
+* Životní styl a společnost
+    \begitems
+    * Auto
+    * Cestování
+    * Móda
+    * Společnost
+    * Vaření a jídlo
+    * Zdraví
+    \enditems
+
+
+* Sport
+    \begitems
+    * Atletika
+    * Fotbal
+    * Hokej
+    * Olympijské hry
+    * Ostatní sporty
+    * Tenis
+    * Zimní sporty
+    * Zápisník
+    \enditems
+
+
+* Kultura
+    \begitems
+    * Divadlo
+    * Film
+    * Hudba
+    * Literatura
+    * Televize
+    * Výtvarné umění
+    \enditems
+
+
+* Věda a technologie
+    \begitems
+    * Historie
+    * Příroda
+    * Technologie
+    * Vesmír
+    * Voda
+    * Věda
+    \enditems
+
+* Zprávy z domova
+    \begitems
+    *Volby
+    \enditems
+\enditems
+
+This reconstructed hierarchy provides a richer understanding of the topical organization of the dataset and supports more structured downstream analyses.
+
+Analysis of tags and locations reveals dominant topics and geographic distribution in the dataset. Figure \clabel[tags-locations] combines these perspectives in a single side-by-side visualization: the left panel shows a horizontal bar plot of the 20 most frequent tags, while the right panel displays the 20 most commonly mentioned locations (domicil). In both plots, the y-axes list tag or location names, and the x-axes (logarithmic scale) show the number of articles associated with each item. This logarithmic scaling compensates for the predominance of a few top categories, making it easier to observe mid-ranked items as well. Higher bars indicate more frequent tags or locations, highlighting the most important topics, entities, and places in the corpus.
+
+\medskip\clabel[tags-locations]{Top 20 tags and locations with logarithmic axis}\picw=14cm \cinspic figs/analysis/tags-domicil-combined.pdf
+~\caption/f The left panel shows the 20 most frequent tags and the right panel the 20 most frequent locations mentioned in the articles. For both, the y-axes list tag or location names. The x-axes are logarithmic, showing the number of articles per tag/location. This scaling compensates for the dominance of the top items, making differences among mid-frequency tags and locations more interpretable. Reading down each panel reveals the main themes and geographies covered by Český rozhlas.\medskip
+
+Lexical analysis using a word cloud enables intuitive visualization of word frequency across the corpus. Figure \ref[Fig7] depicts a word cloud, where each word’s size is proportional to its frequency (after lemmatization and filtering stopwords). The most frequently occurring words are visually larger and usually positioned centrally, while less common words are smaller and nearer the edges. This allows the reader to instantly identify which terms, concepts, and named entities are most prominent in the dataset. The word cloud thus offers a high-level summary of lexical salience and main topics.
+
+\medskip  \clabel[Fig7]{Word cloud}
+\picw=14cm \cinspic figs/analysis/wordcloud.pdf
+~\caption/f Word cloud of the most frequent lemmatized words in the dataset. Word size represents frequency: larger words occur more often. This provides a visual overview of key themes and vocabulary in the corpus.
+\medskip
+
+In summary, the exploratory analysis establishes a foundational understanding of the Český rozhlas dataset’s structure, thematic focus, temporal patterns, and lexical characteristics. These insights inform subsequent methodological choices for advanced natural language processing, topic modeling, and event extraction tasks.
+
+
+\sec Challenges and considerations
+
+Several challenges and considerations arise when working with the Český rozhlas news articles dataset. The most significant challenge is the presence of heterogeneous article lengths, with some texts being exceptionally short or long, which may affect the robustness of downstream modeling and skew descriptive statistics. Another consideration is the evolving structure of metadata fields, such as sections, tags, and locations, which may change over time or be inconsistently applied by annotators. The dataset exhibits class imbalance, as a small number of topics, tags, or locations dominate the corpus, while others are underrepresented; this imbalance may bias machine learning models toward majority categories.
+
+Ambiguity in section, tag, and location assignment presents an additional challenge. Some articles are assigned to multiple sections or use overlapping tags, complicating attempts at hierarchical or thematic modeling. The reconstructed hierarchy of sections is based on observed co-occurrence and may not correspond precisely to an editorial taxonomy, introducing uncertainty in interpretations. Missing values in certain metadata fields, though generally rare, could still impact analyses focused on specific attributes, such as geospatial or sectional studies.
+
+Temporal drift is also a key consideration, as the content and volume of articles fluctuate in response to major events, such as the COVID-19 pandemic. These shifts affect both the distribution of topics and the reliability of time-based comparisons. Language use evolves over time and across sections, which may present difficulties for models trained on static word or entity distributions. Lastly, there is potential for annotation errors, duplicated or near-duplicate articles, and non-standardized formats, all of which require careful data cleaning and validation before proceeding to advanced natural language processing tasks.

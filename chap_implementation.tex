@@ -1,0 +1,196 @@
+\chap Implementation
+
+This chapter outlines the practical implementation of the experimental framework. It covers the methods for experiment logging and reproducibility, the management and versioning of prompts, and the structure of the experimental script. The chapter also introduces the computational infrastructure used for model inference and concludes with a summary of the main libraries supporting data processing, evaluation, and visualization.
+
+\label[mlfl]
+\sec Logging
+
+All experiments are recorded.
+This is done in order to maximize experiment repeatability and ensure sustainable orientation among individual runs. For this purpose, the MLflow application\cite[mlflow] was used. MLflow is an open-source platform designed for managing the machine learning lifecycle, with a particular focus on experiment tracking and reproducibility. In this thesis, MLflow was used to systematically log all experiments, including input parameters, datasets, evaluation metrics, and model outputs. Its web interface enabled clear organization and comparison of experimental runs, supporting both tabular and graphical visualizations. MLflow's support for prompt versioning and automatic capture of API calls during large language model inference made it an essential tool for ensuring transparency, repeatability, and effective analysis throughout the experimental workflow. The experiment data are sa    ved into the local directory. The server app can be started with the following command:
+
+\begtt
+mlflow server --host 127.0.0.1 --port 8080
+\endtt
+
+ MLflow has recently received integrations for various frameworks based on API call management for services providing access to large language model inference (such as the OpenAI SDK\cite[openai-sdk] or LiteLLM\cite[litellm]). This allows automatic tracing and logging of API requests, their inputs and outputs, and linking them to the running experiment. This significantly facilitates orientation and enhances the clarity of experiments based on language model inference. The MLflow application runs as a local web server. The data from individual runs are stored in the directory from which the application is launched.
+
+The structure of experiments was defined.
+The systematization in MLflow is as follows. The tool records experiments. Experiments consist of multiple runs, which can be compared with each other. Runs may have either a custom name or a randomly generated human-readable name. In this work, individual tested models are considered as experiments. The version of the tested pipeline is subsequently logged as a run tag. This enables comparison of results both across runs of a single model and comparison of the performance of different models under the same version of the extraction pipeline, thanks to filtering by tag.
+
+MLflow offers two interface modes for run management.
+The first is a table mode that enables an organized view of experiment runs with filtering capabilities. The second is a visualization dashboard. In this dashboard, users can create custom visualizations from selected run data. Available options include bar chart (for visualizing 1D categorical data), line chart (1D continuous data), parallel coordinates (multidimensional data visualization), scatter plot (2D planar data), contour chart (surface visualization of 3D data), difference view (differences in tabular data), and image grid for computer vision applications. For the purposes of this work, evaluation metrics of the best runs are monitored using bar charts. Additionally, the difference view is used to observe exact differences in these values.
+
+\medskip  \clabel[experiments-tabular]{MLflow table experiments view}
+\picw=14cm \cinspic figs/mlflow/experiment-tabular.png
+\caption/f Sample table interface for run management. The interface offers a variety of tools for working with experiments. It is possible to select experiments whose runs are to be compared. A table with corresponding runs appears on the right side. Individual runs can be filtered by creation time, evaluation metrics, parameters, tags, and also attributes from associated API trace calls. Furthermore, the tabular interface can be customized for quicker navigation among runs.
+\medskip
+
+\medskip  \clabel[experiments-visual]{MLflow visualization experiments view}
+\picw=14cm \cinspic figs/mlflow/experiment-visual.png
+\caption/f Sample of visualization interface for run management. This section allows users to create custom visualizations from selected data of selected runs. The layout, position, and size of the visualization panels can also be adjusted.
+\medskip
+
+\medskip  \clabel[difference-view]{MLflow difference view}
+\picw=10cm \cinspic figs/mlflow/difference-view.png
+\caption/f Example of the Difference View visualization in the visualization interface. It is possible to select one baseline run and then easily observe the improvement or deterioration of subsequent runs.
+\medskip
+
+
+Numerous values are logged within each run.
+Upon opening a run detail, the interface provides several tabs. The {\it Overview} tab displays data such as the start time and duration of the run, the input dataset, and tags that refer to the run type and also record Git metadata for the code that executed the experiments. This allows users to return to the specific version of the code for potential reproduction. It also logs the exact versions of prompts used for the inference of instruction-tuned models (see \ref[prompt-management]). In the “Model metrics” tab, the values of tracked metrics can be observed.
+
+\medskip  \clabel[run-detail]{MLflow run detail}
+\picw=8cm \cinspic figs/mlflow/run-detail.png
+\caption/f Sample Overview tab in run detail view.
+This includes a variety of logged parameters. Some are logged automatically, while others are specified directly by the user.
+\medskip
+
+\medskip  \clabel[run-traces]{MLflow traces tab}
+\picw=14cm \cinspic figs/mlflow/run-traces.png
+\caption/f Example of the traces tab, which contains a list of individual calls to the large language model API.
+The tabular overview shows the creation time and runtime. Additionally, the original form of the Request and the Response received from the server are recorded here.
+\medskip
+
+\medskip  \clabel[run-artifacts]{MLflow artifacts tab}
+\picw=14cm \cinspic figs/mlflow/run-artifacts2.png
+\caption/f The Artifact tab contains various files logged during the experiment run.
+The files may be binary or tabular in nature. JSON structures can also be logged. For each media case in the evaluation dataset, partial evaluation results are logged. The final JSON structure from the prediction step is also recorded.
+\medskip
+
+\medskip  \clabel[run-completion]{MLflow LLM trace detail}
+\picw=14cm \cinspic figs/mlflow/run-completion.png
+\caption/f Example interface of an individual LLM trace detail.
+Here, the message structure can be seen in a user-friendly and readable format. If any record is formatted using Markdown, it is rendered accordingly. In the Inputs/Outputs and Attributes tabs, additional request and response properties are available. For example, if the model uses a thinking process, the output of this process can be found here. In the Events table, error messages can be located if the request fails.
+\medskip
+
+\label[prompt-management]
+\sec Prompt management
+MLflow offers a system for prompt management. Prompts are instructional texts used to guide instruction-based language models. A high-quality formulation of the desired task and expected output is one of the key factors for improving language model performance \cite[prompt-engineering]. To organize the prompts used and their versions, the prompt repository provided by MLflow was utilized in this thesis.
+
+Prompts are maintained in a single location.
+The resulting prompts are not merely static texts. They are implemented as mustache templates\cite[mustache]. The text may therefore contain variables. It defines the textual output that results from rendering the template with applied variables. Each prompt in MLflow stores, in addition to its text, various metadata in the form of key-value pairs. In addition, each prompt contains a list of versions. Versions can be created through either the user interface or from code, and, similarly to version control systems, each change can be accompanied by an optional commit message. The UI provides a convenient way to compare individual versions. MLflow also automatically captures the prompts used and links the applied version to the executed experiment runs. A prompt version then contains a reference to the run in which it was used, and the run itself includes a list of used prompts and their respective versions.
+
+The prompts can be accessed directly from the code.
+Once connected to an MLflow server, a prompt version can be accessed via 
+
+\begtt
+prompt = mlflow.load_prompt("prompts:/llama4_events/3")
+\endtt
+
+The resulting string can be rendered using 
+\begtt
+prompt.format(variable_name=variable)
+\endtt 
+
+The value of the {\tt variable} is inserted into the placeholder at the location of {\tt variable\char`_name} within the rendered prompt. The variable identifier follows the format "prompts:/{prompt_name}/{version}". The version can be a numeric version identifier or "latest" for dynamic usage of the most recently created prompt version.
+
+\medskip  \clabel[prompt-management-fig]{MLflow prompt management}
+\picw=14cm \cinspic figs/mlflow/prompt-management.png
+\caption/f An illustration of version comparison in the detail view of a saved prompt. Two versions can be compared at the same time. One is used as the baseline (left side) and the other as the update (right side). The edit differences between the two prompt texts are highlighted in color.
+\medskip
+
+
+Prompt management system has major disadvantage. With the increasing complexity of prompts, a limitation was encountered preventing saved prompts from exceeding 5,000 characters. Therefore, a custom versioning system was created. Each pipeline version has its own folder containing markdown files with the prompt template texts. This folder is a parameter of the prediction script. Schemas remain static across prompt and pipeline versions and are also downloaded from a designated folder at the beginning of the script run. To ensure maximum reproducibility of experiments, individual prompts and schemas are logged into MLflow as artifacts with every experiment run.
+
+
+\sec Experiment script
+
+The experiments share a unified script.
+The individual runs of the experiment differ only in input parameters: the used model, model parameters, the "predict_structure" method representing the current version of the pipeline, and the current versions of prompts in the prompt repository. The experiment script consists of the following components:
+
+\begtt
+mlflow.set_tracking_uri(uri="http://localhost:8080")
+mlflow.set_experiment(MODEL)
+mlflow.litellm.autolog()
+
+data_names, data, gt = load_dataset()
+\endtt
+
+This section initializes integration with a running MLflow server, sets the experiment name based on the model name, and enables automatic logging of API call traces. Subsequently, the input data and ground truth data for each media case are loaded.
+
+\begtt
+with mlflow.start_run():
+    log_git_info()  
+    dataset_metrics = pd.DataFrame(  
+        columns=["dataset", "Precision", "Recall", "F1 Score"]  
+    )  
+\endtt
+
+The experiment run is encapsulated within the context manager "start_run()". Git metadata for the current repository state are logged using a custom function. A results table for individual media cases is then initialized.
+
+\begtt
+    for name, articles, gt_data in zip(data_names, data, gt):
+        dataset = mlflow.data.from_pandas(pd.DataFrame(articles))  
+        mlflow.log_input(dataset)  
+        mlflow.log_params(params)  
+\endtt
+
+For each case, the input dataset and input parameters are logged.
+
+\begtt
+        pred = predict_structure(articles, create_completion)
+        mlflow.log_dict(pred, name+"_prediction.json")
+\endtt
+
+A prediction is performed using the tested pipeline and the current versions of the prompts in use. The resulting predicted JSON structure is then logged.
+
+\begtt
+        perf_met, articles_met, event_met, total_met = \
+        eval_predictions(pred, gt_data)
+    
+        mlflow.log_table(perf_met, name+"_entity_metrics.json")  
+        mlflow.log_table(articles_met, name+"_articles_metrics.json")  
+        mlflow.log_table(event_met, name+"_event_metrics.json")  
+        mlflow.log_table(total_met, name+"_total_metrics.json")  
+      
+        dataset_metrics.loc[name] = [  
+            name,  
+            *list(total_metrics.loc['total'])  
+        ]  
+\endtt
+
+Next, evaluation is conducted and all evaluation components in the form of pandas DataFrames are logged as MLflow tables using the "log_table" function. The result for the current case is appended to the overall results table.
+
+\begtt
+    mlflow.log_table(dataset_metrics, "dataset_metrics.json")
+    mlflow.log_metrics({  
+        "precision": dataset_metrics["Precision"].fillna(0).mean(),  
+        "recall": dataset_metrics["Recall"].fillna(0).mean(),  
+        "f1": dataset_metrics["F1 Score"].fillna(0).mean()  
+    })  
+\endtt
+
+After processing all cases, the results table is logged, the results are aggregated, and the final metrics are sent to the server.
+
+\sec Infractructure
+Some of the models were hosted in a computing cluster. The {\it RCI compute cluster}\cite[rci]{} is used to provide access to opensource large language models. The cluster is an HPC (High Performance Computing) infrastructure designed for scientific purposes in the field of computationally intensive tasks such as large language models. The cluster consists of two subclusters, one based on Intel processors, the other on AMD processors. Each cluster consists of compute and management nodes. At the same time, a common data store takes care of persistence across nodes. The compute nodes of Intel clusters are divided into CPU, GPU and multi-CPU. GPU nodes have access to up to four NVIDIA Tesla V100 GPUs. In total, therefore, 48 Tesla V100 graphics cards are available. AMD subcluster nodes are divided into CPU, 4GPU, 8GPU and one node with access to a Graphcore M2000 IPU (Intelligence Processing Unit). Graphics nodes use graphics cards NVIDIA Tesla A100 with 40 GB of graphics operating memory. Thus, a total of 56 Tesla A100 GPUs available. Job scheduling is taken care of by the Slurm workload manager\cite[slurm]{}.
+
+{\it Chat AI}\cite[e-infra] is a web application operated within the e-INFRA CZ infrastructure. It enables authorized users to interact with advanced language models for generating textual and visual outputs. The service provides access to models such as LLaMA 3.3, DeepSeek R1, Qwen 2.5 Coder, Aya Expanse, and Phi-4, covering a wide range of tasks from natural language understanding to code generation and multilingual communication. Users are offered both a graphical interface for interactive use and a REST API for programmatic access, with authentication handled through the MetaCentrum infrastructure. The service thus represents a universal platform for both research and practical applications of generative models.
+
+\sec Libraries
+{\it Hugging Face} helps with the development of generative language models. Hugging Face offers a platform \cite[huggingface]{} for sharing source code, trained weights of individual deep learning models, and datasets for performance testing and comparison of trained models.
+
+{\it The Transformers library} \cite[hf-transformers]{} is part of the Hugging Face platform. It is an interface for a unified approach to inference, training and retraining pre-trained models. The library is based on Python and supports deep learning libraries such as PyTorch, TensorFlow and Flax.
+
+The {\it vLLM}\cite[vllm]{}\cite[vllm-github]{} library helps with inference. The vLLM library takes care of optimizing inference and serving inference http endpoints for large language models. It introduces Pipelined Execution with Distributed Shared Memory (PDS) memory management paradigm, which enables the concurrent processing of multiple requests by sharing memory across different inference tasks. This design minimizes redundant computation and memory overhead, enhancing throughput and reducing latency. Compatible with various model repositories like Hugging Face Transformers, vLLM supports diverse architectures
+
+{\it LiteLLM} is an open-source Python library that serves as a unified interface for working with more than one hundred different LLMs (Large Language Models) through a single OpenAI-style API. The purpose of the library is to make it easier for developers to switch between various model providers, such as OpenAI, Azure, Together, Anthropic, or Hugging Face, without having to modify the application logic. LiteLLM supports authentication, fallback mechanisms, and access control (e.g., throttle limits or quotas) directly from the Python environment.\cite[litellm]
+
+The {\it Mustache}\cite[mustache] templating library was used for prompt management in language model experiments. By leveraging Mustache templates, the prompts for large language models could be easily parameterized and versioned, which streamlined both prompt engineering and the reproducibility of experiments. The integration with MLflow allowed for transparent tracking and comparison of different prompt versions, directly supporting experimental repeatability and clarity in model behavior analysis.
+
+{\it SentenceTransformers}\cite[sentence-transformer] played a crucial role in semantic similarity assessment. This library enabled the encoding of event descriptions into dense vector representations using the {\it paraphrase-multilingual-MiniLM-L12-v2}\cite[multilingual-sentence-bert] model. These embeddings facilitated efficient and robust semantic comparison of textual content, which was essential for deduplication of events and for evaluating the quality of extracted knowledge structures.
+
+{\it Pandas}\cite[pandas1, pandas2] was the core tool for data processing and experiment logging. The library was used extensively for manipulating dataframes containing both raw and processed data, as well as for aggregating and exporting evaluation metrics. Its seamless integration with MLflow further enabled automated logging of experimental results and parameters, enhancing experiment traceability and enabling comparative analysis across different runs.
+
+{\it Plotly}\cite[plotly] was used to generate all plots and visualizations in the thesis. This library facilitated the creation of interactive and publication-quality charts, which were essential for communicating experimental findings and for comparing the performance of various models and pipeline configurations. Visualizations created using Plotly provided intuitive insights into metric distributions and experimental trends.
+
+{\it Rapidfuzz}\cite[rapidfuzz] provided efficient fuzzy string matching for entity deduplication and evaluation. The library was applied in both the auxiliary deduplication scripts and the main evaluation pipeline to compute similarity between entity names, roles, and types. The adoption of the Jaro-Winkler metric ensured high performance and reliability, enabling minor typographical variations and enhancing the robustness of the entity matching process.
+
+{\it Dotenv}\cite[dotenv] was used for dynamic loading of secret credentials and environment variables. The library enabled secure and convenient access to sensitive information such as API keys, while preventing their accidental inclusion in version control systems. This approach conformed to best practices for handling secrets in collaborative research and ensured experimental reproducibility without compromising security.
+
+{\it Wordcloud}\cite[wordcloud] was utilized for the visualization of dominant themes within the dataset. By generating visual representations of the most frequent words in the corpus, the library provided an intuitive overview of prevalent topics and aided the exploratory data analysis phase. This approach supported the initial understanding of the dataset's content and informed subsequent processing steps.
+
+{\it Simplemma}\cite[simplelemma] was applied for lemmatization of Czech text during exploratory analysis. The lemmatizer enabled normalization of word forms, which facilitated frequency analysis and improved the consistency of downstream natural language processing tasks. Lemmatization was particularly beneficial for aggregating and matching semantically equivalent terms across diverse articles.
+
+Several libraries were combined to address complex tasks within the NLP pipeline. For instance, rapidfuzz and SentenceTransformers were jointly employed to deduplicate entities and events using both fuzzy and semantic similarity, while pandas and plotly together enabled systematic data management and effective visualization of evaluation results. This modular integration allowed for scalable, maintainable, and transparent experimentation throughout the thesis.
+

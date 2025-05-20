@@ -881,6 +881,7 @@
 \def\normalitem{\locc\Blue{\tenbf\thefontsize[30].\kern-2pt}\Black\enspace}
 \sdef{item:x}{\raise.4ex\hbox{\locc\Blue\tenbf\thefontsize[17].\Black} }
 \sdef{item:n}{\the\itemnum.\kern.25em }
+% \sdef{item:e}{\number\ilevel.\the\itemnum.\kern.25em }
 \addto\begitems{\vskip.5\parskip \parskip=0pt\relax}
 \addto\enditems{\vskip-.5\parskip}
 
@@ -897,7 +898,9 @@
    \ifx\citelinkA\empty \noindent\hskip2\iindent \llap{[\the\bibnum] }%
    \else \noindent \fi
 }
-\addto\bibskip{\vskip-\parskip}
+
+%%% Pseudocode
+
 
 %%% Last thinks:
 

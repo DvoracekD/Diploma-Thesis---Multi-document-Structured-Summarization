@@ -1,10 +1,12 @@
 \chap Methodology
 
-The chapter describes the methodology for extracting structured data from media articles. First, the target data schema and its individual components, including entities, events, and their mutual relations, are defined. This is followed by a detailed description of the extraction pipeline, including the data preprocessing phase and the multi-level extraction of entities and events. Next, the construction of the evaluation dataset is introduced, along with the procedure for both manual and automated annotation. The chapter also presents the design of an evaluation metric to measure the quality of the output structure against the annotated data. The final part is devoted to the experimental verification of the performance of the proposed solution, including an overview of the models used, their configurations, and the method to manage experiments using the MLflow tool.
+The chapter describes the methodology for extracting structured data from media articles. First, the target data schema and its individual components, including entities, events, and their mutual relations, are defined. This is followed by a detailed description of the extraction pipeline, including the data preprocessing phase and the multi-level extraction of entities and events. Next, the construction of the evaluation dataset is introduced, along with the procedure for both manual and automated annotation. The chapter also presents the design of an evaluation metric to measure the quality of the output structure against the annotated data. The final part is devoted to the experimental methodology proposed to asses the performance of the proposed solution, including an overview of the models used and their configurations.
 
 \sec Extraction data structure
 
 The principle of the problem is structure extraction. It is a matter of extracting persons, organizations, and locations from mutually connected articles related to a single media case or topic. The individual entities further contain associated information. In the case of persons, it is the roles they occupy across the examined set of articles. In the case of organizations and locations, we try to extract their type for further potential categorization and filtering. Furthermore, it is necessary to extract the objective events that the articles describe and their temporal validity, which can be derived both from the text of the article from which the event is extracted and from all available information across the articles.
+
+At the core of the first part of the extraction process is named entity recognition (NER), which is extended beyond standard entity detection by also extracting associated roles for persons and types for organizations and locations. This enriched NER approach enables more detailed categorization and filtering of entities within the dataset.
 
 A fundamental part of the resulting structure are mutual relations. Therefore, each event additionally contains a list of relevant entities (actors). At the same time, the relation between the entities, events, and individual articles is recorded. It is necessary to capture in which articles the extracted events appear and which reference them. Furthermore, it is necessary to capture a list of persons, organizations, and locations that appear in the given article.
 
@@ -70,17 +72,61 @@ The structure of the ground truth dataset for individual cases is as follows:
     \enditems
 \enditems
 
+Example of the resulting structure is shown in the following json snippet:
+
+\begtt
+{
+    "people": [
+        {"id": 1, 
+        "name": "David Rath", 
+        "roles": ["bývalý hejtman", "bývalý poslanec ČSSD"]}
+    ],
+    "organizations": [
+        {"id": 1, "name": "ČSSD", "types": ["politická strana"]}
+    ],
+    "locations": [
+        {"id": 1, "name": "Litoměřice", "types": ["město", "obec"]}
+    ],
+    "events": [
+        {
+            "id": 1,
+            "text": "Exhejtman David Rath získal v prvním kole senátních 
+                     voleb v Litoměřicích necelých pět procent hlasů.",
+            "people": [1], "organizations": [], "locations": [1],
+            "time_start": "2018-10-07", "time_end": "2018-10-07"
+        }
+    ],
+    "articles": [
+        {
+            "id": 7634574,
+            "people": [1], "organizations": [1], "locations": [1], 
+            "events": [1]
+        }
+    ],
+    "event_summaries": [
+        {
+            "id": 1,
+            "text": "Proběhlo první kolo senátních voleb.",
+            "sub_events": [1],
+            "time_start": "2018-10-07", "time_end": "2018-10-07"
+        }
+    ]
+}
+\endtt
+
+
 \sec Pipeline
 
 The extraction pipeline produces the desired structure. It consists of a series of components that sequentially analyze articles related to a single media case and transform textual data into structured lists of persons, organizations, locations, and events. The first step is preprocessing, during which disruptive elements in the continuous text are removed. This is followed by extraction, which consists of several steps that incrementally structure the unstructured input.
 
+\label[preprocessing]
 \secc Preprocessing
 
 Data should be preprocessed before analysis.
 Before conducting any natural language analysis, it is advisable to apply certain filters and transformations to the data that facilitate later machine processing and reduce potential biases arising from the syntax of the original language used\cite[preprocessing]. Traditional natural language preprocessing typically includes techniques such as lemmatization and stemming, which are employed and discussed in greater detail in the chapter \ref[dataset-analysis]. However, these techniques substantially alter the form of the text and could distort the outputs of the large language models.
 
 Dataset-specific preprocessing methods were applied.
-The applied preprocessing methods are tailored to the specific characteristics of the dataset. Individual newspaper articles contain foreign blocks intended to attract readers’ attention but which interrupt the text’s coherence. One such phenomenon involves image captions, which are included in the dataset in the following format:
+The applied preprocessing methods are tailored to the specific characteristics of the dataset. Individual newspaper articles contain extraneous blocks intended to attract readers’ attention but which interrupt the text’s coherence. One such phenomenon involves image captions, which are included in the dataset in the following format:
 \begtt
 {title} | Foto: {author} | Zdroj: {source} \n\n
 \endtt
@@ -106,7 +152,7 @@ A further form of distraction comes from embedded tweets. Authors often include 
 Disruptive blocks were removed using regular expressions.
 To maximize textual coherence, such disruptive elements were eliminated during preprocessing by detecting regular expressions matching the identified structural patterns. Additionally, redundant new-line characters, those that did not contribute semantic information, were removed.
 
-Meaningful components were merged into a single string.
+Meaningful components were merged into a single string named "ftext".
 To simplify further processing, the individual article components were concatenated into a single textual string. The final string takes the following form:
 \begtt
 {date}
@@ -119,7 +165,7 @@ The original date, formatted as "YYYY-MM-DDTHH:MM:SS", is converted to the Czech
 \secc Extraction 
 The main component of the pipeline is extraction. After data preprocessing, the extraction of the desired structure follows. This process consists of the sequential extraction of persons, organizations, locations, and entities. These stages of the pipeline are separated to allow each type of entity or event to be targeted with an individual, specialized prompt. At the same time, this approach supports the scalability of the solution, which—thanks to its decomposition into subproblems—is less dependent on the context length of the current model and on the variable quality depending on the context length, including phenomena such as positional bias, which become more prominent with longer context in many models. \cite[positional-bias]
 
-An extraction script was created. Following experimentation in a Python notebook, the script "pipeline.py" was developed. Its main method is "predict_structure", which takes the parameters "articles" and "create_completion". The "articles" parameter is a list of articles produced by preprocessing. Each object must contain the required attributes "id" and "ftext", which includes the processed text of the article. The "create_completion" parameter is a function that accepts two arguments: the resulting prompt string with substituted variables, and a dictionary representing the JSON definition of the output schema. The output of "create_completion" is a populated dictionary containing the extracted data in accordance with the provided JSON schema. Since the function is passed as a parameter, the prediction script is completely independent of the settings of the employed model and can therefore be used generically across all experiments.
+An extraction script was created. Following experimentation in a Python notebook, the script "pipeline.py" was developed. Its main method is "predict_structure", which takes the parameters "articles" and "create_completion". The "articles" parameter is a list of articles produced by preprocessing. Each object must contain the required attributes "id" and "ftext", which consists of the formatted text of the article, according to the preprocessing structure described in \ref[preprocessing]. The "create_completion" parameter is a function that accepts two arguments: the resulting prompt string with substituted variables, and a dictionary representing the JSON definition of the output schema. The output of "create_completion" is a populated dictionary containing the extracted data in accordance with the provided JSON schema. Since the function is passed as a parameter, the prediction script is completely independent of the settings of the employed model and can therefore be used generically across all experiments.
 
 The prediction function calls subsequent parts of the pipeline. A separate function is prepared for extracting each type of entity and event structure. The prediction function first extracts structures for people, organizations, and locations. Subsequently, a new structure is assembled as the input parameter for event extraction. The resulting dictionary has the following schema:
 
@@ -149,14 +195,34 @@ The prediction function calls subsequent parts of the pipeline. A separate funct
 The resulting script is independent of the number of processed articles.
 Articles can be processed either individually or in batches of a specified size. The principle of extraction for individual entities and events is as follows:
 
+\begitems \style I
+* Initialize "entities" = [] and "articles" = [].
+* As long as there are unprocessed articles:
+    \begitems
+    * A batch of unprocessed articles of the given size is created.
+    * Inference is performed, with the current list of extracted entities inserted into the prompt.
+    * The new list of entities is merged with the "entities" list.
+    * Relations between the article and the persons are added to the "articles" list.
+    \enditems
+\enditems
+
 The model is instructed to reuse entities from the global list. If it is necessary to modify the list of roles/types of an entity, a new entity is returned, but with the original ID. If a new entity is discovered, it is returned with a unique ID relative to both the global and newly created entity list.
 
 Entity lists are merged as follows.
 The final list contains the original entities. Only if an entity with the same ID also exists in the new list is the old entity replaced with the updated version. The remaining entities from the new list that have no counterpart in the old list are appended to the end of the final list.
 
-The inference includes prompts and schemas.
-In the initial versions of the pipeline, prompts were versioned and pulled through MLflow’s prompt management and its SDK. However, with the increasing complexity of prompts, a limitation was encountered preventing saved prompts from exceeding 5,000 characters. Therefore, a new versioning system was created. Each pipeline version has its own folder containing markdown files with the prompt template texts. This folder is a parameter of the script. Schemas remain static across prompt and pipeline versions and are also downloaded from a designated folder at the beginning of the script run. To ensure maximum reproducibility of experiments, individual prompts and schemas are logged into MLflow as artifacts with every experiment run.
+\label[pipeline-versions]
+\sec Versions
 
+Three configurations of the extraction pipeline emerged. The extraction pipeline is parameterized by the model used, batch size (the number of articles processed simultaneously), and instructional prompts. During development, three distinct configurations of the pipeline arose, differing specifically in batch size or the form of prompts. Individual versions of the extraction module are referenced in the following text according to the nomenclature established here.
+
+\begitems
+* {\bf V1}: Baseline implementation of instructional prompts and the maximum batch size, where all articles in the dataset are processed at once.
+
+* {\bf V2}: The next phase aimed to maximize the observed metrics through prompt engineering. The second version retains the maximum batch size but applies improved prompts.
+
+* {\bf V3}: Improved prompts from V2 are used in this configuration, while the batch size is reduced to one. Only a single article is processed at any given moment.
+\enditems
 
 \label[data-schema]
 \sec Evaluation Dataset 
@@ -223,16 +289,60 @@ The dataset consists of five cases. The cases were selected to cover the widest 
 \enditems
 \enditems
 
+A script was created to access the dataset. The script "eval.eval_dataset.py" contains definitions of the names of media cases and paths to the source and ground truth data within the repository. The script also includes preprocessing of the data. The return values are a list of case names, a list of source articles with the properties "id" and "ftext", and also a list of ground-truth structures.
+
 The data was manually annotated. For easier orientation in the annotated data, entities and events were first manually detected for individual articles. To assist in subsequently linking entities across articles, it is necessary to detect which ones correspond to each other. The relevant identifiers must then be remapped. For this purpose, a helper script was created.
+
+\secc Deduplication script
+
+This section introduces a supporting script designed to facilitate the deduplication and linking of entities and events within the dataset. The script assists human annotators by automatically identifying and mapping corresponding entities and events across articles, streamlining the process of constructing a consistent and accurate relational structure. After the script's application, a human annotator reviews and refines the resulting structure, ensuring that all links and references accurately reflect the underlying data and correcting any errors, omissions, or inconsistencies as needed.
 
 The script is based on semantic and approximate string matching. Individual entity names are compared with the ground truth entities step by step. For name comparison, Jaro-Winkler similarity is used\cite[jaro-winkler]. Only entities whose names match sufficiently—i.e., their Jaro-Winkler similarity exceeds a given threshold—are considered corresponding. If no entity with sufficient similarity is found, the entity is added to the global entity list with a new free identifier. The mapping between local and global identifiers is recorded.
 
 Events are matched semantically. Descriptions of atomic events are converted into semantic embeddings using the SentenceTransformers library\cite[sentence-transformer], employing the embedding model "paraphrase-multilingual-MiniLM-L12-v2"\cite[multilingual-sentence-bert]. Events are considered identical when the cosine similarity of their textual representation exceeds a configurable threshold. If no corresponding event is found in the global list of events, the tested event is added with a new identifier. The mapping between identifiers is again recorded. At the same time, the foreign keys of entities associated with the event are remapped according to the previously inferred entity mapping. Finally, a relational object for articles is constructed using the identifier mapping.
 
-The described script is used as an aid. The resulting structure is finally reviewed and edited by a human annotator, who verifies that appropriate entities and events have been linked and that relational references correspond to reality. Any identified shortcomings are corrected, including erroneous, missing, or superfluous entity assignments, as well as incorrect or absent links between entities or events.
+The algorithm operates on a corpus of discrete articles, $\cal A$, to generate a canonicalized and consolidated knowledge graph. This graph comprises distinct sets of entities and events, effectively resolving inter-article redundancy.
 
-A script was created to access the dataset. The script "eval.eval_dataset.py" contains definitions of the names of media cases and paths to the source and ground truth data within the repository. The script also includes preprocessing of the data. The return values are a list of case names, a list of source articles with the properties "id" and "ftext", and also a list of ground-truth structures.
+{\bf Global Variables and Constants:}
+\begitems
+* {\cal P}: Canonical register for Persons.
+* {\cal O}: Canonical register for Organizations.
+* {\cal L}: Canonical register for Locations.
+* {\cal V}: Canonical register for Events.
+* $\tau_E$: Threshold for entity fuzzy string similarity.
+* $\tau_V$: Threshold for event semantic similarity.
+\enditems
 
+\begitems \style I
+* {\bf Initialization Phase}
+    \begitems
+    * Initialize canonical registers ({\cal P}, {\cal O}, {\cal L}, {\cal V}) with entities and events from the first article, $A_1$, assigning unique IDs to events.
+    * Establish a mapping structure, ${\cal M}_i$, for each article $A_i$, and initialize a deduplicated representation, $\hat{A}_i$, for each article.
+    \enditems
+* {\bf Entity Deduplication (Iterative Processing for $A_i$ where $i > 1$)}
+    For each subsequent article $A_i$, entities (persons, organizations, locations) are deduplicated against their respective global canonical registers.
+    \begitems
+    * {\bf Similarity Assessment:} Employ fuzzy string similarity (e.g., Jaro-Winkler) for name matching between entities from $A_i$ and existing canonical entries. A match is determined if the similarity exceeds $\tau_E$.
+    * {\bf Consolidation:}
+        \begitems
+        * If a match is found, the article's entity ID is mapped to the canonical entity's ID, and any new descriptive attributes (roles, types) are merged into the canonical record.
+        * If no match, the article's entity is added as a new canonical entry with a unique ID, and its original ID is mapped to this new canonical ID.
+        \enditems
+    \enditems
+* {\bf Event Deduplication (Iterative Processing for $A_i$ where $i > 1$)}
+    For each event in article $A_i$:
+    \begitems
+    * {\bf Semantic Embedding:} Convert event textual descriptions into vector embeddings using a sentence transformer model.
+    * {\bf Cosine Similarity Matching:} Compute cosine similarity between the event's embedding and all existing canonical event embeddings. Identify the best match with score $s_{max}$.
+    * {\bf Consolidation:}
+        \begitems
+        * If $s_{max} \ge \tau_V$, the article's event ID is mapped to the canonical event's ID.
+        * If $s_{max} < \tau_V$, the article's event is added as a new canonical event with a unique ID, its original ID is mapped, and its associated entity IDs are re-mapped to their canonical forms.
+        \enditems
+    \enditems
+* {\bf Final Output}
+    The algorithm outputs a consolidated knowledge graph comprising the final, deduplicated sets of canonical entities ({\cal P}, {\cal O}, {\cal L}) and events ({\cal V}), along with canonicalized article representations ($\hat{A}_i$) linking to these global elements.
+\enditems
 
 \sec Evaluation
 Evaluation is conducted through a custom evaluation pipeline.
@@ -275,166 +385,7 @@ ODS pro letošní volby dala přednost právníkovi Milanovi Golasovi. &  Komun�
 Subsequent evaluation assesses event-entity and event-article relations.
 As with articles, precision and recall are now calculated for the assignment of entities to events in which they appear. Additionally, precision and recall are computed for the assignment of events to the articles in which they are mentioned. The evaluation process thus yields precision and recall from the following stages: entity detection, event detection, entity-to-event assignment, entity-to-article assignment, and event-to-article assignment. All metrics are logged together with the experiment in MLflow. Since these problem aspects are considered equally important, the final metric for a given case is computed by averaging precision and recall across all tasks. This result is also attached to the experiment log. The final evaluation score is obtained by averaging all precision and recall values across all evaluation media cases, followed by computing the harmonic mean—i.e., the final F1 score.
 
-\sec Experiments
-
-A series of experiments was conducted to verify the solution's quality. The main focus of the research was to use the extraction pipeline with the largest possible batch size—i.e., the number of articles processed simultaneously by a single stage of the extraction pipeline. In the case of the evaluation dataset, this meant processing the entire media case in one stage using a single inference of the language model.
-
-The experiments were divided into phases. Initially, a baseline implementation of the extraction pipeline was created using an initial version of the prompts. The dataset was split into a validation set (1 case) and a test set (5 cases). The test dataset was used to measure the quality of the predicted structure for the baseline implementation.
-
-The baseline was improved. In the next phase, the goal was to maximize the monitored metrics using prompt engineering. The evaluation results against the validation dataset served as guidance during the incremental improvement of the prompts. In the following phase, the degree of improvement was determined through a new evaluation against the test dataset.
-
-Performance was also verified with a minimal batch. In the subsequent phase, the improved prompts were used to verify the quality of the solution when the batch size was reduced to the minimum. That is, when only one article was processed at a time using a single inference of the language model. The results were then compared to the enhanced multi-article processing solution.
-
-Several models were used for testing. For incremental improvements on the validation dataset, a single model was used, namely the relatively fast Llama 4 Scout. However, a variety of models were employed for evaluation on the test dataset. This was motivated by the effort to compare models on this specific task and to ensure greater objectivity of the results independent of a single model. The following models were used for experimentation: Llama 4 Scout, Qwen 3, Deepseek R1, Gemini 2.5 Flash, Gemini 2.5 Pro, and GPT 4.1. Some models were not applied to all versions of the pipeline due to insufficient context length or financial constraints. An effort was made to utilize both open-source and commercial models.
-
-\secc Implementation
-The experiments share a unified script.
-The individual runs of the experiment differ only in input parameters: the used model, model parameters, the "predict_structure" method representing the current version of the pipeline, and the current versions of prompts in the prompt repository. The experiment script consists of the following components:
-
-\begtt
-mlflow.set_tracking_uri(uri="http://localhost:8080")
-mlflow.set_experiment(MODEL)
-mlflow.litellm.autolog()
-
-data_names, data, gt = load_dataset()
-\endtt
-
-This section initializes integration with a running MLflow server, sets the experiment name based on the model name, and enables automatic logging of API call traces. Subsequently, the input data and ground truth data for each media case are loaded.
-
-\begtt
-with mlflow.start_run():
-    log_git_info()  
-    dataset_metrics = pd.DataFrame(  
-        columns=["dataset", "Precision", "Recall", "F1 Score"]  
-    )  
-\endtt
-
-The experiment run is encapsulated within the context manager "start_run()". Git metadata for the current repository state are logged using a custom function. A results table for individual media cases is then initialized.
-
-\begtt
-    for name, articles, gt_data in zip(data_names, data, gt):
-        dataset = mlflow.data.from_pandas(pd.DataFrame(articles))  
-        mlflow.log_input(dataset)  
-        mlflow.log_params(params)  
-\endtt
-
-For each case, the input dataset and input parameters are logged.
-
-\begtt
-        pred = predict_structure(articles, create_completion)
-        mlflow.log_dict(pred, name+"_prediction.json")
-\endtt
-
-A prediction is performed using the tested pipeline and the current versions of the prompts in use. The resulting predicted JSON structure is then logged.
-
-\begtt
-        perf_met, articles_met, event_met, total_met = \
-        eval_predictions(pred, gt_data)
-    
-        mlflow.log_table(perf_met, name+"_entity_metrics.json")  
-        mlflow.log_table(articles_met, name+"_articles_metrics.json")  
-        mlflow.log_table(event_met, name+"_event_metrics.json")  
-        mlflow.log_table(total_met, name+"_total_metrics.json")  
-      
-        dataset_metrics.loc[name] = [  
-            name,  
-            *list(total_metrics.loc['total'])  
-        ]  
-\endtt
-
-Next, evaluation is conducted and all evaluation components in the form of pandas DataFrames are logged as MLflow tables using the "log_table" function. The result for the current case is appended to the overall results table.
-
-\begtt
-    mlflow.log_table(dataset_metrics, "dataset_metrics.json")
-    mlflow.log_metrics({  
-        "precision": dataset_metrics["Precision"].fillna(0).mean(),  
-        "recall": dataset_metrics["Recall"].fillna(0).mean(),  
-        "f1": dataset_metrics["F1 Score"].fillna(0).mean()  
-    })  
-\endtt
-
-After processing all cases, the results table is logged, the results are aggregated, and the final metrics are sent to the server.
-
-\sec Logging
-
-All experiments are recorded.
-This is done in order to maximize experiment repeatability and ensure sustainable orientation among individual runs. For this purpose, the MLflow application\cite[mlflow] was used. MLflow (see \ref[mlflow]) is an open-source application designed for managing experiments in machine learning workflows. The tool has recently received integrations for various frameworks based on API call management for services providing access to large language model inference (such as the OpenAI SDK\cite[openai-sdk] or LiteLLM\cite[litellm]). This allows automatic tracing and logging of API requests, their inputs and outputs, and linking them to the running experiment. This significantly facilitates orientation and enhances the clarity of experiments based on language model inference. The MLflow application runs as a local web server. The data from individual runs are stored in the directory from which the application is launched.
-
-The structure of experiments was defined.
-The systematization in MLflow is as follows. The tool records experiments. Experiments consist of multiple runs, which can be compared with each other. Runs may have either a custom name or a randomly generated human-readable name. In this work, individual tested models are considered as experiments. The version of the tested pipeline is subsequently logged as a run tag. This enables comparison of results both across runs of a single model and comparison of the performance of different models under the same version of the extraction pipeline, thanks to filtering by tag.
-
-MLflow offers two interface modes for run management.
-The first is a table mode that enables an organized view of experiment runs with filtering capabilities. The second is a visualization dashboard. In this dashboard, users can create custom visualizations from selected run data. Available options include bar chart (for visualizing 1D categorical data), line chart (1D continuous data), parallel coordinates (multidimensional data visualization), scatter plot (2D planar data), contour chart (surface visualization of 3D data), difference view (differences in tabular data), and image grid for computer vision applications. For the purposes of this work, evaluation metrics of the best runs are monitored using bar charts. Additionally, the difference view is used to observe exact differences in these values.
-
-\medskip  \clabel[experiments-tabular]{MLflow table experiments view}
-\picw=14cm \cinspic figs/mlflow/experiment-tabular.png
-\caption/f Sample table interface for run management. The interface offers a variety of tools for working with experiments. It is possible to select experiments whose runs are to be compared. A table with corresponding runs appears on the right side. Individual runs can be filtered by creation time, evaluation metrics, parameters, tags, and also attributes from associated API trace calls. Furthermore, the tabular interface can be customized for quicker navigation among runs.
-\medskip
-
-\medskip  \clabel[experiments-visual]{MLflow visualization experiments view}
-\picw=14cm \cinspic figs/mlflow/experiment-visual.png
-\caption/f Sample of visualization interface for run management. This section allows users to create custom visualizations from selected data of selected runs. The layout, position, and size of the visualization panels can also be adjusted.
-\medskip
-
-\medskip  \clabel[difference-view]{MLflow difference view}
-\picw=10cm \cinspic figs/mlflow/difference-view.png
-\caption/f Example of the Difference View visualization in the visualization interface. It is possible to select one baseline run and then easily observe the improvement or deterioration of subsequent runs.
-\medskip
-
-
-Numerous values are logged within each run.
-Upon opening a run detail, the interface provides several tabs. The {\it Overview} tab displays data such as the start time and duration of the run, the input dataset, and tags that refer to the run type and also record Git metadata for the code that executed the experiments. This allows users to return to the specific version of the code for potential reproduction. It also logs the exact versions of prompts used for the inference of instruction-tuned models (see \ref[prompt-management]). In the “Model metrics” tab, the values of tracked metrics can be observed.
-
-\medskip  \clabel[run-detail]{MLflow run detail}
-\picw=8cm \cinspic figs/mlflow/run-detail.png
-\caption/f Sample Overview tab in run detail view.
-This includes a variety of logged parameters. Some are logged automatically, while others are specified directly by the user.
-\medskip
-
-\medskip  \clabel[run-traces]{MLflow traces tab}
-\picw=14cm \cinspic figs/mlflow/run-traces.png
-\caption/f Example of the traces tab, which contains a list of individual calls to the large language model API.
-The tabular overview shows the creation time and runtime. Additionally, the original form of the Request and the Response received from the server are recorded here.
-\medskip
-
-\medskip  \clabel[run-artifacts]{MLflow artifacts tab}
-\picw=14cm \cinspic figs/mlflow/run-artifacts2.png
-\caption/f The Artifact tab contains various files logged during the experiment run.
-The files may be binary or tabular in nature. JSON structures can also be logged. For each media case in the evaluation dataset, partial evaluation results are logged. The final JSON structure from the prediction step is also recorded.
-\medskip
-
-\medskip  \clabel[run-completion]{MLflow LLM trace detail}
-\picw=14cm \cinspic figs/mlflow/run-completion.png
-\caption/f Example interface of an individual LLM trace detail.
-Here, the message structure can be seen in a user-friendly and readable format. If any record is formatted using Markdown, it is rendered accordingly. In the Inputs/Outputs and Attributes tabs, additional request and response properties are available. For example, if the model uses a thinking process, the output of this process can be found here. In the Events table, error messages can be located if the request fails.
-\medskip
-
-\label[prompt-management]
-\sec Prompt management
-MLflow offers a system for prompt management. Prompts are instructional texts used to guide instruction-based language models. A high-quality formulation of the desired task and expected output is one of the key factors for improving language model performance \cite[prompt-engineering]. To organize the prompts used and their versions, the prompt repository provided by MLflow was utilized in this thesis.
-
-Prompts are maintained in a single location.
-The resulting prompts are not merely static texts. They are implemented as mustache templates\cite[moustache]. The text may therefore contain variables. It defines the textual output that results from rendering the template with applied variables. Each prompt in MLflow stores, in addition to its text, various metadata in the form of key-value pairs. In addition, each prompt contains a list of versions. Versions can be created through either the user interface or from code, and, similarly to version control systems, each change can be accompanied by an optional commit message. The UI provides a convenient way to compare individual versions. MLflow also automatically captures the prompts used and links the applied version to the executed experiment runs. A prompt version then contains a reference to the run in which it was used, and the run itself includes a list of used prompts and their respective versions.
-
-The prompts can be accessed directly from the code.
-Once connected to an MLflow server, a prompt version can be accessed via 
-
-\begtt
-prompt = mlflow.load_prompt("prompts:/llama4_events/3")
-\endtt
-
-The resulting string can be rendered using 
-\begtt
-prompt.format(variable_name=variable)
-\endtt 
-
-The value of the {\tt variable} is inserted into the placeholder at the location of {\tt variable\char`_name} within the rendered prompt. The variable identifier follows the format "prompts:/{prompt_name}/{version}". The version can be a numeric version identifier or "latest" for dynamic usage of the most recently created prompt version.
-
-\medskip  \clabel[prompt-management-fig]{MLflow prompt management}
-\picw=14cm \cinspic figs/mlflow/prompt-management.png
-\caption/f An illustration of version comparison in the detail view of a saved prompt. Two versions can be compared at the same time. One is used as the baseline (left side) and the other as the update (right side). The edit differences between the two prompt texts are highlighted in color.
-\medskip
-
+\label[models]
 \sec Used models
 A wide range of language models was used for the experiments. The selection aimed to include both open-source and commercial models. Likewise, the models represent both large language models with direct inference and those with an integrated reasoning phase.
 
@@ -452,38 +403,13 @@ vllm serve Qwen/Qwen3-14B-AWQ --enable-reasoning \
 
 {\em GPT-4.1}\cite[gpt4.1] is a closed-source multimodal language model developed by OpenAI in 2025, designed for advanced natural language understanding, code generation, and processing of very long contexts of up to 1 million tokens. Compared to previous versions, it achieves significantly better results in logical reasoning, following complex instructions, and multimodal analysis, including text, image, audio, and video. The model shows robust performance across standard benchmarks and represents a significant improvement in accuracy, efficiency, and generalization capabilities.\cite[gpt4.1] Access to the model was provided via the OpenAI Platform\cite[openai-platform].
 
-\sec Implementation
+\sec Experiments
 
-TBD
+Experimental methodology defines the objectives and procedures of experiments. The objective of the experimental section is to measure the performance of individual extraction pipeline configurations (v1, v2, and v3) defined in section \ref[pipeline-versions]. For the purposes of the experiments, the dataset was divided into validation and test splits. The experiments can be categorized into the following groups:
 
-\secc Infractructure
-Some of the models were hosted in a computing cluster. The {\it RCI compute cluster}\cite[rci]{} is used to provide access to opensource large language models. The cluster is an HPC (High Performance Computing) infrastructure designed for scientific purposes in the field of computationally intensive tasks such as large language models. The cluster consists of two subclusters, one based on Intel processors, the other on AMD processors. Each cluster consists of compute and management nodes. At the same time, a common data store takes care of persistence across nodes. The compute nodes of Intel clusters are divided into CPU, GPU and multi-CPU. GPU nodes have access to up to four NVIDIA Tesla V100 GPUs. In total, therefore, 48 Tesla V100 graphics cards are available. AMD subcluster nodes are divided into CPU, 4GPU, 8GPU and one node with access to a Graphcore M2000 IPU (Intelligence Processing Unit). Graphics nodes use graphics cards NVIDIA Tesla A100 with 40 GB of graphics operating memory. Thus, a total of 56 Tesla A100 GPUs available. Job scheduling is taken care of by the Slurm workload manager\cite[slurm]{}.
+Performance measurement of the baseline configuration (v1) on the test dataset using selected language models.
+Iterative improvement of the selected model's (Llama4 Scout) performance on the validation dataset through prompt engineering.
+Performance measurement of the improved configuration (v2) on the test dataset using selected language models.
+Performance measurement of the configuration with minimal batch size (v3) on the test dataset using selected language models.
 
-{\it Chat AI}\cite[e-infra] is a web application operated within the e-INFRA CZ infrastructure. It enables authorized users to interact with advanced language models for generating textual and visual outputs. The service provides access to models such as LLaMA 3.3, DeepSeek R1, Qwen 2.5 Coder, Aya Expanse, and Phi-4, covering a wide range of tasks from natural language understanding to code generation and multilingual communication. Users are offered both a graphical interface for interactive use and a REST API for programmatic access, with authentication handled through the MetaCentrum infrastructure. The service thus represents a universal platform for both research and practical applications of generative models.
-
-\secc Libraries
-{\it Hugging Face} helps with the development of generative language models. Hugging Face offers a platform \cite[huggingface]{} for sharing source code, trained weights of individual deep learning models, and datasets for performance testing and comparison of trained models.
-
-{\it The Transformers library} \cite[hf-transformers]{} is part of the Hugging Face platform. It is an interface for a unified approach to inference, training and retraining pre-trained models. The library is based on Python and supports deep learning libraries such as PyTorch, TensorFlow and Flax.
-
-The {\it vLLM}\cite[vllm]{}\cite[vllm-github]{} library helps with inference. The vLLM library takes care of optimizing inference and serving inference http endpoints for large language models. It introduces Pipelined Execution with Distributed Shared Memory (PDS) memory management paradigm, which enables the concurrent processing of multiple requests by sharing memory across different inference tasks. This design minimizes redundant computation and memory overhead, enhancing throughput and reducing latency. Compatible with various model repositories like Hugging Face Transformers, vLLM supports diverse architectures
-
-LiteLLM is an open-source Python library that serves as a unified interface for working with more than one hundred different LLMs (Large Language Models) through a single OpenAI-style API. The purpose of the library is to make it easier for developers to switch between various model providers, such as OpenAI, Azure, Together, Anthropic, or Hugging Face, without having to modify the application logic. LiteLLM supports authentication, fallback mechanisms, and access control (e.g., throttle limits or quotas) directly from the Python environment.\cite[litellm]
-
-mustache
-
-BertTransformers
-
-pandas
-
-matplotlib and seaborn
-
-rapidfuzz
-
-dotenv
-
-
-\label[mlfl]
-\secc Tools
-
-MLflow
+A number of models were used for testing. For incremental improvement on the validation dataset, only one model was used, specifically the relatively fast Llama 4 Scout. However, for evaluation on the test dataset, several models were used. The reason for this was both the effort to compare the models on this specific problem and to ensure greater objectivity of the results, which would not depend solely on a single model. The list of models can be found in chapter \ref[models]. Some models were not used for all versions of the pipeline due to insufficient context or financial reasons. The intention was to include both open and commercial models.

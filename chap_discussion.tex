@@ -14,7 +14,7 @@ Model performance is compared across all pipeline versions using results from th
 
 \medskip  \clabel[models-heatmap]{Heatmap of model performances}
 \picw=14cm \cinspic figs/discussion/model-performance-heatmaps.png
-\caption/f Heatmap of model performances across pipeline versions for Precision, Recall, and F1. Each cell displays the score achieved by a given model (row) for a specific pipeline version (column), with color intensity ranging from light blue (lower performance) to dark blue (higher performance). The three panels represent the different evaluation metrics. Darker blue cells correspond to stronger performance. The heatmap highlights that commercial models (e.g., Gemini 2.5 Flash, GPT 4.1) consistently achieve the highest scores across all metrics and pipeline versions, while open-source models tend to perform lower, especially in more complex extraction phases. Comparing columns shows the effect of pipeline improvements for each model; reading across rows allows quick assessment of relative model strength.
+~\caption/f Heatmap of model performances across pipeline versions for Precision, Recall, and F1. Each cell displays the score achieved by a given model (row) for a specific pipeline version (column), with color intensity ranging from light blue (lower performance) to dark blue (higher performance). The three panels represent the different evaluation metrics. Darker blue cells correspond to stronger performance. The heatmap highlights that commercial models (e.g., Gemini 2.5 Flash, GPT 4.1) consistently achieve the highest scores across all metrics and pipeline versions, while open-source models tend to perform lower, especially in more complex extraction phases. Comparing columns shows the effect of pipeline improvements for each model; reading across rows allows quick assessment of relative model strength.
 \medskip
 
 
@@ -61,7 +61,7 @@ Precision & 0.629 & 0.117 & 0.633 & 0.091 & 0.004 & 0.082 \cr
 Recall    & 0.494 & 0.085 & 0.509 & 0.083 & 0.014 & 0.042 \cr
 F1-score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
 }
-\caption/t This table provides a summary of the central tendency ($\mu$) and spread ($\sigma$) for each metric (precision, recall, F1-score) in both system versions. $\mu_1$, $\sigma_1$ refer to version 1, $\mu_2$, $\sigma_2$ to version 2, and $\mu_{2-1}$, $\sigma_{2-1}$ to the difference. Read horizontally to compare old and new versions. The final columns show the average change, indicating if, on average, the new system increases or decreases performance.
+~\caption/t This table provides a summary of the central tendency ($\mu$) and spread ($\sigma$) for each metric (precision, recall, F1-score) in both system versions. $\mu_1$, $\sigma_1$ refer to version 1, $\mu_2$, $\sigma_2$ to version 2, and $\mu_{2-1}$, $\sigma_{2-1}$ to the difference. Read horizontally to compare old and new versions. The final columns show the average change, indicating if, on average, the new system increases or decreases performance.
 \endinsert
 
 
@@ -72,23 +72,23 @@ Precision & 0.004 & 0.082 & 0.840 & 0.700 \cr
 Recall    & 0.014 & 0.042 & 0.140 & 0.180 \cr
 F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
 }
-\caption/t This table shows the results of both statistical tests for every metric. The Mean Diff ($\mu_{2-1}$) and Std Diff ($\sigma_{2-1}$) reflect the average and standard deviation of observed improvement. The p-values (t-test and Wilcoxon) indicate whether observed changes are statistically significant. To interpret, look for p-values below 0.05, which indicate strong evidence against the null hypothesis.
+~\caption/t This table shows the results of both statistical tests for every metric. The Mean Diff ($\mu_{2-1}$) and Std Diff ($\sigma_{2-1}$) reflect the average and standard deviation of observed improvement. The p-values (t-test and Wilcoxon) indicate whether observed changes are statistically significant. To interpret, look for p-values below 0.05, which indicate strong evidence against the null hypothesis.
 \endinsert
 
 \medskip  \clabel[v1-v2-bar-plot]{Comparison v1-v2: Grouped bar plot}
 \picw=14cm \cinspic figs/discussion/v1-v2-barplot.pdf
-\caption/f Grouped bar plot displays F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for the old version and one for the new version. To interpret, locate the (model, dataset) of interest along the axes, then compare the height of the bars within each group. Taller bars indicate higher F1 scores. If the bar for the new version is taller than that of the old, the new system performed better for that specific case. This figure allows a quick visual scan for systematic improvements or regressions across all groups.
+~\caption/f Grouped bar plot displays F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for the old version and one for the new version. To interpret, locate the (model, dataset) of interest along the axes, then compare the height of the bars within each group. Taller bars indicate higher F1 scores. If the bar for the new version is taller than that of the old, the new system performed better for that specific case. This figure allows a quick visual scan for systematic improvements or regressions across all groups.
 \medskip
 
 
 \medskip  \clabel[v1-v2-diff-bar-plot]{Comparison v1-v2: Difference bar plot}
 \picw=10cm \cinspic figs/discussion/v1-v2-f-diff.pdf
-\caption/f Bar plot visualizes the difference in F1 score (v2 - v1) for each (model, dataset) pair. The x-axis shows different models, grouped or colored by dataset. Each bar’s height indicates how much the F1 score changed: positive values (bars above zero) represent improvements, and negative values (bars below zero) represent declines. The horizontal dotted line at zero provides a clear visual threshold—bars crossing above this line signify improvement, those below indicate regression. To interpret, examine the position and height of each bar relative to zero.
+~\caption/f Bar plot visualizes the difference in F1 score (v2 - v1) for each (model, dataset) pair. The x-axis shows different models, grouped or colored by dataset. Each bar’s height indicates how much the F1 score changed: positive values (bars above zero) represent improvements, and negative values (bars below zero) represent declines. The horizontal dotted line at zero provides a clear visual threshold—bars crossing above this line signify improvement, those below indicate regression. To interpret, examine the position and height of each bar relative to zero.
 \medskip
 
 \medskip  \clabel[v1-v2-data-points]{Comparison v1-v2: Scatter plot}
 \picw=10cm \cinspic figs/discussion/v1-v2-data-points.pdf
-\caption/f Scatter plot compares F1 scores of the two versions for each (model, dataset) pair. The shape represents a dataset, color of the point represents a model. Each point represents one (model, dataset) instance, with the x-coordinate showing the old version’s F1 and the y-coordinate showing the new version’s F1. The diagonal dashed line marks equality ($y = x$): points above this line indicate that the new version outperformed the old for that pair, while points below indicate a decrease. The distance from the line reveals the magnitude of the difference. This figure allows the reader to quickly assess whether improvements are systematic (most points above the line) or inconsistent.
+~\caption/f Scatter plot compares F1 scores of the two versions for each (model, dataset) pair. The shape represents a dataset, color of the point represents a model. Each point represents one (model, dataset) instance, with the x-coordinate showing the old version’s F1 and the y-coordinate showing the new version’s F1. The diagonal dashed line marks equality ($y = x$): points above this line indicate that the new version outperformed the old for that pair, while points below indicate a decrease. The distance from the line reveals the magnitude of the difference. This figure allows the reader to quickly assess whether improvements are systematic (most points above the line) or inconsistent.
 \medskip
 
 Conclusion is based on statistical evidence. Statistical tests and visualizations indicate a trend toward improved F1 scores, but these improvements do not reach statistical significance at the 0.05 level. Mean values are generally higher for the new version, but standard deviations indicate considerable overlap.
@@ -110,7 +110,7 @@ Precision&	0.622&	0.097&	0.610&	0.094&	-0.012&	0.049 \cr
 Recall&	0.497&	0.087&	0.503&	0.094&	0.005&	0.059 \cr
 F1-score&	0.459&	0.106&	0.465&	0.098	&0.006	&0.053 \cr
 }
-\caption/t Descriptive statistics for precision, recall, and F1-score for system versions 2 and 3. $\mu_2$ and $\sigma_2$ are the mean and standard deviation for version 2, $\mu_3$ and $\sigma_3$ for version 3, and $\mu_{3-2}$, $\sigma_{3-2}$ are the mean and standard deviation of the difference (version 3 minus version 2).
+~\caption/t Descriptive statistics for precision, recall, and F1-score for system versions 2 and 3. $\mu_2$ and $\sigma_2$ are the mean and standard deviation for version 2, $\mu_3$ and $\sigma_3$ for version 3, and $\mu_{3-2}$, $\sigma_{3-2}$ are the mean and standard deviation of the difference (version 3 minus version 2).
 \endinsert
 
 Statistical hypotheses are formally tested. The null hypothesis for each metric asserts no difference between version 3 and version 2; the alternative hypothesis asserts a difference. The tests used are the paired t-test (which assumes normally distributed differences) and the Wilcoxon signed-rank test (which is non-parametric). A p-value less than 0.05 is interpreted as statistically significant evidence of a difference.
@@ -122,23 +122,23 @@ Precision & -0.012 & 0.049 & 0.362 & 0.389 \cr
 Recall    & 0.005  & 0.059 & 0.727 & 0.489 \cr
 F1-score  & 0.006  & 0.053 & 0.667 & 0.421 \cr
 }
-\caption/t Statistical test results for metric differences (version 3 minus version 2). $\mu_{3-2}$ and $\sigma_{3-2}$ denote the mean and standard deviation of the difference. p-values from the paired t-test and Wilcoxon signed-rank test are shown; p-values below 0.05 indicate statistical significance.
+~\caption/t Statistical test results for metric differences (version 3 minus version 2). $\mu_{3-2}$ and $\sigma_{3-2}$ denote the mean and standard deviation of the difference. p-values from the paired t-test and Wilcoxon signed-rank test are shown; p-values below 0.05 indicate statistical significance.
 \endinsert
 
 \medskip  \clabel[v2-v3-bar-plot]{Comparison v2-v3: Grouped bar plot}
 \picw=14cm \cinspic figs/discussion/v2-v3-barplot.pdf
-\caption/f Grouped bar plot showing F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for version 2 and one for version 3. The notation for each axis corresponds to the models and datasets. Taller bars for version 3 indicate local improvement. The plot facilitates systematic visual assessment across groups.
+~\caption/f Grouped bar plot showing F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for version 2 and one for version 3. The notation for each axis corresponds to the models and datasets. Taller bars for version 3 indicate local improvement. The plot facilitates systematic visual assessment across groups.
 \medskip
 
 \medskip  \clabel[v2-v3-diff-bar-plot]{Difference bar plot emphasizes magnitude and direction}
 \picw=10cm \cinspic figs/discussion/v2-v3-f-diff.pdf
-\caption/f Bar plot displaying the difference in F1 score ($\Delta$F1 = F1$_3$ – F1$_2$) for each (model, dataset) pair. The x-axis categorizes by model, colors distinguish datasets. The horizontal dashed line at zero highlights whether the difference is positive or negative. The magnitude and direction of each bar directly visualizes the local effect of the system change.
+~\caption/f Bar plot displaying the difference in F1 score ($\Delta$F1 = F1$_3$ – F1$_2$) for each (model, dataset) pair. The x-axis categorizes by model, colors distinguish datasets. The horizontal dashed line at zero highlights whether the difference is positive or negative. The magnitude and direction of each bar directly visualizes the local effect of the system change.
 \medskip
 
 
 \medskip  \clabel[v2-v3-data-points]{Scatter plot details pairwise relationships.}
 \picw=10cm \cinspic figs/discussion/v2-v3-data-points.pdf
-\caption/f Scatter plot comparing F1 scores for version 2 (x-axis) and version 3 (y-axis) for each (model, dataset) pair. Each point represents a single instance. The diagonal dashed line ($y=x$) is the reference for equality: points above the line indicate higher F1 in version 3, points below indicate higher F1 in version 2. This plot summarizes whether improvements are systematic or sporadic.
+~\caption/f Scatter plot comparing F1 scores for version 2 (x-axis) and version 3 (y-axis) for each (model, dataset) pair. Each point represents a single instance. The diagonal dashed line ($y=x$) is the reference for equality: points above the line indicate higher F1 in version 3, points below indicate higher F1 in version 2. This plot summarizes whether improvements are systematic or sporadic.
 \medskip
 
 Performance differences are minimal between system versions two and three.

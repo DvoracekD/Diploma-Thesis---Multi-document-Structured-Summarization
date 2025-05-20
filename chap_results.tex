@@ -8,28 +8,28 @@ The first section, Baseline evaluation, establishes reference performance levels
 
 The baseline quality was assessed. The baseline implementation of the extraction pipeline, together with the baseline instructional prompts, was evaluated using the evaluation process described earlier.
 
-The only controlled inference parameter for most models was temperature. The parameter was set to 0 to maximize the determinism of the experiments and to support structured output generation in JSON format. Based on the experiment (see \ref[temperature-influence]), it was also found that a value of 0 provides the best performance in terms of the overall recall of the process and yields comparable results in terms of precision and F1 score. Only for the Qwen3 model were the parameters recommended by the model authors used, namely "temperature": 0.6, "top_p": 0.95, and "top_k": 20. The model with zero temperature exhibited a marked tendency to endlessly repeat certain passages of the generated structure.
+The only controlled inference parameter for most models was temperature. The parameter was set to 0 to maximize the determinism of the experiments and to support structured output generation in JSON format. Based on the experiment (see \ref[temperature-influence]), it was also found that a value of 0 provides the best performance in terms of the overall recall of the process and yields comparable results in terms of precision and F1 score. Only for the Qwen3 model were the parameters recommended by the model authors used, namely "temperature": 0.6, "top_p": 0.95, and "top_k": 20.
 
-Experiments were conducted on the models Qwen3, GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1, and Llama 4 Scout. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
+Experiments were conducted using models Qwen3, GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1, and Llama 4 Scout. For detailed description see \ref[models]. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
 
 \medskip  \clabel[v1-barplot]{Baseline metrics}
 \picw=10cm \cinspic figs/results/pipeline-v1-precision-recall-bar.pdf
-\caption/f The bar plot offers a visualization of aggregated overall metrics across all test cases. For each model, the values of overall precision (blue), recall (red), and F1 score (green) are available.
+~\caption/f The bar plot offers a visualization of aggregated overall metrics across all test cases. For each model, the values of overall precision (blue), recall (red), and F1 score (green) are available.
 \medskip
 
 \medskip  \clabel[v1-metric]{Baseline model comparison by metric}
 \picw=12cm \cinspic figs/results/pipeline-v1-coord-per-metric.pdf
-\caption/f In the parallel coordinates graph, it is possible to observe changes in the ranking of individual models depending on the observed metric. The horizontal axis represents the model used and then the individual metrics (overall precision, overall recall, and overall F1 score). The vertical axis then describes the values of these parameters. For maximum information value within limited space, the individual axes do not have the same range and scale, even though all three metrics share the same range of 0 to 1. The colored lines in the graph represent individual experiments. The lines connect the vertical axes at the metric values measured in the corresponding experiment. The color of the line corresponds to the value of the F1 score in the given experiment.
+~\caption/f In the parallel coordinates graph, it is possible to observe changes in the ranking of individual models depending on the observed metric. The horizontal axis represents the model used and then the individual metrics (overall precision, overall recall, and overall F1 score). The vertical axis then describes the values of these parameters. For maximum information value within limited space, the individual axes do not have the same range and scale, even though all three metrics share the same range of 0 to 1. The colored lines in the graph represent individual experiments. The lines connect the vertical axes at the metric values measured in the corresponding experiment. The color of the line corresponds to the value of the F1 score in the given experiment.
 \medskip
 
 \medskip  \clabel[v1-stage]{Baseline model comparison by evaluation aspect}
 \picw=12cm \cinspic figs/results/pipeline-v1-coord-per-stage.pdf
-\caption/f The parallel coordinates diagram shows changes in the ranking of models depending on the F1 score value for individual aspects of the evaluation. These include the model's ability to detect entities in text (Entity Detection), the correct assignment of detected entities to the articles in which they appear (Entity-article Assignment), and the ability to detect entities (Entity Detection) and correctly assign these to events in the articles where they are mentioned. The color of the experiments is the overall value of the F1 score measured in the experiment.
+~\caption/f The parallel coordinates diagram shows changes in the ranking of models depending on the F1 score value for individual aspects of the evaluation. These include the model's ability to detect entities in text (Entity Detection), the correct assignment of detected entities to the articles in which they appear (Entity-article Assignment), and the ability to detect entities (Entity Detection) and correctly assign these to events in the articles where they are mentioned. The color of the experiments is the overall value of the F1 score measured in the experiment.
 \medskip
 
 \medskip  \clabel[v1-dataset]{Baseline model comparison by dataset}
 \picw=12cm \cinspic figs/results/pipeline-v1-coord-per-dataset.pdf
-\caption/f The parallel coordinates diagram for F1 score values in individual media cases that make up the test dataset. The color of the experiment corresponds to the overall measured value of the F1 score.
+~\caption/f The parallel coordinates diagram for F1 score values in individual media cases that make up the test dataset. The color of the experiment corresponds to the overall measured value of the F1 score.
 \medskip
 
 
@@ -63,7 +63,7 @@ Further, examples were added. Given the proven effectiveness of using few-shot p
 
 \medskip  \clabel[v1-iter]{Progression of baseline optimization}
 \picw=14cm \cinspic figs/results/v1-iter-all.pdf
-\caption/f Changes in individual metrics. In all charts, the horizontal axis shows the order of improvement iterations, and the vertical axis shows the value of the metric. The bottom row presents the metrics calculated on individual datasets (media cases). In the lower left corner, the overall aggregated values of the tracked metrics are located. In the rest of the bottom row, the metrics calculated for individual evaluation phases are presented.
+~\caption/f The figure shows changes in the individual metrics. In all charts, the horizontal axis shows the number of the improvement iteration, and the vertical axis shows the value of the metric. All the charts share the same scale. In the upper left corner, the overall aggregated values of the tracked metrics are located. In the rest of the top row, the metrics calculated for individual evaluation phases are presented. The bottom row presents the metrics calculated on individual datasets (media cases). In the lower left corner, the overall aggregated values of the tracked metrics are located. In the rest of the bottom row, the metrics calculated for individual evaluation phases are presented.
 \medskip
 
 
@@ -77,7 +77,7 @@ The optimized pipeline was evaluated. Only models Qwen3, Llama 4 Scout, GPT 4.1,
 
 \medskip \clabel[v2-barplot]{Enhanced pipeline metrics}
 \picw=10cm \cinspic figs/results/pipeline-v2-precision-recall-bar.pdf
-\caption/f The bar plot summarizes overall precision, recall, and F1 score across all models and test cases. Gemini 2.5 Flash shows leading performance in all metrics.
+~\caption/f The bar plot summarizes overall precision, recall, and F1 score across all models and test cases. Gemini 2.5 Flash shows leading performance in all metrics.
 
 \medskip
 
@@ -87,7 +87,7 @@ Parallel coordinates visualization enables detailed comparison by metric. In \re
 
 \medskip \clabel[v2-metric]{Enhanced pipeline comparison by metric}
 \picw=12cm \cinspic figs/results/pipeline-v2-coord-per-metric.pdf
-\caption/f Parallel coordinates graph for model performance by metric. Each colored line represents an experiment, colored by F1 score.
+~\caption/f Parallel coordinates graph for model performance by metric. Each colored line represents an experiment, colored by F1 score.
 
 \medskip
 
@@ -95,7 +95,7 @@ Stage-wise evaluation examines F1 scores for four key extraction phases: Entity 
 
 \medskip \clabel[v2-stage]{Enhanced pipeline comparison by evaluation aspect}
 \picw=12cm \cinspic figs/results/pipeline-v2-coord-per-stage.pdf
-\caption/f Parallel coordinates for F1 scores by evaluation stage. Gemini consistently achieves the highest values.
+~\caption/f Parallel coordinates for F1 scores by evaluation stage. Gemini consistently achieves the highest values.
 
 \medskip
 
@@ -103,7 +103,7 @@ Dataset-level analysis reveals that Gemini 2.5 Flash leads in F1 score for every
 
 \medskip \clabel[v2-dataset]{Enhanced pipeline comparison by dataset}
 \picw=12cm \cinspic figs/results/pipeline-v2-coord-per-dataset.pdf
-\caption/f Parallel coordinates plot for F1 scores by dataset. Performance advantage of commercial models is most evident for challenging cases.
+~\caption/f Parallel coordinates plot for F1 scores by dataset. Performance advantage of commercial models is most evident for challenging cases.
 
 \medskip
 
@@ -115,7 +115,7 @@ The pipeline from the previous chapter was re-evaluated with a key modification:
 
 \medskip \clabel[v3-barplot]{Batch size 1 pipeline metrics}
 \picw=8cm \cinspic figs/results/pipeline-v3-precision-recall-bar.pdf
-\caption/f The bar plot summarizes overall precision, recall, and F1 score for all included models when processing single articles.
+~\caption/f The bar plot summarizes overall precision, recall, and F1 score for all included models when processing single articles.
 
 \medskip
 
@@ -125,7 +125,7 @@ A parallel coordinates plot was used to compare model performance by metric. In 
 
 \medskip \clabel[v3-metric]{Batch size 1 pipeline comparison by metric}
 \picw=12cm \cinspic figs/results/pipeline-v3-coord-per-metric.pdf
-\caption/f Parallel coordinates plot for model performance by metric when using batch size 1. The Gemini model consistently leads in all metrics.
+~\caption/f Parallel coordinates plot for model performance by metric when using batch size 1. The Gemini model consistently leads in all metrics.
 
 \medskip
 
@@ -133,7 +133,7 @@ Stage-wise analysis of F1 scores for entity detection, entity-article assignment
 
 \medskip \clabel[v3-stage]{Batch size 1 pipeline comparison by evaluation aspect}
 \picw=12cm \cinspic figs/results/pipeline-v3-coord-per-stage.pdf
-\caption/f Parallel coordinates plot for F1 scores by evaluation stage. Gemini 2.5 Flash achieves the highest F1 at all stages.
+~\caption/f Parallel coordinates plot for F1 scores by evaluation stage. Gemini 2.5 Flash achieves the highest F1 at all stages.
 
 \medskip
 
@@ -141,7 +141,7 @@ Dataset-level analysis again shows Gemini 2.5 Flash ahead in F1 score on every d
 
 \medskip \clabel[v3-dataset]{Batch size 1 pipeline comparison by dataset}
 \picw=12cm \cinspic figs/results/pipeline-v3-coord-per-dataset.pdf
-\caption/f Parallel coordinates plot for F1 scores by dataset. Gemini 2.5 Flash again demonstrates clear superiority.
+~\caption/f Parallel coordinates plot for F1 scores by dataset. Gemini 2.5 Flash again demonstrates clear superiority.
 
 \medskip
 
@@ -155,7 +155,7 @@ Model performance can be sensitive to the temperature parameter, which governs t
 
 \medskip  \clabel[temperature]{Temperature comparison}
 \picw=15cm \cinspic figs/results/temperature.pdf
-\caption/f Distribution and regression analysis of precision, recall, and F1 score as a function of the temperature parameter. For each metric, boxplots illustrate the distribution of scores at each temperature setting, with the solid and dashed lines representing linear and quadratic regression fits, respectively.
+~\caption/f Distribution and regression analysis of precision, recall, and F1 score as a function of the temperature parameter. For each metric, boxplots illustrate the distribution of scores at each temperature setting, with the solid and dashed lines representing linear and quadratic regression fits, respectively.
 \medskip
 
 
@@ -172,7 +172,7 @@ Precision & 0.40 & 0.85 & No \cr
 Recall & 5.42 & 0.00045 & {\bf Yes} \cr
 F1 & 0.47 & 0.79 & No \cr
 }
-\caption/t Summary of ANOVA test results for the effect of temperature on model evaluation metrics. Statistically significant results $(p < 0.05)$ are highlighted in bold.
+~\caption/t Summary of ANOVA test results for the effect of temperature on model evaluation metrics. Statistically significant results $(p < 0.05)$ are highlighted in bold.
 \endinsert
 
 In Table \ref[ANOVA-temperature], the F-statistic and p-value are reported for each metric, along with an indication of statistical significance at the standard 0.05 threshold. Only recall was found to vary significantly with temperature ($F = 5.42$, p = $0.00045$), indicating that changes in the temperature parameter can lead to meaningful differences in recall. In contrast, precision ($F = 0.40$, $p = 0.85$) and F1 score ($F = 0.47$, $p = 0.79$) showed no statistically significant dependence on temperature, suggesting stability across the tested range. The summary table should be read such that a significant result denotes substantial differences in the mean value of the metric across temperature settings, while a non-significant result implies relative invariance.
