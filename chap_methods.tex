@@ -303,7 +303,7 @@ Events are matched semantically. Descriptions of atomic events are converted int
 
 The algorithm operates on a corpus of discrete articles, $\cal A$, to generate a canonicalized and consolidated knowledge graph. This graph comprises distinct sets of entities and events, effectively resolving inter-article redundancy.
 
-{\bf Global Variables and Constants:}
+Global Variables and Constants:
 \begitems
 * {\cal P}: Canonical register for Persons.
 * {\cal O}: Canonical register for Organizations.
@@ -314,33 +314,33 @@ The algorithm operates on a corpus of discrete articles, $\cal A$, to generate a
 \enditems
 
 \begitems \style I
-* {\bf Initialization Phase}
+* Initialization Phase
     \begitems
     * Initialize canonical registers ({\cal P}, {\cal O}, {\cal L}, {\cal V}) with entities and events from the first article, $A_1$, assigning unique IDs to events.
     * Establish a mapping structure, ${\cal M}_i$, for each article $A_i$, and initialize a deduplicated representation, $\hat{A}_i$, for each article.
     \enditems
-* {\bf Entity Deduplication (Iterative Processing for $A_i$ where $i > 1$)}
+* Entity Deduplication (Iterative Processing for $A_i$ where $i > 1$)
     For each subsequent article $A_i$, entities (persons, organizations, locations) are deduplicated against their respective global canonical registers.
     \begitems
-    * {\bf Similarity Assessment:} Employ fuzzy string similarity (e.g., Jaro-Winkler) for name matching between entities from $A_i$ and existing canonical entries. A match is determined if the similarity exceeds $\tau_E$.
-    * {\bf Consolidation:}
+    * Similarity Assessment: Employ fuzzy string similarity (e.g., Jaro-Winkler) for name matching between entities from $A_i$ and existing canonical entries. A match is determined if the similarity exceeds $\tau_E$.
+    * Consolidation:
         \begitems
         * If a match is found, the article's entity ID is mapped to the canonical entity's ID, and any new descriptive attributes (roles, types) are merged into the canonical record.
         * If no match, the article's entity is added as a new canonical entry with a unique ID, and its original ID is mapped to this new canonical ID.
         \enditems
     \enditems
-* {\bf Event Deduplication (Iterative Processing for $A_i$ where $i > 1$)}
+* Event Deduplication (Iterative Processing for $A_i$ where $i > 1$)
     For each event in article $A_i$:
     \begitems
-    * {\bf Semantic Embedding:} Convert event textual descriptions into vector embeddings using a sentence transformer model.
-    * {\bf Cosine Similarity Matching:} Compute cosine similarity between the event's embedding and all existing canonical event embeddings. Identify the best match with score $s_{max}$.
-    * {\bf Consolidation:}
+    * Semantic Embedding: Convert event textual descriptions into vector embeddings using a sentence transformer model.
+    * Cosine Similarity Matching: Compute cosine similarity between the event's embedding and all existing canonical event embeddings. Identify the best match with score $s_{max}$.
+    * Consolidation:
         \begitems
         * If $s_{max} \ge \tau_V$, the article's event ID is mapped to the canonical event's ID.
         * If $s_{max} < \tau_V$, the article's event is added as a new canonical event with a unique ID, its original ID is mapped, and its associated entity IDs are re-mapped to their canonical forms.
         \enditems
     \enditems
-* {\bf Final Output}
+* Final Output
     The algorithm outputs a consolidated knowledge graph comprising the final, deduplicated sets of canonical entities ({\cal P}, {\cal O}, {\cal L}) and events ({\cal V}), along with canonicalized article representations ($\hat{A}_i$) linking to these global elements.
 \enditems
 

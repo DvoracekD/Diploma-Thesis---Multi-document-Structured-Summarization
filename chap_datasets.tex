@@ -26,6 +26,30 @@ The structure of a single article is as follows:
 
 \enditems
 
+Example article:
+\begtt
+{
+    "id": 8109238,
+    "date": "2019-11-14 13:39:00",
+    "url": "https://www.irozhlas.cz/zpravy-domov/blanka-dejvicky-
+            tunel-pozar-auto-policie-hasici_1911141310_dok",
+    "domicil": "Praha",
+    "sections": "Zprávy z domova",
+    "tags": "Praha;auto;hasiči;požár;tunel Blanka",
+    "title": "Tunel Blanka byl hodinu uzavřen kvůli požáru osobního 
+              auta. Na místě zasahovali hasiči i policie",
+    "abstract": "V Dejvickém tunelu kvůli technické závadě podle mluvčí 
+                 pražské policie Violetty Siřišťové začalo ve čtvrtek 
+                 okolo půl jedné hořet osobní auto. Provoz byl v obou 
+                 směrech obnoven po půl druhé. Na místě zasahovalo kromě 
+                 policie i pět jednotek pražských hasičů. „Zasahujeme
+                 v dýchací technice a dohašujeme vozidlo,“ napsali 
+                 na svůj twitter.",
+    "text": "Podle informací Zelené vlny kolabovala doprava v ulicích 
+             Na Letné a Patočkova."
+}
+\endtt
+
 \sec Exploratory analysis
 
 The exploratory analysis provides a comprehensive overview of the Český rozhlas articles dataset. The dataset consists of 104,677 news articles in JSONL format, with each article containing metadata such as date, URL, domicil, section, tags, title, abstract, and main text. Initial assessment demonstrates high data quality, as the dataset contains no duplicate URLs and only 48 duplicate article titles, which suggests minimal redundancy and high data integrity.
@@ -59,8 +83,8 @@ Section & Articles & Average & Median & Average abstract\crl \tskip4pt
 Zprávy z domova & 31683 & 2906 & 2212 & 354 \cr
 Zprávy ze světa & 24393 & 2327 & 1750 & 338 \cr
 Sport & 23183 & 2072 & 1811 & 293 \cr
-Fotbal & 6795 & 2071 & 1827 & 291 \cr
-Ostatní sporty & 6236 & 1926 & 1781 & 293 \cr
+Ekonomika & 5788 & 2203 & 1939 & 339 \cr
+Věda a technologie & 5204 & 2711 & 2103 & 324 \cr
 }
 ~\caption/t Section-level statistics: counts and article lengths for the top sections. The table columns are: section name, article count, average text length, median text length, and average abstract length. This enables comparison of thematic coverage and content size.
 \endinsert
@@ -138,7 +162,7 @@ Lexical analysis using a word cloud enables intuitive visualization of word freq
 
 \medskip  \clabel[Fig7]{Word cloud}
 \picw=14cm \cinspic figs/analysis/wordcloud.pdf
-~\caption/f Word cloud of the most frequent lemmatized words in the dataset. Word size represents frequency: larger words occur more often. This provides a visual overview of key themes and vocabulary in the corpus.
+~\caption/f Word cloud of the most frequent lemmatized words in the dataset, filtered for Czech stopwords. Word size represents frequency: larger words occur more often. This provides a visual overview of key themes and vocabulary in the corpus.
 \medskip
 
 In summary, the exploratory analysis establishes a foundational understanding of the Český rozhlas dataset’s structure, thematic focus, temporal patterns, and lexical characteristics. These insights inform subsequent methodological choices for advanced natural language processing, topic modeling, and event extraction tasks.

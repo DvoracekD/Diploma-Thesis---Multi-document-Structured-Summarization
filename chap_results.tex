@@ -6,11 +6,11 @@ The first section, Baseline evaluation, establishes reference performance levels
 
 \sec Baseline evaluation
 
-The baseline quality was assessed. The baseline implementation of the extraction pipeline, together with the baseline instructional prompts, was evaluated using the evaluation process described earlier.
+The baseline quality was assessed. The baseline implementation of the extraction pipeline, together with the baseline instructional prompts, was evaluated using the evaluation process described earlier. The initial instructional prompts for the pipeline were tuned on the Llama 4 model.
 
 The only controlled inference parameter for most models was temperature. The parameter was set to 0 to maximize the determinism of the experiments and to support structured output generation in JSON format. Based on the experiment (see \ref[temperature-influence]), it was also found that a value of 0 provides the best performance in terms of the overall recall of the process and yields comparable results in terms of precision and F1 score. Only for the Qwen3 model were the parameters recommended by the model authors used, namely "temperature": 0.6, "top_p": 0.95, and "top_k": 20.
 
-Experiments were conducted using models Qwen3, GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1, and Llama 4 Scout. For detailed description see \ref[models]. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
+Experiments were conducted using models Qwen3 (14B), GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1 (32B), and Llama 4 Scout (17B). For detailed description see \ref[models]. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
 
 \medskip  \clabel[v1-barplot]{Baseline metrics}
 \picw=10cm \cinspic figs/results/pipeline-v1-precision-recall-bar.pdf
@@ -39,7 +39,7 @@ Similar trends can be observed in the graphs \ref[v1-stage] and \ref[v1-dataset]
 
 \sec Pipeline optimization
 
-The baseline pipeline was improved. For iterations over the solution, the evaluation pipeline was applied to the validation dataset. Only one model, namely Llama 4 Scout, was used for the iterations. The improvement workflow was as follows:
+The baseline pipeline was improved. For iterations over the solution, the evaluation pipeline was applied to the validation dataset. Only one model, namely Llama 4 Scout, was used for the prompt tuning. The improvement workflow was as follows:
 
 \begitems \style N
 * Evaluation of the pipeline on the validation dataset.
@@ -71,9 +71,9 @@ We observe Figure \ref[v1-iter]. In the chart of overall values in the lower lef
 
 In the final system, unfortunately, there was no improvement in average recall, but it was possible to significantly improve the overall precision on the validation dataset (from 0.55 to 0.68), while recall remained nearly constant. Thus, it was also possible to improve the overall F1 score.
 
-\sec Optimized pipeline
+\sec Optimized pipeline evaluation
 
-The optimized pipeline was evaluated. Only models Qwen3, Llama 4 Scout, GPT 4.1, and Gemini 2.5 Flash were included. The evaluation procedure remained as previously described to maintain comparability. Deterministic inference (temperature set to 0) was used except where otherwise recommended. Gemini 2.5 Pro was not used for financial reasons. DeepSeek R1 was not used due to the insufficient context window of the version used. The generated responses in this version of the extraction pipeline are on average longer than the baseline due to more detailed analysis enforced by updated prompts.
+The optimized pipeline was then tested on the test dataset. Only models Qwen3, Llama 4 Scout, GPT 4.1, and Gemini 2.5 Flash were included. The evaluation procedure remained as previously described to maintain comparability. Deterministic inference (temperature set to 0) was used except where otherwise recommended. Gemini 2.5 Pro was not used for financial reasons. DeepSeek R1 was not used due to the insufficient context window of the version used. The generated responses in this version of the extraction pipeline are on average longer than the baseline due to more detailed analysis enforced by updated prompts.
 
 \medskip \clabel[v2-barplot]{Enhanced pipeline metrics}
 \picw=10cm \cinspic figs/results/pipeline-v2-precision-recall-bar.pdf
@@ -148,6 +148,130 @@ Dataset-level analysis again shows Gemini 2.5 Flash ahead in F1 score on every d
 These results demonstrate that reducing batch size to one does not fundamentally change the ranking or performance gap between models. Gemini 2.5 Flash remains the best-performing model under this more granular, single-article regime, and open-source models continue to lag behind across all metrics, stages, and datasets.
 
 
+\sec Assessment of baseline improvement
+
+We want to verify whether there has been an improvement in the extraction pipeline. In this stage, we compare the baseline implementation and prompts with the improved version obtained by iterating on the prompt design. The iterations were guided solely by the results of a single model (Llama 4) on the validation dataset. However, for the verification, we use a test dataset and a larger number of models. We designate the baseline solution as v1. We designate the improved solution as v2. Both versions were evaluated using four models across several datasets (media cases), measuring precision, recall, and F1-score for each (model, dataset) pair. The goal is to determine if the new version offers statistically significant improvements.
+
+Data is loaded and merged. Evaluation results from both versions are exported as CSV files, loaded, and standardized by renaming columns for clarity. Both datasets are merged on model and dataset, enabling direct comparison. For each metric, the difference between the new and old version is calculated for every (model, dataset) pair.
+
+Descriptive statistics give overview. The mean and standard deviation are calculated for each metric and version, along with the mean difference. This step provides an initial impression of potential improvements in precision, recall, and F1-score, indicating the central tendency and spread for both system versions.
+
+For each metric (precision, recall, F1-score), we formally test the following hypotheses:
+\begitems
+* Null Hypothesis ($H_0$): There is no difference in the metric between the two system versions.
+* Alternative Hypothesis ($H_1$): There is a difference in the metric between the two versions (two-sided test).
+\enditems
+
+Mathematically, for each metric $M$:
+
+$$
+H_0: {\bbchar E}[M_{v2} - M_{v1}] = 0
+$$
+$$
+H_1: {\bbchar E}[M_{v2} - M_{v1}] \neq 0
+$$
+
+Test methodology is robust. The paired t-test assesses whether the mean difference is significantly different from zero, assuming approximate normality. The Wilcoxon signed-rank test provides a non-parametric alternative that does not require normality. A p-value below 0.05 is considered statistically significant.
+
+\midinsert \clabel[descriptive-v1-v2]{Descriptive statistics for system versions 1 and 2}
+\ctable{l|cccccc}{
+Metric & $\mu_1$ & $\sigma_1$ & $\mu_2$ & $\sigma_2$ & $\mu_{2-1}$ & $\sigma_{2-1}$ \crl \tskip4pt
+Precision & 0.629 & 0.117 & 0.633 & 0.091 & 0.004 & 0.082 \cr
+Recall    & 0.494 & 0.085 & 0.509 & 0.083 & 0.014 & 0.042 \cr
+F1-score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
+}
+~\caption/t This table provides a summary of the central tendency ($\mu$) and spread ($\sigma$) for each metric (precision, recall, F1-score) in both system versions. $\mu_1$, $\sigma_1$ refer to version 1, $\mu_2$, $\sigma_2$ to version 2, and $\mu_{2-1}$, $\sigma_{2-1}$ to the difference. Read horizontally to compare old and new versions. The final columns show the average change, indicating if, on average, the new system increases or decreases performance.
+\endinsert
+
+
+\midinsert \clabel[statistics-v1-v2]{Statistical test results for metric differences}
+\ctable{l|cccc}{
+Metric & $\mu_{2-1}$ & $\sigma_{2-1}$ & t-test p-value & Wilcoxon p-value \crl \tskip4pt
+Precision & 0.004 & 0.082 & 0.840 & 0.700 \cr
+Recall    & 0.014 & 0.042 & 0.140 & 0.180 \cr
+F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
+}
+~\caption/t This table shows the results of both statistical tests for every metric. The Mean Diff ($\mu_{2-1}$) and Std Diff ($\sigma_{2-1}$) reflect the average and standard deviation of observed improvement. The p-values (t-test and Wilcoxon) indicate whether observed changes are statistically significant. To interpret, look for p-values below 0.05, which indicate strong evidence against the null hypothesis.
+\endinsert
+
+\medskip  \clabel[v1-v2-bar-plot]{Comparison v1-v2: Grouped bar plot}
+\picw=14cm \cinspic figs/discussion/v1-v2-barplot.pdf
+~\caption/f Grouped bar plot displays F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for the old version and one for the new version. To interpret, locate the (model, dataset) of interest along the axes, then compare the height of the bars within each group. Taller bars indicate higher F1 scores. If the bar for the new version is taller than that of the old, the new system performed better for that specific case. This figure allows a quick visual scan for systematic improvements or regressions across all groups.
+\medskip
+
+
+\medskip  \clabel[v1-v2-diff-bar-plot]{Comparison v1-v2: Difference bar plot}
+\picw=10cm \cinspic figs/discussion/v1-v2-f-diff.pdf
+~\caption/f Bar plot visualizes the difference in F1 score (v2 - v1) for each (model, dataset) pair. The x-axis shows different models, grouped or colored by dataset. Each bar’s height indicates how much the F1 score changed: positive values (bars above zero) represent improvements, and negative values (bars below zero) represent declines. The horizontal dotted line at zero provides a clear visual threshold—bars crossing above this line signify improvement, those below indicate regression. To interpret, examine the position and height of each bar relative to zero.
+\medskip
+
+\medskip  \clabel[v1-v2-data-points]{Comparison v1-v2: Scatter plot}
+\picw=10cm \cinspic figs/discussion/v1-v2-data-points.pdf
+~\caption/f Scatter plot compares F1 scores of the two versions for each (model, dataset) pair. The shape represents a dataset, color of the point represents a model. Each point represents one (model, dataset) instance, with the x-coordinate showing the old version’s F1 and the y-coordinate showing the new version’s F1. The diagonal dashed line marks equality ($y = x$): points above this line indicate that the new version outperformed the old for that pair, while points below indicate a decrease. The distance from the line reveals the magnitude of the difference. This figure allows the reader to quickly assess whether improvements are systematic (most points above the line) or inconsistent.
+\medskip
+
+Conclusion is based on statistical evidence. Statistical tests and visualizations indicate a trend toward improved F1 scores, but these improvements do not reach statistical significance at the 0.05 level. Mean values are generally higher for the new version, but standard deviations indicate considerable overlap.
+
+\sec Assessment of single batch approach
+
+We want to verify whether the minimum batch approach improves the solution. This is an approach where each phase of the extraction pipeline works with only one article. The idea is that if the model uses a smaller context, it can focus more effectively on details in the text. We will refer to this approach as v3. This approach is compared with the extraction method that uses the maximum batch size, meaning that all five articles are processed in a single inference. We refer to this approach as v2, the same as in the previous section.
+
+Statistical comparison continues for system versions two and three. Both versions are evaluated on the same set of models and datasets (media cases), with precision, recall, and F1-score measured for each (model, dataset) pair. The purpose is to identify any statistically significant improvement in the third version over the second.
+
+Data handling is consistent. Results from both versions are loaded, standardized, and merged by model and dataset. For each metric, the difference between the new and previous version is computed for every (model, dataset) pair.
+
+Descriptive statistics reveal distributions. The mean ($\mu$) and standard deviation ($\sigma$) for each metric and version, together with the mean and standard deviation of their differences, provide a summary of central tendency and variability. This statistical overview indicates the typical value and spread for each system version and the magnitude of observed changes.
+
+\midinsert \clabel[descriptive-v2-v3]{Descriptive statistics for system versions 2 and 3}
+\ctable{l|cccccc}{
+Metric & $\mu_2$&	$\sigma_2$&	$\mu_3$&	$\sigma_3$&	$\mu_{3-2}$&	$\sigma_{3-2}$ \crl \tskip4pt
+Precision&	0.622&	0.097&	0.610&	0.094&	-0.012&	0.049 \cr
+Recall&	0.497&	0.087&	0.503&	0.094&	0.005&	0.059 \cr
+F1-score&	0.459&	0.106&	0.465&	0.098	&0.006	&0.053 \cr
+}
+~\caption/t Descriptive statistics for precision, recall, and F1-score for system versions 2 and 3. $\mu_2$ and $\sigma_2$ are the mean and standard deviation for version 2, $\mu_3$ and $\sigma_3$ for version 3, and $\mu_{3-2}$, $\sigma_{3-2}$ are the mean and standard deviation of the difference (version 3 minus version 2).
+\endinsert
+
+Statistical hypotheses are formally tested. The null hypothesis for each metric asserts no difference between version 3 and version 2; the alternative hypothesis asserts a difference. The tests used are the paired t-test (which assumes normally distributed differences) and the Wilcoxon signed-rank test (which is non-parametric). A p-value less than 0.05 is interpreted as statistically significant evidence of a difference.
+
+\midinsert \clabel[test-v2-v3]{Statistical test results for difference between versions 3 and 2}
+\ctable{l|cccc}{
+Metric&	$\mu_{3-2}$&	$\sigma_{3-2}$&	t-test p-value&	Wilcoxon p-value \crl \tskip4pt
+Precision & -0.012 & 0.049 & 0.362 & 0.389 \cr
+Recall    & 0.005  & 0.059 & 0.727 & 0.489 \cr
+F1-score  & 0.006  & 0.053 & 0.667 & 0.421 \cr
+}
+~\caption/t Statistical test results for metric differences (version 3 minus version 2). $\mu_{3-2}$ and $\sigma_{3-2}$ denote the mean and standard deviation of the difference. p-values from the paired t-test and Wilcoxon signed-rank test are shown; p-values below 0.05 would indicate statistical significance.
+\endinsert
+
+\medskip  \clabel[v2-v3-bar-plot]{Comparison v2-v3: Grouped bar plot}
+\picw=14cm \cinspic figs/discussion/v2-v3-barplot.pdf
+~\caption/f Grouped bar plot showing F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for version 2 and one for version 3. The notation for each axis corresponds to the models and datasets. Taller bars for version 3 indicate local improvement. The plot facilitates systematic visual assessment across groups.
+\medskip
+
+\medskip  \clabel[v2-v3-diff-bar-plot]{Difference bar plot emphasizes magnitude and direction}
+\picw=10cm \cinspic figs/discussion/v2-v3-f-diff.pdf
+~\caption/f Bar plot displaying the difference in F1 score ($\Delta$F1 = F1$_3$ – F1$_2$) for each (model, dataset) pair. The x-axis categorizes by model, colors distinguish datasets. The horizontal dashed line at zero highlights whether the difference is positive or negative. The magnitude and direction of each bar directly visualizes the local effect of the system change.
+\medskip
+
+
+\medskip  \clabel[v2-v3-data-points]{Scatter plot details pairwise relationships.}
+\picw=10cm \cinspic figs/discussion/v2-v3-data-points.pdf
+~\caption/f Scatter plot comparing F1 scores for version 2 (x-axis) and version 3 (y-axis) for each (model, dataset) pair. Each point represents a single instance. The diagonal dashed line ($y=x$) is the reference for equality: points above the line indicate higher F1 in version 3, points below indicate higher F1 in version 2. This plot summarizes whether improvements are systematic or sporadic.
+\medskip
+
+Performance differences are minimal between system versions two and three.
+Descriptive statistics show only a negligible increase in mean F1-score from 0.459 to 0.465, with the mean difference (0.006) far smaller than the standard deviation (0.053). Mean precision actually declined slightly, while mean recall improved by a similarly small margin.
+
+Statistical tests support the absence of significant change.
+The paired t-test p-values for all metrics are substantially greater than 0.05 (precision:~0.36; recall:~0.73; F1:~0.67), as are the Wilcoxon signed-rank test p-values. This statistical evidence indicates that the observed differences could easily be due to random variation rather than any systematic effect of the new system version.
+
+Figure analysis confirms the statistical result.
+In the grouped bar plots (\ref[v2-v3-bar-plot]), the bars representing system versions two and three are generally similar in height for all model-dataset pairs. In the difference bar plot (\ref[v2-v3-diff-bar-plot]), most bars cluster close to zero, with a nearly even balance of positive and negative values, further indicating the lack of consistent improvement or decline. The scatter plot (\ref[v2-v3-data-points]) shows that most points lie close to the diagonal, reinforcing that performance between the two versions is nearly equivalent for every tested combination.
+
+Overall, the empirical evidence from all metrics, tests, and visualizations demonstrates that system version three does not yield any substantial or statistically significant improvement over version two. The approach of extracting data article by article is not more efficient than batch inference.
+
+
 \label[temperature-influence]
 \sec Temperature influence
 
@@ -178,3 +302,18 @@ F1 & 0.47 & 0.79 & No \cr
 In Table \ref[ANOVA-temperature], the F-statistic and p-value are reported for each metric, along with an indication of statistical significance at the standard 0.05 threshold. Only recall was found to vary significantly with temperature ($F = 5.42$, p = $0.00045$), indicating that changes in the temperature parameter can lead to meaningful differences in recall. In contrast, precision ($F = 0.40$, $p = 0.85$) and F1 score ($F = 0.47$, $p = 0.79$) showed no statistically significant dependence on temperature, suggesting stability across the tested range. The summary table should be read such that a significant result denotes substantial differences in the mean value of the metric across temperature settings, while a non-significant result implies relative invariance.
 
 In summary, this analysis reveals that temperature tuning exerts a pronounced influence on recall but has negligible effects on precision and F1 score within the examined range. This finding is visually apparent from the combined plot, where recall displays clear shifts as temperature changes, and statistically confirmed by the ANOVA test. For practitioners, this implies that careful adjustment of the temperature parameter can optimize recall, while precision and F1 remain robust to temperature variation.
+
+\sec Prediction examples
+We subjectively evaluate several problematic outputs. In most cases, the models deliver acceptable results, and their responses are both coherent and factually accurate. The primary concern, however, is the lack of extraction granularity, which corresponds to reduced recall. For a subset of systems, especially open-source variants, a limited amount of pretraining data in Czech is particularly evident. As a consequence, generated passages may not adhere to proper grammar. For example, DeepSeek R1 produced the phrase “scénářový autor” instead of scénárista and substituted režisér with ředitel.
+\begtt
+"name": "Petr Zelenka",
+"roles": ["režisér", "scénářový autor", "ředitel televizního seriálu"]
+\endtt
+Qwen3 sometimes produces duplicate entries among both roles and entities. Another illustration highlights instruction drift, where an individual is returned without a fully specified name and the associated role is completely inappropriate.
+\begtt
+"name": "Donald Trump",
+"roles": ["prezident USA", "americký prezident"]
+
+"name": "Kim Čong-una sestra",
+"roles": ["soustružník"]
+\endtt
