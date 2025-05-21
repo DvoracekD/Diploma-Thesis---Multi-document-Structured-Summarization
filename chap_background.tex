@@ -4,22 +4,15 @@
 
 Natural Language Processing (NLP) is a subfield of artificial intelligence that focuses on enabling machines to understand and generate human language. While human languages are built from a finite set of symbols, the possible combinations and meanings are vast and often context-dependent, making NLP a complex challenge.
 
-Traditional NLP methods rely heavily on syntactic structures and statistical patterns to perform tasks like information retrieval, spell-checking, and word-level analysis. However, they struggle with deeper understanding, such as interpreting ambiguous sentences or referencing prior context—areas where humans naturally excel due to background knowledge and cognitive associations.
+Traditional NLP methods rely heavily on syntactic structures and statistical patterns to perform tasks like information retrieval, spell-checking, and word-level analysis. However, they struggle with deeper understanding, such as interpreting ambiguous sentences or referencing prior context—areas where humans naturally excel due to background knowledge and cognitive associations.\cite[fundAI]{}
 
 For example, machines find it difficult to resolve pronouns or understand phrases like “I saw the Golden Gate Bridge flying into San Francisco,” where context is essential. This limitation arises from the lack of high-level symbolic reasoning and semantic understanding in current systems. \cite[fundAI]{}
 
-To bridge this gap, modern NLP increasingly focuses on Natural Language Understanding (NLU), which involves cognitive-like processing such as identifying entities, understanding relationships, and representing abstract concepts. Although recent computational models aim to simulate human-like language comprehension, achieving true understanding remains an ongoing challenge.
+To bridge this gap, modern NLP increasingly focuses on Natural Language Understanding (NLU), which involves cognitive-like processing such as identifying entities, understanding relationships, and representing abstract concepts.\cite[fundAI]{} Although recent computational models aim to simulate human-like language comprehension, achieving true understanding remains an ongoing challenge.
+
+Importantly, NLP has become an interdisciplinary subject, combining knowledge from linguistics, computer science, mathematics, psychology, philosophy, statistics, electronic engineering, and biology. The research and development of NLP not only require formalizing language in strict mathematical terms, designing algorithms, and implementing practical systems, but also benefit from psychological models of human language behavior, philosophical theories of meaning, statistical methods for pattern recognition, and advances in signal processing and neural networks.\cite[Feng2023]
 
 NLP plays a critical role in applications like machine translation, chatbots, and question answering, and continues to evolve toward more sophisticated and human-like language interaction.
-
-\secc Data representations
-% TODO
-
-\secc Metrics
-%TODO
-
-\sec Neural networks in NLP
-%TODO
 
 \sec Transformer architecture
 Most modern NLP solutions are based on {\it transformers}. The Transformer architecture, introduced in the paper {\it Attention Is All You Need}\cite[transformer]{}, revolutionized sequence transduction tasks by eliminating recurrence and convolutions, relying instead entirely on self-attention mechanisms. Its encoder-decoder structure leveraged multi-head self-attention layers combined with position-wise feed-forward networks, enhanced by residual connections and layer normalization. The self-attention mechanism efficiently modeled dependencies across all positions in a sequence, while positional encodings preserved order information. This design allowed the Transformer to process sequences with unparalleled parallelism, significantly reducing training time compared to recurrent or convolutional models.
@@ -28,7 +21,7 @@ The architecture introduced innovations such as scaled dot-product attention and
 
 \medskip  \clabel[transformer-architecture]{Transformer model architecture}
 \picw=6cm \cinspic figs/transformer.png
-\caption/f Transformer model architecture.
+\caption/f This figure illustrates the main components of the Transformer model, which consists of an encoder (left) and a decoder (right). The encoder processes input embeddings combined with positional encodings through multiple stacked layers, each containing a multi-head self-attention mechanism followed by a feed-forward network, with residual connections and layer normalization. The decoder receives output embeddings (shifted right) with positional encodings and processes them through masked multi-head self-attention, encoder-decoder attention, and a feed-forward network, also using residual connections and layer normalization. The decoder outputs are then passed through a linear layer and softmax to generate the final output probabilities.
 \medskip
 %TODO
 
@@ -286,3 +279,13 @@ Just as important as the clustering algorithm is the method of extracting the nu
 
 
 \sec Prompt engineering and instruction tuning
+
+Prompt engineering is an emerging field of research. It is a discipline whose aim is to maximize the success of a generative model by systematically improving instruction prompts.\cite[prompt-engineering] Prompt refers to an instruction that, in modern large language models, helps to guide subsequent text generation. Typically, a prompt consists of four parts. These are instructions, questions, input data, and examples.\cite[prompt-engineering2] Most of these fields are optional; however, models usually expect at least one of the instruction or question fields. Input data and examples are then an integral part of certain prompt engineering techniques.
+
+There is a wide range of prompt tuning techniques. Only the basic ones will be discussed here, some of which are part of the methodology of this thesis. The fundamental concept is the so-called {\it Zero-Shot Prompting}. This involves querying or instructing the model without any additional information. The user thus fully relies on the model’s knowledge, which has been acquired during the pre-training phase or through subsequent supervised learning.
+
+{\it Few-shot prompting} inserts examples of the input and the expected output. This makes use of the “examples” section in the prompt template. “Providing even a few high-quality examples has improved model performance on complex tasks compared to no demonstration”\cite[prompt-engineering]. However, examples limit the usable context of the model. At the same time, they introduce bias, which can manifest when the prompt is applied to domains other than those anticipated. Additionally, with some models, there is a risk of example data leaking into the resulting output.
+
+The {\it Chain-of-Thought (CoT)}\cite[chain-of-thought] technique mimics the way humans approach problems. The model is forced to generate a series of logical steps leading to the desired goal before producing the final output. As a result, the model is less susceptible to self-reinforcement, which may occur during greedy inference. The disadvantage is increased model latency. A “thinking” phase must be performed before generating the first tokens of the output sequence. Some language models inference setups are directly based on this principle.
+
+{\it Retrieval Augmented Generation (RAG)}\cite[RAG] dynamically adjusts the prompt based on the user’s query. The resulting prompt is enriched with examples that are dynamically retrieved from a knowledge base so that they relate to the original question or instruction. Embedding models trained for semantic similarity can be used for this purpose. The vectorized semantic message can then be compared with semantic fragments in the knowledge base.

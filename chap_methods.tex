@@ -119,6 +119,12 @@ Example of the resulting structure is shown in the following json snippet:
 
 The extraction pipeline produces the desired structure. It consists of a series of components that sequentially analyze articles related to a single media case and transform textual data into structured lists of persons, organizations, locations, and events. The first step is preprocessing, during which disruptive elements in the continuous text are removed. This is followed by extraction, which consists of several steps that incrementally structure the unstructured input.
 
+\medskip  \clabel[pipeline-diagram]{Extraction pipeline diagram}
+\picw=14cm \cinspic figs/methods/extraction-pipeline.pdf
+\caption/f An overview diagram of the individual phases of the extraction pipeline process. The individual subprocesses are described in detail in this chapter. Individual blocs represent the individual subprocesses. The arrows symbolize data passing (output to input).
+\medskip
+
+
 \label[preprocessing]
 \secc Preprocessing
 
@@ -212,7 +218,7 @@ Entity lists are merged as follows.
 The final list contains the original entities. Only if an entity with the same ID also exists in the new list is the old entity replaced with the updated version. The remaining entities from the new list that have no counterpart in the old list are appended to the end of the final list.
 
 \label[pipeline-versions]
-\sec Versions
+\secc Versions
 
 Three configurations of the extraction pipeline emerged. The extraction pipeline is parameterized by the model used, batch size (the number of articles processed simultaneously), and instructional prompts. During development, three distinct configurations of the pipeline arose, differing specifically in batch size or the form of prompts. Individual versions of the extraction module are referenced in the following text according to the nomenclature established here.
 
@@ -347,6 +353,11 @@ Global Variables and Constants:
 \sec Evaluation
 Evaluation is conducted through a custom evaluation pipeline.
 An evaluation pipeline was developed to assess the quality of the proposed solution. The purpose of the evaluation process is to compare the similarity of the extracted structure to the ground truth data using evaluation metrics. Given the uncommon nature of the problem, the thesis proposes a custom evaluation process to quantify similarity. The data structures being compared are composed as described in Chapter \ref[data-schema].
+
+\medskip  \clabel[evaluation-diagram]{Evaluation pipeline diagram}
+\picw=14cm \cinspic figs/methods/evaluation-pipeline-2.pdf
+\caption/f Process diagram of the evaluation pipeline. The input to the evaluations is the predicted structure and the ground truth structure. The paths leading from them represent the transfer of these two data objects. These serve as input to all subsequent computational blocks. Independently, the calculation of individual detection metrics, depicted in purple, occurs. The outputs of these processes indicate the mapping between local IDs within the prediction and the IDs of ground truth entities and events. These mappings serve as inputs for the calculation of metrics for assigning events to articles and entities to events. The outputs of all blocks are evaluation metrics, which also represent the output of the entire process.
+\medskip
 
 Entity correctness is assessed using information retrieval metrics.
 Correct inference of entities (persons, organizations, and events) is reduced to an information retrieval problem. Therefore, standard metrics such as precision and recall can be applied. All entity types include additional information — roles in the case of persons, and types for other entities. The atomic element is defined as a pair consisting of the entity name and its role. If a predicted pair is successfully matched with a ground truth name-role pair, it is considered a true positive (TP). If the pair cannot be matched with any ground truth pair, it is classified as a false positive (FP). Ground truth pairs for which no prediction exists are counted as false negatives (FN).

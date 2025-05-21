@@ -31,30 +31,31 @@
 \pagetwo    {}  % The text printed on the page 2 at the bottom.
 
 \abstractEN {
-% TODO update
+Multi-document structured summarization addresses the challenge of extracting key knowledge from large collections of related texts. Essential information—such as entities, their roles, and events with temporal attributes—must be detected and linked across heterogeneous sources. Recent advances in large language models (LLMs) and transformer-based architectures have greatly improved the quality of both extraction and summary generation. A modular extraction pipeline was designed, integrating named entity recognition and event extraction techniques, and evaluated on a manually annotated news corpus. Performance was assessed using both classical information retrieval metrics and custom measures for structured outputs. Results demonstrate the superiority of commercial LLMs over open-source alternatives and highlight that incremental improvements in prompt engineering and batch processing yield only marginal gains. This research establishes a reproducible framework for structured summarization and provides a foundation for further methodological innovation.
 }
 \abstractCZ {
-% TODO update
+Vícedokumentová strukturovaná sumarizace řeší problém extrakce klíčových znalostí z rozsáhlých kolekcí souvisejících textů. Je nutné detekovat a propojit základní informace—jako jsou entity, jejich role a události s časovými atributy—napříč heterogenními zdroji. Nedávný pokrok ve vývoji velkých jazykových modelů (LLM) výrazně zvýšil kvalitu extrakce i generování textových souhrnů. Byla navržena modulární extrakční sekvence výpočetních modulů, která integruje techniky rozpoznávání pojmenovaných entit a extrakce událostí, a její kvalita byla ověřena na ručně anotovaném textovém korpusu mediálních zpráv. Kvalita extrakcí byla posuzován pomocí klasických metrik informačního vyhledávání i vlastních měřítek pro strukturované výstupy. Výsledky prokazují převahu komerčních LLM nad open-source alternativami a ukazují, že dílčí vylepšení pomocí prompt engineeringu a dávkového zpracování přináší jen marginální zisky. Tento výzkum zavádí reprodukovatelný rámec pro strukturovanou sumarizaci a vytváří základ pro další metodologické inovace.
 }           % If your language is Slovak use \abstractSK instead \abstractCZ
 
-\keywordsEN {%
-    % TODO update
-   Timeline Summarization, Event Extraction, Named Entity Recognition (NER), Multi-Document Summarization, Clustering in NLP, Transformers, Retrieval-Augmented Generation (RAG), Large Language Models (LLM), Semantic Search, Natural Language Processing (NLP)
+\keywordsEN {
+multi-document summarization, structured summarization, information extraction, named entity recognition, event extraction, temporal relevance, large language models, prompt engineering.
 }
 \keywordsCZ {
-    % TODO update
-    Sumarizace časové osy, Extrakce událostí, Rozpoznávání pojmenovaných entit (NER), Multi-dokumentová sumarizace, Shlukování v NLP, Transformery, Retrieval Augmented Generation (RAG), Velké jazykové modely (LLM), Sémantické vyhledávání, Zpracování přirozeného jazyka (NLP)
+vícedokumentová sumarizace, strukturovaná sumarizace, extrakce informací, rozpoznávání pojmenovaných entit, extrakce událostí, časová relevance, velké jazykové modely, prompt engineering.
 }
 \thanks {           % Use main language here
+Computational resources were provided by the e-INFRA CZ project (ID:90254), supported by the Ministry of Education, Youth and Sports of the Czech Republic. The access to the computational infrastructure of the OP VVV funded project CZ.02.1.01/0.0/0.0/16\_019/0000765 ``Research Center for Informatics'' is also gratefully acknowledged.
 }
 \declaration {      % Use main language here
-   I declare that I have prepared the submitted thesis independently and that I have listed all the information sources used in accordance with the Methodological Guideline on the Observance of Ethical Principles in the Preparation of University Theses. Computational resources were provided by the e-INFRA CZ project (ID:90254), supported by the Ministry of Education, Youth and Sports of the Czech Republic. The access to the computational infrastructure of the OP VVV funded project CZ.02.1.01/0.0/0.0/16\_019/0000765 ``Research Center for Informatics'' is also gratefully acknowledged.
-   \signature % makes dots
+I declare that I have prepared my thesis independently and that I have provided all the information sources used in accordance with the Methodological Guideline on the Observance of Ethical Principles in the Preparation of University Theses and the Framework Rules for the Use of Artificial Intelligence at CTU for Study and Teaching Purposes in Bachelor and Master Studies.
+\signature % makes dots
 }
 
 \specification {
   \vbox to0pt{\vskip-25mm\centerline{\inspic specification/1.pdf }\vss} \null\vfil\break
   \vbox to0pt{\vskip-25mm\centerline{\inspic specification/2.pdf }\vss}
+  \null\vfil\break
+  \vbox to0pt{\vskip-25mm\centerline{\inspic specification/declaration.pdf }\vss}
 }
 
 %%%%% <--   % The place for your own macros is here.
@@ -69,7 +70,7 @@
 
 \makefront  % Mandatory command. Makes title page, acknowledgment, contents etc.
 
-% \input chap_introduction    % Files where the source of the document is prepared.
+\input chap_introduction
 \input chap_background  
 \input chap_datasets
 \input chap_methods
@@ -86,6 +87,6 @@
 
 \endgroup
 
-\input chap_appendix
+% \input chap_appendix
 
 \bye
