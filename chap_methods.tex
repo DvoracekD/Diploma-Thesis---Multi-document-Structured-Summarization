@@ -129,7 +129,7 @@ The extraction pipeline produces the desired structure. It consists of a series 
 \secc Preprocessing
 
 Data should be preprocessed before analysis.
-Before conducting any natural language analysis, it is advisable to apply certain filters and transformations to the data that facilitate later machine processing and reduce potential biases arising from the syntax of the original language used~\cite[preprocessing]. Traditional natural language preprocessing typically includes techniques such as lemmatization and stemming, which are employed and discussed in greater detail in the chapter \ref[dataset-analysis]. However, these techniques substantially alter the form of the text and could distort the outputs of the large language models.
+Before conducting any natural language analysis, it is advisable to apply certain filters and transformations to the data that facilitate later machine processing and reduce potential biases arising from the syntax of the original language used~\cite[preprocessing]. Traditional natural language preprocessing typically includes techniques such as lemmatization and stemming. However, these techniques substantially alter the form of the text and could distort the outputs of the large language models.
 
 Dataset-specific preprocessing methods were applied.
 The applied preprocessing methods are tailored to the specific characteristics of the dataset. Individual newspaper articles contain extraneous blocks intended to attract readers’ attention but which interrupt the text’s coherence. One such phenomenon involves image captions, which are included in the dataset in the following format:
@@ -144,7 +144,7 @@ Another disruptive feature consists of embedded hyperlinks to related articles. 
 \endtt
 
 \medskip  \clabel[embedded-article]{Embedded article}
-\picw=12cm \cinspic figs/embeded-article.png
+\picw=14cm \cinspic figs/embeded-article.png
 \caption/f An example of such an inserted hyperlink in the article might appear as: "Zápas Česko - Slovensko jsme sledovali ONLINE \n\nČíst článek \n\n".
 \medskip
 
@@ -182,7 +182,7 @@ The prediction function calls subsequent parts of the pipeline. A separate funct
 
 * "locations": global list of extracted locations
 
-* "articles": list of processed articles
+* "articles": list of processed articles:
 
 \begitems
 
@@ -235,7 +235,7 @@ Three configurations of the extraction pipeline emerged. The extraction pipeline
 
 It was necessary to construct an evaluation dataset. In order to evaluate the quality of the implemented solution and at the same time obtain an objective metric for iterating over the individual principal decisions of the data extraction and summarization process, it was necessary to construct an evaluation dataset. Given that the entire provided original dataset is not the subject of the final analysis, it is possible to use the unused articles to create ground truth data.
 
-The dataset consists of five cases. The cases were selected to cover the widest possible range of different types of articles. The extracted topic hierarchy was used for this purpose. The sections of different main sections were randomly selected. The final selection includes the following cases/topics. A table of counts of unique entities within the dataset is given.
+The dataset consists of six cases. The cases were selected to cover the widest possible range of different types of articles. The extracted topic hierarchy was used for this purpose. The sections of different main sections were randomly selected. The final selection includes the following cases/topics. A table of counts of unique entities within the dataset is given.
 
 \begitems
 * {\bf Český lev Film Award}
@@ -293,9 +293,22 @@ The dataset consists of five cases. The cases were selected to cover the widest 
     17 & 19 & 15 & 61 & 6 \crl
     }
 \enditems
+* {\bf Global Warming}
+\begitems
+  * Section: Science \& Technology
+  * These articles highlight the severe impacts of global warming, evidenced by rapidly melting glaciers from Everest to the Alps, and the Great Barrier Reef losing half its corals due to rising sea temperatures. These changes, alongside record global heat like the hottest July in 142 years, are attributed to human-caused climate change.
+  * The dataset consists of five randomly selected articles out of a total of 90, from the period between April 23, 2017, and May 14, 2022.\smallskip
+  * \table{ccccc}{
+    \crl
+    \hfil People & \hfil Organizations & Locations & Events & Event summaries \crl \tskip4pt
+    4 & 10 & 29 & 71 & 5 \crl
+    }
+\enditems
 \enditems
 
-A script was created to access the dataset. The script "eval.eval_dataset.py" contains definitions of the names of media cases and paths to the source and ground truth data within the repository. The script also includes preprocessing of the data. The return values are a list of case names, a list of source articles with the properties "id" and "ftext", and also a list of ground-truth structures.
+The data set was then divided into validation and test splits. The validation split (the global warming case) can be used for iterations of the solutions. The remainder of the dataset, that is, the other five cases, can be used to test the final solutions.
+
+A script was created to access the dataset. The script "eval.eval_dataset.py" contains definitions of the names of media cases and paths to the source and ground truth data within the repository. The script also includes preprocessing of the data. The return values are a list of case names, a list of source articles with the properties "id" and "ftext", and also a list of ground-truth structures. The script also offers dataset splitting capability.
 
 The data was manually annotated. For easier orientation in the annotated data, entities and events were first manually detected for individual articles. To assist in subsequently linking entities across articles, it is necessary to detect which ones correspond to each other. The relevant identifiers must then be remapped. For this purpose, a helper script was created.
 
@@ -410,17 +423,18 @@ vllm serve Qwen/Qwen3-14B-AWQ --enable-reasoning \
 
 {\em DeepSeek-R1-Distill-Qwen-32B}~\cite[deepseek] is an open large language model with approximately 32 billion parameters, developed by the DeepSeek research team. The model is a distilled version of the larger DeepSeek-R1, which was trained using large-scale reinforcement learning without prior supervision (SFT). This approach enabled the model to develop capabilities such as self-verification, reflection, and the generation of extended chains of thought, representing a significant advancement in language model research. The distilled Qwen-32B model was further optimized for efficient deployment and shows high performance in text generation, dialogue optimization, and logical reasoning tasks.~\cite[deepseek] In comparative evaluations, it outperforms models such as OpenAI-o1-mini. The version used was hosted via e-INFRA CZ~\cite[e-infra].
 
-{\em Gemini 2.5 Pro} and {\em Gemini 2.5 Flash} are advanced closed-source multimodal language models of the second generation developed by Google, supporting the processing of various input modalities (text, image, audio, video) and demonstrating high performance in tasks requiring inferential reasoning and language understanding. Gemini 2.5 Pro is optimized for complex, computationally intensive scenarios such as programming, mathematical tasks, and large-scale data analysis, and offers a context window of up to 1 million tokens. In contrast, Gemini 2.5 Flash is designed with a focus on low latency and efficient real-time deployment, typically for summarization, information extraction, and conversational systems; it allows the definition of a so-called “thinking budget,” i.e., a computational constraint to balance quality, speed, and cost. Both models share a common architecture and represent two complementary optimization strategies for different application scenarios.~\cite[gemini] Access to the model was provided via Google AI Studio~\cite[ai-studio].
+{\em Gemini 2.5 Pro}~\cite[gemini] and {\em Gemini 2.5 Flash}~\cite[gemini] are advanced closed-source multimodal language models of the second generation developed by Google, supporting the processing of various input modalities (text, image, audio, video) and demonstrating high performance in tasks requiring inferential reasoning and language understanding. Gemini 2.5 Pro is optimized for complex, computationally intensive scenarios such as programming, mathematical tasks, and large-scale data analysis, and offers a context window of up to 1 million tokens. In contrast, Gemini 2.5 Flash is designed with a focus on low latency and efficient real-time deployment, typically for summarization, information extraction, and conversational systems; it allows the definition of a so-called “thinking budget,” i.e., a computational constraint to balance quality, speed, and cost. Both models share a common architecture and represent two complementary optimization strategies for different application scenarios.~\cite[gemini] Access to the model was provided via Google AI Studio~\cite[ai-studio].
 
 {\em GPT-4.1}~\cite[gpt4.1] is a closed-source multimodal language model developed by OpenAI in 2025, designed for advanced natural language understanding, code generation, and processing of very long contexts of up to 1 million tokens. Compared to previous versions, it achieves significantly better results in logical reasoning, following complex instructions, and multimodal analysis, including text, image, audio, and video. The model shows robust performance across standard benchmarks and represents a significant improvement in accuracy, efficiency, and generalization capabilities.~\cite[gpt4.1] Access to the model was provided via the OpenAI Platform~\cite[openai-platform].
 
 \sec Experiments
 
 Experimental methodology defines the objectives and procedures of experiments. The objective of the experimental section is to measure the performance of individual extraction pipeline configurations (v1, v2, and v3) defined in section \ref[pipeline-versions]. For the purposes of the experiments, the dataset was divided into validation and test splits. The experiments can be categorized into the following groups:
-
-Performance measurement of the baseline configuration (v1) on the test dataset using selected language models.
-Iterative improvement of the selected model's (Llama4 Scout) performance on the validation dataset through prompt engineering.
-Performance measurement of the improved configuration (v2) on the test dataset using selected language models.
-Performance measurement of the configuration with minimal batch size (v3) on the test dataset using selected language models.
+\begitems
+* Performance measurement of the baseline configuration (v1) on the test dataset using selected language models.
+* Iterative improvement of the selected model's (Llama4 Scout) performance on the validation dataset through prompt engineering.
+* Performance measurement of the improved configuration (v2) on the test dataset using selected language models.
+* Performance measurement of the configuration with minimal batch size (v3) on the test dataset using selected language models.
+\enditems
 
 A number of models were used for testing. For incremental improvement on the validation dataset, only one model was used, specifically the relatively fast Llama 4 Scout. However, for evaluation on the test dataset, several models were used. The reason for this was both the effort to compare the models on this specific problem and to ensure greater objectivity of the results, which would not depend solely on a single model. The list of models can be found in Chapter \ref[models]. Some models were not used for all versions of the pipeline due to insufficient context or financial reasons. The intention was to include both open and commercial models.

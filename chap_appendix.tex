@@ -1,70 +1,49 @@
 \label[attached-files]
-\app Attached files
+\app Attachments
 
-\app Prompts
-\sec People v1
+\sec Code Base \& Data
 
-\begtt
-Extract all people mentioned in the Czech newspaper articles (the article 
-release timestamp is included) and output the result in JSON.
+The attachments contain Python notebooks and scripts that were used for the practical part of this thesis. It is a standard Python project that can be installed using: "pip install -e ."
 
-The order of people is given by their appearance in the articles.
- - Person "id" is a unique integer assigned to each person
- (start with 1).
- - A person's "name" is a unique name of the person.
-   - Use full names (if available in the article) and state them 
-   in a basic form (e.g., "Andrej Babiš" instead of "Andreje Babiše").
-   - Use the Czech "ml." and "st." abbreviations for junior and senior 
-   if stated in the text.
- - Replace each item of the "roles" array with a short Czech string 
- describing the role of the person
-   - Examples: "prezident", "novinář", "předseda vlády", "soudce", etc.
-   - The roles must not repeat, i.e., the "roles" array corresponds 
-   to a set.
-   - The roles must be atomic. An item like "premiér a prezident" 
-   must be split into two roles.
-   - Be as specific as possible (in line with the article text) 
-   in the role description. E.g., if a person is a colleague 
-   of some other person, make it clear.
-   - Prefer abbreviations, e.g., "ČR" instead of "Česká republika".
- - You will receive a list of global people IDs, names and roles. 
- If you encounter a person with the same name and role, 
- you must use the same ID. If the person is not in the list, 
- assign a new ID, while extending the global list of people.
- - The IDs must be unique across all articles. If a person appears 
- in multiple articles, use the same ID.
+\begitems
+* "multi_sum/": Main Python package containing modules.
+  \begitems \style x
+  * "comparison/": Notebooks for comparing different model versions and temperature settings.
+  * "data_analysis/": Notebooks and scripts for data exploration, deduplication, headline analysis, and temporal/topic analysis.
+  * "eval/": Evaluation scripts and notebooks for assessing summarization quality.
+  * "extraction_pipeline/": Extraction pipeline code and development notebooks.
+  * "utils/": Utility scripts for data processing, stemming, MLflow integration, and matching.
+  \enditems
 
-IMPORTANT:
-   - First extract the global list of people from the articles 
-   and assign them IDs.
-   - Use the initial IDs from the provided global list of people.
-   - Then extract the list of articles and assign IDs to them.
-   - Do not use "\\u" escape sequences in JSON strings. You are 
-   not limited to ASCII.
-   - Do not make things out - each person and his/her roles 
-   must be clearly mentioned in the text.
-   - Return only the JSON. Give no additional text! 
-   Start with the "{" character and end with "}".
-   - The person has to be unique across all of the articles
-   - No unique person can appear more then one unique ID
-   - The output has to start with the "{" character and end with "}".
+* "evaluation_dataset/"  
+  Contains datasets for evaluation, organized by topic 
+  
+  ("cesky_lev", "covid", "peking", "summit", "volby", "oteplovani"). Each topic includes:
+  \begitems  \style x
+  * "<topic>_articles.json": Source articles.
+  * "<topic>_gt.json": Ground truth summaries.
+  * "articles_gt/": Additional ground truth data for single topics.
+  \enditems
 
-   
-Requested JSON Schema:
-{{ output_schema }}
+* "visualization/"  
+  Jupyter notebooks for visualizing model results, metrics, and experiments.
 
-Global list of people:
-{{ people }}
+* "prompts/"  
+  Prompt templates for different model versions ("v1", "v2", "v3"), organized by entity type (events, locations, organizations, people).
 
-Czech text of the articles follow:
-{{#articles}}
-<article>
-    ID: {{ id }}
-    TEXT: {{ ftext }}
-</article>
-{{/articles}}
+* "schemas/"  
+  JSON schema files defining the structure of extracted entities.
 
-Do not output anything else than the JSON with Requested JSON Schema. 
-Do not add any additional text or explanation. Do not output 
-the reasoning process.
-\endtt
+* "pyproject.toml"  
+  Project dependencies and configuration.
+
+* "README.md"  
+  Instructions and overview of the repository.
+\enditems
+
+\sec Experiment logs
+
+Folder "mlruns" with records of all experiments compatible with MLflow is provided. The experiments contain both input and output, as well as parameters, prompts, API logs including thinking outputs, the resulting predictions and monitored metrics.
+
+\sec Thesis source code
+The source code of the diploma thesis document is also included. The compilation instructions can be found on the \url{https://petr.olsak.net/ctustyle-e.html} website.
