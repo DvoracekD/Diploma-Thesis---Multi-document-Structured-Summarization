@@ -10,7 +10,7 @@ The baseline quality was assessed. The baseline implementation of the extraction
 
 The only controlled inference parameter for most models was temperature. The parameter was set to 0 to maximize the determinism of the experiments and to support structured output generation in JSON format. Based on the experiment (see \ref[temperature-influence]), it was also found that a value of 0 provides the best performance in terms of the overall recall of the process and yields comparable results in terms of precision and F1 score. Only for the Qwen3 model were the parameters recommended by the model authors used, namely "temperature": 0.6, "top_p": 0.95, and "top_k": 20.
 
-Experiments were conducted using models Qwen3 (14B), GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1 (32B), and Llama 4 Scout (17B). For detailed description see \ref[models]. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
+Experiments were conducted using models Qwen3 (14B), GPT 4.1, Gemini 2.5 Pro, Gemini 2.5 Flash, DeepSeek R1 (32B), and Llama 4 Scout (17B). For a detailed description, see Section \ref[models]. For each model, one evaluation of a highly deterministic extraction pipeline was carried out, and the results can be observed in a series of visualizations.
 
 \medskip  \clabel[v1-barplot]{Baseline metrics}
 \picw=10cm \cinspic figs/results/pipeline-v1-precision-recall-bar.pdf
@@ -150,13 +150,13 @@ These results demonstrate that reducing batch size to one does not fundamentally
 
 \sec Assessment of Baseline Improvement
 
-We want to verify whether there has been an improvement in the extraction pipeline. In this stage, we compare the baseline implementation and prompts with the improved version obtained by iterating on the prompt design. The iterations were guided solely by the results of a single model (Llama 4) on the validation dataset. However, for the verification, we use a test dataset and a larger number of models. We designate the baseline solution as v1. We designate the improved solution as v2. Both versions were evaluated using four models across several datasets (media cases), measuring precision, recall, and F1-score for each (model, dataset) pair. The goal is to determine if the new version offers statistically significant improvements.
+We want to verify whether there has been an improvement in the extraction pipeline. In this stage, we compare the baseline implementation and prompts with the improved version obtained by iterating on the prompt design. The iterations were guided solely by the results of a single model (Llama 4) on the validation dataset. However, for the verification, we use a test dataset and a larger number of models. We designate the baseline solution as v1. We designate the improved solution as v2. Both versions were evaluated using four models across several datasets (media cases), measuring precision, recall, and F1 score for each (model, dataset) pair. The goal is to determine if the new version offers statistically significant improvements.
 
 Data is loaded and merged. Evaluation results from both versions are exported as CSV files, loaded, and standardized by renaming columns for clarity. Both datasets are merged on model and dataset, enabling direct comparison. For each metric, the difference between the new and old version is calculated for every (model, dataset) pair.
 
-Descriptive statistics give overview. The mean and standard deviation are calculated for each metric and version, along with the mean difference. This step provides an initial impression of potential improvements in precision, recall, and F1-score, indicating the central tendency and spread for both system versions.
+Descriptive statistics give overview. The mean and standard deviation are calculated for each metric and version, along with the mean difference. This step provides an initial impression of potential improvements in precision, recall, and F1 score, indicating the central tendency and spread for both system versions.
 
-For each metric (precision, recall, F1-score), we formally test the following hypotheses:
+For each metric (precision, recall, F1 score), we formally test the following hypotheses:
 \begitems
 * Null Hypothesis ($H_0$): There is no difference in the metric between the two system versions.
 * Alternative Hypothesis ($H_1$): There is a difference in the metric between the two versions (two-sided test).
@@ -178,9 +178,9 @@ Test methodology is robust. The paired t-test assesses whether the mean differen
 Metric & $\mu_1$ & $\sigma_1$ & $\mu_2$ & $\sigma_2$ & $\mu_{2-1}$ & $\sigma_{2-1}$ \crl \tskip4pt
 Precision & 0.629 & 0.117 & 0.633 & 0.091 & 0.004 & 0.082 \cr
 Recall    & 0.494 & 0.085 & 0.509 & 0.083 & 0.014 & 0.042 \cr
-F1-score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
+F1 score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
 }
-~\caption/t This table provides a summary of the central tendency ($\mu$) and spread ($\sigma$) for each metric (precision, recall, F1-score) in both system versions. $\mu_1$, $\sigma_1$ refer to version 1, $\mu_2$, $\sigma_2$ to version 2, and $\mu_{2-1}$, $\sigma_{2-1}$ to the difference. Read horizontally to compare old and new versions. The final columns show the average change, indicating if, on average, the new system increases or decreases performance.
+~\caption/t This table provides a summary of the central tendency ($\mu$) and spread ($\sigma$) for each metric (precision, recall, F1 score) in both system versions. $\mu_1$, $\sigma_1$ refer to version 1, $\mu_2$, $\sigma_2$ to version 2, and $\mu_{2-1}$, $\sigma_{2-1}$ to the difference. Read horizontally to compare old and new versions. The final columns show the average change, indicating if, on average, the new system increases or decreases performance.
 \endinsert
 
 
@@ -189,7 +189,7 @@ F1-score  & 0.450 & 0.123 & 0.476 & 0.103 & 0.026 & 0.067 \cr
 Metric & $\mu_{2-1}$ & $\sigma_{2-1}$ & t-test p-value & Wilcoxon p-value \crl \tskip4pt
 Precision & 0.004 & 0.082 & 0.840 & 0.700 \cr
 Recall    & 0.014 & 0.042 & 0.140 & 0.180 \cr
-F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
+F1 score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
 }
 ~\caption/t This table shows the results of both statistical tests for every metric. The Mean Diff ($\mu_{2-1}$) and Std Diff ($\sigma_{2-1}$) reflect the average and standard deviation of observed improvement. The p-values (t-test and Wilcoxon) indicate whether observed changes are statistically significant. To interpret, look for p-values below 0.05, which indicate strong evidence against the null hypothesis.
 \endinsert
@@ -217,7 +217,7 @@ Conclusion is based on statistical evidence. Statistical tests and visualization
 
 We want to verify whether the minimum batch approach improves the solution. This is an approach where each phase of the extraction pipeline works with only one article. The idea is that if the model uses a smaller context, it can focus more effectively on details in the text. We will refer to this approach as v3. This approach is compared with the extraction method that uses the maximum batch size, meaning that all five articles are processed in a single inference. We refer to this approach as v2, the same as in the previous section.
 
-Statistical comparison continues for system versions two and three. Both versions are evaluated on the same set of models and datasets (media cases), with precision, recall, and F1-score measured for each (model, dataset) pair. The purpose is to identify any statistically significant improvement in the third version over the second.
+Statistical comparison continues for system versions two and three. Both versions are evaluated on the same set of models and datasets (media cases), with precision, recall, and F1 score measured for each (model, dataset) pair. The purpose is to identify any statistically significant improvement in the third version over the second.
 
 Data handling is consistent. Results from both versions are loaded, standardized, and merged by model and dataset. For each metric, the difference between the new and previous version is computed for every (model, dataset) pair.
 
@@ -228,9 +228,9 @@ Descriptive statistics reveal distributions. The mean ($\mu$) and standard devia
 Metric & $\mu_2$&	$\sigma_2$&	$\mu_3$&	$\sigma_3$&	$\mu_{3-2}$&	$\sigma_{3-2}$ \crl \tskip4pt
 Precision&	0.622&	0.097&	0.610&	0.094&	-0.012&	0.049 \cr
 Recall&	0.497&	0.087&	0.503&	0.094&	0.005&	0.059 \cr
-F1-score&	0.459&	0.106&	0.465&	0.098	&0.006	&0.053 \cr
+F1 score&	0.459&	0.106&	0.465&	0.098	&0.006	&0.053 \cr
 }
-~\caption/t Descriptive statistics for precision, recall, and F1-score for system versions 2 and 3. $\mu_2$ and $\sigma_2$ are the mean and standard deviation for version 2, $\mu_3$ and $\sigma_3$ for version 3, and $\mu_{3-2}$, $\sigma_{3-2}$ are the mean and standard deviation of the difference (version 3 minus version 2).
+~\caption/t Descriptive statistics for precision, recall, and F1 score for system versions 2 and 3. $\mu_2$ and $\sigma_2$ are the mean and standard deviation for version 2, $\mu_3$ and $\sigma_3$ for version 3, and $\mu_{3-2}$, $\sigma_{3-2}$ are the mean and standard deviation of the difference (version 3 minus version 2).
 \endinsert
 
 Statistical hypotheses are formally tested. The null hypothesis for each metric asserts no difference between version 3 and version 2; the alternative hypothesis asserts a difference. The tests used are the paired t-test (which assumes normally distributed differences) and the Wilcoxon signed-rank test (which is non-parametric). A p-value less than 0.05 is interpreted as statistically significant evidence of a difference.
@@ -240,7 +240,7 @@ Statistical hypotheses are formally tested. The null hypothesis for each metric 
 Metric&	$\mu_{3-2}$&	$\sigma_{3-2}$&	t-test p-value&	Wilcoxon p-value \crl \tskip4pt
 Precision & -0.012 & 0.049 & 0.362 & 0.389 \cr
 Recall    & 0.005  & 0.059 & 0.727 & 0.489 \cr
-F1-score  & 0.006  & 0.053 & 0.667 & 0.421 \cr
+F1 score  & 0.006  & 0.053 & 0.667 & 0.421 \cr
 }
 ~\caption/t Statistical test results for metric differences (version 3 minus version 2). $\mu_{3-2}$ and $\sigma_{3-2}$ denote the mean and standard deviation of the difference. p-values from the paired t-test and Wilcoxon signed-rank test are shown; p-values below 0.05 would indicate statistical significance.
 \endinsert
@@ -262,7 +262,7 @@ F1-score  & 0.006  & 0.053 & 0.667 & 0.421 \cr
 \medskip
 
 Performance differences are minimal between system versions two and three.
-Descriptive statistics show only a negligible increase in mean F1-score from 0.459 to 0.465, with the mean difference (0.006) far smaller than the standard deviation (0.053). Mean precision actually declined slightly, while mean recall improved by a similarly small margin.
+Descriptive statistics show only a negligible increase in mean F1 score from 0.459 to 0.465, with the mean difference (0.006) far smaller than the standard deviation (0.053). Mean precision actually declined slightly, while mean recall improved by a similarly small margin.
 
 Statistical tests support the absence of significant change.
 The paired t-test p-values for all metrics are substantially greater than 0.05 (precision:~0.36; recall:~0.73; F1:~0.67), as are the Wilcoxon signed-rank test p-values. This statistical evidence indicates that the observed differences could easily be due to random variation rather than any systematic effect of the new system version.

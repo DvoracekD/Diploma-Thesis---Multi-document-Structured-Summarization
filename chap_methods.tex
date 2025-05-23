@@ -121,7 +121,7 @@ The extraction pipeline produces the desired structure. It consists of a series 
 
 \medskip  \clabel[pipeline-diagram]{Extraction pipeline diagram}
 \picw=14cm \cinspic figs/methods/extraction-pipeline.pdf
-\caption/f An overview diagram of the individual phases of the extraction pipeline process. The individual subprocesses are described in detail in this chapter. Individual blocs represent the individual subprocesses. The arrows symbolize data passing (output to input).
+\caption/f An overview diagram of the individual phases of the extraction pipeline process. The individual subprocesses are described in detail in this chapter. Individual blocks represent individual sub-processes. The arrows represent data passing (output to input).
 \medskip
 
 
@@ -169,7 +169,7 @@ To simplify further processing, the individual article components were concatena
 The original date, formatted as "YYYY-MM-DDTHH:MM:SS", is converted to the Czech date format to prevent ambiguity between days and months and to align with the language of the text. Article titles and abstracts are included as they may contain supplementary semantic information.
 
 \secc Extraction 
-The main component of the pipeline is extraction. After data preprocessing, the extraction of the desired structure follows. This process consists of the sequential extraction of persons, organizations, locations, and entities. These stages of the pipeline are separated to allow each type of entity or event to be targeted with an individual, specialized prompt. At the same time, this approach supports the scalability of the solution, which—thanks to its decomposition into subproblems—is less dependent on the context length of the current model and on the variable quality depending on the context length, including phenomena such as positional bias, which become more prominent with longer context in many models. \cite[positional-bias]
+The main component of the pipeline is extraction. After data preprocessing, the extraction of the desired structure follows. This process consists of the sequential extraction of persons, organizations, locations, and events. These stages of the pipeline are separated to allow each type of entity or event to be targeted with an individual, specialized prompt. At the same time, this approach supports the scalability of the solution, which—thanks to its decomposition into subproblems—is less dependent on the context length of the current model and on the variable quality depending on the context length, including phenomena such as positional bias, which become more prominent with longer context in many models. \cite[positional-bias]
 
 An extraction script was created. Following experimentation in a Python notebook, the script "pipeline.py" was developed. Its main method is "predict_structure", which takes the parameters "articles" and "create_completion". The "articles" parameter is a list of articles produced by preprocessing. Each object must contain the required attributes "id" and "ftext", which consists of the formatted text of the article, according to the preprocessing structure described in \ref[preprocessing]. The "create_completion" parameter is a function that accepts two arguments: the resulting prompt string with substituted variables, and a dictionary representing the JSON definition of the output schema. The output of "create_completion" is a populated dictionary containing the extracted data in accordance with the provided JSON schema. Since the function is passed as a parameter, the prediction script is completely independent of the settings of the employed model and can therefore be used generically across all experiments.
 
@@ -377,7 +377,7 @@ státní úřad & statistický úřad & 0.66 \cr
 \endinsert
 
 The next step evaluates entity assignment to articles.
-Each article contains a list of persons, organizations, and locations mentioned. During entity evaluation, a mapping is established between predicted entity identifiers and their ground truth counterparts. This mapping is then used to assess the accuracy of entity-to-article assignments. For each article and each entity type (person, organization, event), precision, recall, and F1-score can be computed. These precision and recall values are then averaged across entity types, yielding overall precision, recall, and F1-score for the assignment of entities to articles.
+Each article contains a list of persons, organizations, and locations mentioned. During entity evaluation, a mapping is established between predicted entity identifiers and their ground truth counterparts. This mapping is then used to assess the accuracy of entity-to-article assignments. For each article and each entity type (person, organization, event), precision, recall, and F1 score can be computed. These precision and recall values are then averaged across entity types, yielding overall precision, recall, and F1 score for the assignment of entities to articles.
 
 Event detection is evaluated similarly to entity detection.
 The same principles applied to entity detection are used to evaluate event detection. Detected events are sequentially matched to ground truth events, recording the counts of TP, FP, and FN events. Since textual descriptions of events can vary significantly, the evaluation prioritizes semantic similarity of the compared texts. The "paraphrase-multilingual-MiniLM-L12-v2" model\cite[multilingual-sentence-bert] is used for this purpose, offering relatively fast, language-agnostic semantic embedding extraction. The resulting embeddings are then compared using cosine similarity.
@@ -390,7 +390,7 @@ Václav Kopta moderoval ve\-černí u\-dílení cen Čes\-kého lva.
  & Konal se slavnostní ve\-čer udíle\-ní cen Českého lva. & 0.81 \crl \tskip5pt
 ODS pro letošní volby dala přednost právníkovi Milanovi Golasovi. &  Komunální volby se konaly minulý víkend. & 0.41 \cr
 }
-\caption/t The table presents two event descriptions and their cosine similarity score based on embeddings from the "paraphrase-multilingual-MiniLM-L12-v2" model\cite[multilingual-sentence-bert]. Shows that semantically equivalent strings yield high similarity scores, while texts with lower semantic overlap yield a significantly lower similarity value.
+\caption/t The table presents two event descriptions and their cosine similarity score based on embeddings from the "paraphrase-multilingual-MiniLM-L12-v2" model\cite[multilingual-sentence-bert]. Demonstrates that semantically equivalent strings produce high similarity scores, whereas texts with less semantic overlap result in notably lower similarity values.
 \endinsert
 
 Subsequent evaluation assesses event-entity and event-article relations.
@@ -423,4 +423,4 @@ Iterative improvement of the selected model's (Llama4 Scout) performance on the 
 Performance measurement of the improved configuration (v2) on the test dataset using selected language models.
 Performance measurement of the configuration with minimal batch size (v3) on the test dataset using selected language models.
 
-A number of models were used for testing. For incremental improvement on the validation dataset, only one model was used, specifically the relatively fast Llama 4 Scout. However, for evaluation on the test dataset, several models were used. The reason for this was both the effort to compare the models on this specific problem and to ensure greater objectivity of the results, which would not depend solely on a single model. The list of models can be found in chapter \ref[models]. Some models were not used for all versions of the pipeline due to insufficient context or financial reasons. The intention was to include both open and commercial models.
+A number of models were used for testing. For incremental improvement on the validation dataset, only one model was used, specifically the relatively fast Llama 4 Scout. However, for evaluation on the test dataset, several models were used. The reason for this was both the effort to compare the models on this specific problem and to ensure greater objectivity of the results, which would not depend solely on a single model. The list of models can be found in Chapter \ref[models]. Some models were not used for all versions of the pipeline due to insufficient context or financial reasons. The intention was to include both open and commercial models.
