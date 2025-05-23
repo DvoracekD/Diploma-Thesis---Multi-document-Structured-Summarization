@@ -6,7 +6,7 @@ This chapter outlines the practical implementation of the experimental framework
 \sec Logging
 
 All experiments are recorded.
-This is done in order to maximize experiment repeatability and ensure sustainable orientation among individual runs. For this purpose, the MLflow application\cite[mlflow] was used. MLflow is an open-source platform designed for managing the machine learning lifecycle, with a particular focus on experiment tracking and reproducibility. In this thesis, MLflow was used to systematically log all experiments, including input parameters, datasets, evaluation metrics, and model outputs. Its web interface enabled clear organization and comparison of experimental runs, supporting both tabular and graphical visualizations. MLflow's support for prompt versioning and automatic capture of API calls during large language model inference made it an essential tool for ensuring transparency, repeatability, and effective analysis throughout the experimental workflow. The experiment data are sa    ved into the local directory. The server app can be started with the following command:
+This is done in order to maximize experiment repeatability and ensure sustainable orientation among individual runs. For this purpose, the MLflow application\cite[mlflow] was used. MLflow is an open-source platform designed for managing the machine learning lifecycle, with a particular focus on experiment tracking and reproducibility. In this thesis, MLflow was used to systematically log all experiments, including input parameters, datasets, evaluation metrics, and model outputs. Its web interface enabled clear organization and comparison of experimental runs, supporting both tabular and graphical visualizations. MLflow's support for prompt versioning and automatic capture of API calls during large language model inference made it an essential tool for ensuring transparency, repeatability, and effective analysis throughout the experimental workflow. The experiment data are saved into the local directory. The server app can be started with the following command:
 
 \begtt
 mlflow server --host 127.0.0.1 --port 8080
@@ -64,7 +64,7 @@ Here, the message structure can be seen in a user-friendly and readable format. 
 \medskip
 
 \label[prompt-management]
-\sec Prompt management
+\sec Prompt Management
 MLflow offers a system for prompt management. Prompts are instructional texts used to guide instruction-based language models. A high-quality formulation of the desired task and expected output is one of the key factors for improving language model performance \cite[prompt-engineering]. To organize the prompts used and their versions, the prompt repository provided by MLflow was utilized in this thesis.
 
 Prompts are maintained in a single location.
@@ -93,7 +93,7 @@ The value of the {\tt variable} is inserted into the placeholder at the location
 Prompt management system has major disadvantage. With the increasing complexity of prompts, a limitation was encountered preventing saved prompts from exceeding 5,000 characters. Therefore, a custom versioning system was created. Each pipeline version has its own folder containing markdown files with the prompt template texts. This folder is a parameter of the prediction script. Schemas remain static across prompt and pipeline versions and are also downloaded from a designated folder at the beginning of the script run. To ensure maximum reproducibility of experiments, individual prompts and schemas are logged into MLflow as artifacts with every experiment run.
 
 
-\sec Experiment script
+\sec Experiment Script
 
 The experiments share a unified script.
 The individual runs of the experiment differ only in input parameters: the used model, model parameters, the "predict_structure" method representing the current version of the pipeline, and the current versions of prompts in the prompt repository. The experiment script consists of the following components:

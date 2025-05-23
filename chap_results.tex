@@ -4,7 +4,7 @@ This chapter presents the evaluation results of the proposed information extract
 
 The first section, Baseline evaluation, establishes reference performance levels by applying the initial version of the extraction pipeline to the test dataset using several state-of-the-art language models. Next, the Pipeline optimization section details iterative improvements to the pipeline, focusing on prompt engineering and targeted adjustments, with performance tracked across iterations. The third section, Optimized pipeline, summarizes the evaluation of the final, enhanced extraction pipeline using selected models, facilitating a direct comparison with baseline results. In the Minimal batch evaluation section, the impact of reducing the batch size to one—forcing per-article inference—is investigated to assess its effect on model performance and output consistency. Finally, the Temperature influence section systematically analyzes the effect of the inference temperature parameter on key evaluation metrics, utilizing both visual and statistical methods.
 
-\sec Baseline evaluation
+\sec Baseline Evaluation
 
 The baseline quality was assessed. The baseline implementation of the extraction pipeline, together with the baseline instructional prompts, was evaluated using the evaluation process described earlier. The initial instructional prompts for the pipeline were tuned on the Llama 4 model.
 
@@ -37,7 +37,7 @@ In \ref[v1-barplot], the dominance of the Gemini 2.5 model can be observed acros
 
 Similar trends can be observed in the graphs \ref[v1-stage] and \ref[v1-dataset]. In the diagram \ref[v1-stage], the movement of the F1 score for individual models and individual evaluation phases can be tracked. In the diagram \ref[v1-dataset], on the other hand, the F1 scores of the models can be tracked across the individual datasets. It can be observed that in both graphs, the Gemini models show very similar results. They are followed by the GPT 4.1 model, which surpasses the Gemini Pro version only on the {\it Senátní Volby 2018} dataset. The remaining open-source models perform quite similarly both across evaluation aspects and datasets. On all parallel coordinates diagrams, it is possible to observe a separation of the group of commercial models from the group of open-source models, with the commercial models being superior.
 
-\sec Pipeline optimization
+\sec Pipeline Optimization
 
 The baseline pipeline was improved. For iterations over the solution, the evaluation pipeline was applied to the validation dataset. Only one model, namely Llama 4 Scout, was used for the prompt tuning. The improvement workflow was as follows:
 
@@ -71,7 +71,7 @@ We observe Figure \ref[v1-iter]. In the chart of overall values in the lower lef
 
 In the final system, unfortunately, there was no improvement in average recall, but it was possible to significantly improve the overall precision on the validation dataset (from 0.55 to 0.68), while recall remained nearly constant. Thus, it was also possible to improve the overall F1 score.
 
-\sec Optimized pipeline evaluation
+\sec Optimized Pipeline Evaluation
 
 The optimized pipeline was then tested on the test dataset. Only models Qwen3, Llama 4 Scout, GPT 4.1, and Gemini 2.5 Flash were included. The evaluation procedure remained as previously described to maintain comparability. Deterministic inference (temperature set to 0) was used except where otherwise recommended. Gemini 2.5 Pro was not used for financial reasons. DeepSeek R1 was not used due to the insufficient context window of the version used. The generated responses in this version of the extraction pipeline are on average longer than the baseline due to more detailed analysis enforced by updated prompts.
 
@@ -109,7 +109,7 @@ Dataset-level analysis reveals that Gemini 2.5 Flash leads in F1 score for every
 
 These results confirm previous findings. The performance gap persists across aggregate metrics, evaluation stages, and all datasets considered.
 
-\sec Minimal batch evaluation
+\sec Minimal Batch Evaluation
 
 The pipeline from the previous chapter was re-evaluated with a key modification: batch size was reduced to one, so each model processed only a single article at a time. This experiment was designed to test the impact of sequential, article-by-article extraction, while keeping all other settings consistent with the previous evaluation. Only models Qwen3, Llama 4 Scout, and Gemini 2.5 Flash were included in this experiment. This extraction pipeline version consists of many inference requests. Therefore, GPT 4.1 was excluded from the experiment for financial reasons.
 
@@ -148,7 +148,7 @@ Dataset-level analysis again shows Gemini 2.5 Flash ahead in F1 score on every d
 These results demonstrate that reducing batch size to one does not fundamentally change the ranking or performance gap between models. Gemini 2.5 Flash remains the best-performing model under this more granular, single-article regime, and open-source models continue to lag behind across all metrics, stages, and datasets.
 
 
-\sec Assessment of baseline improvement
+\sec Assessment of Baseline Improvement
 
 We want to verify whether there has been an improvement in the extraction pipeline. In this stage, we compare the baseline implementation and prompts with the improved version obtained by iterating on the prompt design. The iterations were guided solely by the results of a single model (Llama 4) on the validation dataset. However, for the verification, we use a test dataset and a larger number of models. We designate the baseline solution as v1. We designate the improved solution as v2. Both versions were evaluated using four models across several datasets (media cases), measuring precision, recall, and F1-score for each (model, dataset) pair. The goal is to determine if the new version offers statistically significant improvements.
 
@@ -199,11 +199,12 @@ F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
 ~\caption/f Grouped bar plot displays F1 scores for each (model, dataset) combination for both system versions. Each group contains two bars: one for the old version and one for the new version. To interpret, locate the (model, dataset) of interest along the axes, then compare the height of the bars within each group. Taller bars indicate higher F1 scores. If the bar for the new version is taller than that of the old, the new system performed better for that specific case. This figure allows a quick visual scan for systematic improvements or regressions across all groups.
 \medskip
 
-
+\midinsert
 \medskip  \clabel[v1-v2-diff-bar-plot]{Comparison v1-v2: Difference bar plot}
 \picw=10cm \cinspic figs/discussion/v1-v2-f-diff.pdf
 ~\caption/f Bar plot visualizes the difference in F1 score (v2 - v1) for each (model, dataset) pair. The x-axis shows different models, grouped or colored by dataset. Each bar’s height indicates how much the F1 score changed: positive values (bars above zero) represent improvements, and negative values (bars below zero) represent declines. The horizontal dotted line at zero provides a clear visual threshold—bars crossing above this line signify improvement, those below indicate regression. To interpret, examine the position and height of each bar relative to zero.
 \medskip
+\endinsert
 
 \medskip  \clabel[v1-v2-data-points]{Comparison v1-v2: Scatter plot}
 \picw=10cm \cinspic figs/discussion/v1-v2-data-points.pdf
@@ -212,7 +213,7 @@ F1-score  & 0.026 & 0.067 & 0.098 & 0.290 \cr
 
 Conclusion is based on statistical evidence. Statistical tests and visualizations indicate a trend toward improved F1 scores, but these improvements do not reach statistical significance at the 0.05 level. Mean values are generally higher for the new version, but standard deviations indicate considerable overlap.
 
-\sec Assessment of single batch approach
+\sec Assessment of Single Batch Approach
 
 We want to verify whether the minimum batch approach improves the solution. This is an approach where each phase of the extraction pipeline works with only one article. The idea is that if the model uses a smaller context, it can focus more effectively on details in the text. We will refer to this approach as v3. This approach is compared with the extraction method that uses the maximum batch size, meaning that all five articles are processed in a single inference. We refer to this approach as v2, the same as in the previous section.
 
@@ -273,7 +274,7 @@ Overall, the empirical evidence from all metrics, tests, and visualizations demo
 
 
 \label[temperature-influence]
-\sec Temperature influence
+\sec Temperature Influence
 
 Model performance can be sensitive to the temperature parameter, which governs the stochasticity of the sampling process during inference. The influence of temperature on key evaluation metrics—precision, recall, and F1 score—was thoroughly investigated to inform optimal model configuration. The analysis combines both a visual and a statistical approach, ensuring a robust understanding of how temperature shapes the behavior of these metrics. The improved pipeline version v2 was used for testing. The evaluation was performed using the Llama 4 Scout model, with six discrete values of the temperature parameter, which were evenly distributed within the interval between 0 and 1. For each temperature value, ten evaluation runs were carried out. The relationship between temperature and each metric was explored using a comprehensive plot that integrates both distributional and trend-based information.
 
@@ -303,7 +304,7 @@ In Table \ref[ANOVA-temperature], the F-statistic and p-value are reported for e
 
 In summary, this analysis reveals that temperature tuning exerts a pronounced influence on recall but has negligible effects on precision and F1 score within the examined range. This finding is visually apparent from the combined plot, where recall displays clear shifts as temperature changes, and statistically confirmed by the ANOVA test. For practitioners, this implies that careful adjustment of the temperature parameter can optimize recall, while precision and F1 remain robust to temperature variation.
 
-\sec Prediction examples
+\sec Prediction Examples
 We subjectively evaluate several problematic outputs. In most cases, the models deliver acceptable results, and their responses are both coherent and factually accurate. The primary concern, however, is the lack of extraction granularity, which corresponds to reduced recall. For a subset of systems, especially open-source variants, a limited amount of pretraining data in Czech is particularly evident. As a consequence, generated passages may not adhere to proper grammar. For example, DeepSeek R1 produced the phrase “scénářový autor” instead of scénárista and substituted režisér with ředitel.
 \begtt
 "name": "Petr Zelenka",

@@ -49,26 +49,19 @@
    volume = {23},
    year = {2020}
 }
-@misc{,
-   title = {Papers With Code},
-   url = {https://paperswithcode.com/task/multi-document-summarization}
+
+@misc{pwc-multi-doc,
+  title        = {Multi-Document Summarization | Papers With Code},
+  author       = {Meta AI Research},
+  year         = 2025,
+  note         = {\url{https://paperswithcode.com/task/multi-document-summarization} Accessed: 5-15-2025}
 }
-@techReport{Chen2019,
-   abstract = {Timeline summarization targets at concisely summarizing the evolution trajectory along the timeline and existing timeline summarization approaches are all based on extractive methods. In this paper, we propose the task of abstractive timeline summa-rization, which tends to concisely paraphrase the information in the time-stamped events. Unlike traditional document summarization, timeline sum-marization needs to model the time series information of the input events and summarize important events in chronological order. To tackle this challenge , we propose a memory-based timeline sum-marization model (MTS). Concretely, we propose a time-event memory to establish a timeline, and use the time position of events on this timeline to guide generation process. Besides, in each decoding step, we incorporate event-level information into word-level attention to avoid confusion between events. Extensive experiments are conducted on a large-scale real-world dataset, and the results show that MTS achieves the state-of-the-art performance in terms of both automatic and human evaluations.},
-   author = {Xiuying Chen and Zhangming Chan and Shen Gao and Meng-Hsuan Yu and Dongyan Zhao and Rui Yan},
-   keywords = {Natural Language Processing: Natural Language Generation,Natural Language Processing: Natural Language Summarization},
-   title = {Learning towards Abstractive Timeline Summarization},
-   url = {http://tiny.cc/lfh56y},
-   year = {2019}
-}
-@techReport{,
-   abstract = {Timeline summarization (TLS) automatically identifies key dates of major events and provides short descriptions of what happened on these dates. Previous approaches to TLS have focused on extractive methods. In contrast, we suggest an abstractive timeline summarization system. Our system is entirely unsupervised, which makes it especially suited to TLS where there are very few gold summaries available for training of supervised systems. In addition, we present the first abstractive oracle experiments for TLS. Our system outperforms ex-tractive competitors in terms of ROUGE when the number of input documents is high and the output requires strong compression. In these cases, our oracle experiments confirm that our approach also has a higher upper bound for ROUGE scores than extractive methods. A study with human judges shows that our ab-stractive system also produces output that is easy to read and understand.},
-   author = {Julius Steen and Katja Markert},
-   title = {Abstractive Timeline Summarization}
-}
+
 @misc{paperswithcode-timeline-sum,
-   title = {Timeline Summarization | Papers With Code},
-   url = {https://paperswithcode.com/task/timeline-summarization}
+  title        = {Timeline Summarization | Papers With Code},
+  author       = {Meta AI Research},
+  year         = 2025,
+  note         = {\url{https://paperswithcode.com/task/timeline-summarization} Accessed: 5-15-2025}
 }
 @inproceedings{cnn-dailymail,
    author = {Abigail See and Peter J. Liu and Christopher D. Manning},
@@ -138,9 +131,11 @@ Wikipedia},
    volume = {35},
    year = {2024}
 }
-@article{pwc-event-extraction,
-   title = {Event Extraction | Papers With Code},
-   url = {https://paperswithcode.com/task/event-extraction}
+@misc{pwc-event-extraction,
+  title        = {Event Extraction | Papers With Code},
+  author       = {Meta AI Research},
+  year         = 2025,
+  note         = {\url{https://paperswithcode.com/task/event-extraction} Accessed: 5-15-2025}
 }
 @article{Li2022,
    author = {Jing Li and Aixin Sun and Jianglei Han and Chenliang Li},
@@ -155,8 +150,10 @@ Wikipedia},
    year = {2022}
 }
 @misc{pwc-ner,
-   title = {Named Entity Recognition (NER) | Papers With Code},
-   url = {https://paperswithcode.com/task/named-entity-recognition-ner}
+  title        = {Named Entity Recognition (NER) | Papers With Code},
+  author       = {Meta AI Research},
+  year         = 2025,
+  note         = {\url{https://paperswithcode.com/task/named-entity-recognition-ner} Accessed: 5-15-2025}
 }
 @techReport{,
    abstract = {Pretrained contextualized embeddings are powerful word representations for structured prediction tasks. Recent work found that better word representations can be obtained by concatenating different types of embeddings. However, the selection of embeddings to form the best concatenated representation usually varies depending on the task and the collection of candidate embeddings, and the ever-increasing number of embedding types makes it a more difficult problem. In this paper, we propose Automated Concatenation of Embed-dings (ACE) to automate the process of finding better concatenations of embeddings for structured prediction tasks, based on a formulation inspired by recent progress on neural architecture search. Specifically, a controller alternately samples a concatenation of embed-dings, according to its current belief of the effectiveness of individual embedding types in consideration for a task, and updates the belief based on a reward. We follow strategies in reinforcement learning to optimize the parameters of the controller and compute the reward based on the accuracy of a task model, which is fed with the sampled concatenation as input and trained on a task dataset. Empirical results on 6 tasks and 21 datasets show that our approach outperforms strong base-lines and achieves state-of-the-art performance with fine-tuned embeddings in all the evaluations. 1},
@@ -177,13 +174,14 @@ Wikipedia},
    url = {https://www.aclweb.org/anthology/2020.acl-main.45},
    year = {2020}
 }
-@article{bert,
-   abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
-   author = {Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
-   month = {10},
-   title = {BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding},
-   url = {http://arxiv.org/abs/1810.04805},
-   year = {2018}
+@misc{bert,
+      title={BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding}, 
+      author={Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+      year={2019},
+      eprint={1810.04805},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/1810.04805}, 
 }
 @inbook{clustering,
    author = {Lior Rokach and Oded Maimon},

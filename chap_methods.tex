@@ -2,7 +2,7 @@
 
 The chapter describes the methodology for extracting structured data from media articles. First, the target data schema and its individual components, including entities, events, and their mutual relations, are defined. This is followed by a detailed description of the extraction pipeline, including the data preprocessing phase and the multi-level extraction of entities and events. Next, the construction of the evaluation dataset is introduced, along with the procedure for both manual and automated annotation. The chapter also presents the design of an evaluation metric to measure the quality of the output structure against the annotated data. The final part is devoted to the experimental methodology proposed to asses the performance of the proposed solution, including an overview of the models used and their configurations.
 
-\sec Extraction data structure
+\sec Extraction Data Structure
 
 The principle of the problem is structure extraction. It is a matter of extracting persons, organizations, and locations from mutually connected articles related to a single media case or topic. The individual entities further contain associated information. In the case of persons, it is the roles they occupy across the examined set of articles. In the case of organizations and locations, we try to extract their type for further potential categorization and filtering. Furthermore, it is necessary to extract the objective events that the articles describe and their temporal validity, which can be derived both from the text of the article from which the event is extracted and from all available information across the articles.
 
@@ -299,7 +299,7 @@ A script was created to access the dataset. The script "eval.eval_dataset.py" co
 
 The data was manually annotated. For easier orientation in the annotated data, entities and events were first manually detected for individual articles. To assist in subsequently linking entities across articles, it is necessary to detect which ones correspond to each other. The relevant identifiers must then be remapped. For this purpose, a helper script was created.
 
-\secc Deduplication script
+\secc Deduplication Script
 
 This section introduces a supporting script designed to facilitate the deduplication and linking of entities and events within the dataset. The script assists human annotators by automatically identifying and mapping corresponding entities and events across articles, streamlining the process of constructing a consistent and accurate relational structure. After the script's application, a human annotator reviews and refines the resulting structure, ensuring that all links and references accurately reflect the underlying data and correcting any errors, omissions, or inconsistencies as needed.
 
@@ -397,7 +397,7 @@ Subsequent evaluation assesses event-entity and event-article relations.
 As with articles, precision and recall are now calculated for the assignment of entities to events in which they appear. Additionally, precision and recall are computed for the assignment of events to the articles in which they are mentioned. The evaluation process thus yields precision and recall from the following stages: entity detection, event detection, entity-to-event assignment, entity-to-article assignment, and event-to-article assignment. All metrics are logged together with the experiment in MLflow. Since these problem aspects are considered equally important, the final metric for a given case is computed by averaging precision and recall across all tasks. This result is also attached to the experiment log. The final evaluation score is obtained by averaging all precision and recall values across all evaluation media cases, followed by computing the harmonic mean—i.e., the final F1 score.
 
 \label[models]
-\sec Used models
+\sec Used Models
 A wide range of language models was used for the experiments. The selection aimed to include both open-source and commercial models. Likewise, the models represent both large language models with direct inference and those with an integrated reasoning phase.
 
 Meta {\em Llama-4-Scout-17B-16E-Instruct}\cite[llama4] is an open-source multimodal language model developed by Meta, based on the Mixture-of-Experts (MoE) architecture. It includes 17 billion active parameters out of a total of 109 billion and is capable of processing both textual and visual inputs. The model was trained on a large corpus of public and licensed data and is optimized for efficiently handling very long contexts, up to 10 million tokens. It is suitable for tasks such as multilingual document analysis and multimodal querying. The model is released under the community license Llama 4.\cite[llama4] The version used was hosted via e-INFRA CZ\cite[e-infra].

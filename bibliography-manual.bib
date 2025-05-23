@@ -82,7 +82,8 @@ abstract = {This paper explores the complex field of text summarization in Natur
 }
 
 @inproceedings{gpt-3,
- author = {Brown, Tom and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared D and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Agarwal, Sandhini and Herbert-Voss, Ariel and Krueger, Gretchen and Henighan, Tom and Child, Rewon and Ramesh, Aditya and Ziegler, Daniel and Wu, Jeffrey and Winter, Clemens and Hesse, Chris and Chen, Mark and Sigler, Eric and Litwin, Mateusz and Gray, Scott and Chess, Benjamin and Clark, Jack and Berner, Christopher and McCandlish, Sam and Radford, Alec and Sutskever, Ilya and Amodei, Dario},
+ author = {et al, Tom Brown},
+ option = "aumax:1",
  booktitle = {Advances in Neural Information Processing Systems},
  editor = {H. Larochelle and M. Ranzato and R. Hadsell and M.F. Balcan and H. Lin},
  pages = {1877--1901},
@@ -843,3 +844,305 @@ series = {ICML'20}
     abstract = "We introduce a new pretraining approach geared for multi-document language modeling, incorporating two key ideas into the masked language modeling self-supervised objective. First, instead of considering documents in isolation, we pretrain over sets of multiple related documents, encouraging the model to learn cross-document relationships. Second, we improve over recent long-range transformers by introducing dynamic global attention that has access to the entire input to predict masked tokens. We release CDLM (Cross-Document Language Model), a new general language model for multi-document setting that can be easily applied to downstream tasks. Our extensive analysis shows that both ideas are essential for the success of CDLM, and work in synergy to set new state-of-the-art results for several multi-text tasks."
 }
 
+@inproceedings{dbscan,
+author = {Ester, Martin and Kriegel, Hans-Peter and Sander, J\"{o}rg and Xu, Xiaowei},
+title = {A density-based algorithm for discovering clusters in large spatial databases with noise},
+year = {1996},
+publisher = {AAAI Press},
+abstract = {Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements. In this paper, we present the new clustering algorithm DBSCAN relying on a density-based notion of clusters which is designed to discover clusters of arbitrary shape. DBSCAN requires only one input parameter and supports the user in determining an appropriate value for it. We performed an experimental evaluation of the effectiveness and efficiency of DBSCAN using synthetic data and real data of the SEQUOIA 2000 benchmark. The results of our experiments demonstrate that (1) DBSCAN is significantly more effective in discovering clusters of arbitrary shape than the well-known algorithm CLAR-ANS, and that (2) DBSCAN outperforms CLARANS by a factor of more than 100 in terms of efficiency.},
+booktitle = {Proceedings of the Second International Conference on Knowledge Discovery and Data Mining},
+pages = {226–231},
+numpages = {6},
+keywords = {handling nlj4-275oise, efficiency on large spatial databases, clustering algorithms, arbitrary shape of clusters},
+location = {Portland, Oregon},
+series = {KDD'96}
+}
+
+@ARTICLE{em,
+  author={Moon, T.K.},
+  journal={IEEE Signal Processing Magazine}, 
+  title={The expectation-maximization algorithm}, 
+  year={1996},
+  volume={13},
+  number={6},
+  pages={47-60},
+  keywords={Signal processing algorithms;Parameter estimation;Hidden Markov models;Maximum likelihood estimation;Phase detection;Convergence;Image reconstruction;Probability distribution;Histograms;Estimation theory},
+  doi={10.1109/79.543975}}
+
+@incollection{autoclass,
+title = {AutoClass: A Bayesian Classification System},
+editor = {John Laird},
+booktitle = {Machine Learning Proceedings 1988},
+publisher = {Morgan Kaufmann},
+address = {San Francisco (CA)},
+pages = {54-64},
+year = {1988},
+isbn = {978-0-934613-64-4},
+doi = {https://doi.org/10.1016/B978-0-934613-64-4.50011-6},
+url = {https://www.sciencedirect.com/science/article/pii/B9780934613644500116},
+author = {Peter Cheeseman and James Kelly and Matthew Self and John Stutz and Will Taylor and Don Freeman},
+abstract = {This paper describes AutoClass II, a program for automatically discovering (inducing) classes from a database, based on a Bayesian statistical technique which automatically determines the most probable number of classes, their probabilistic descriptions, and the probability that each object is a member of each class. AutoClass has been tested on several large, real databases and has discovered previously unsuspected classes. There is no doubt that these classes represent new phenomena.}
+}
+
+@article{c-means,
+title = {FCM: The fuzzy c-means clustering algorithm},
+journal = {Computers \& Geosciences},
+volume = {10},
+number = {2},
+pages = {191-203},
+year = {1984},
+issn = {0098-3004},
+doi = {https://doi.org/10.1016/0098-3004(84)90020-7},
+url = {https://www.sciencedirect.com/science/article/pii/0098300484900207},
+author = {James C. Bezdek and Robert Ehrlich and William Full},
+keywords = {Cluster analysis, Cluster validity, Fuzzy clustering, Fuzzy QMODEL, Least-squared errors},
+abstract = {This paper transmits a FORTRAN-IV coding of the fuzzy c-means (FCM) clustering program. The FCM program is applicable to a wide variety of geostatistical data analysis problems. This program generates fuzzy partitions and prototypes for any set of numerical data. These partitions are useful for corroborating known substructures or suggesting substructure in unexplored data. The clustering criterion used to aggregate subsets is a generalized least-squares objective function. Features of this program include a choice of three norms (Euclidean, Diagonal, or Mahalonobis), an adjustable weighting factor that essentially controls sensitivity to noise, acceptance of variable numbers of clusters, and outputs that include several measures of cluster validity.}
+}
+
+@misc{sota-extractive,
+      title={Scaling Up Summarization: Leveraging Large Language Models for Long Text Extractive Summarization}, 
+      author={Léo Hemamou and Mehdi Debiane},
+      year={2024},
+      eprint={2408.15801},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2408.15801}, 
+}
+
+@inproceedings{salesforce,
+    title = "Benchmarking Generation and Evaluation Capabilities of Large Language Models for Instruction Controllable Summarization",
+    author = "Liu, Yixin  and
+      Fabbri, Alexander  and
+      Chen, Jiawen  and
+      Zhao, Yilun  and
+      Han, Simeng  and
+      Joty, Shafiq  and
+      Liu, Pengfei  and
+      Radev, Dragomir  and
+      Wu, Chien-Sheng  and
+      Cohan, Arman",
+    editor = "Duh, Kevin  and
+      Gomez, Helena  and
+      Bethard, Steven",
+    booktitle = "Findings of the Association for Computational Linguistics: NAACL 2024",
+    month = jun,
+    year = "2024",
+    address = "Mexico City, Mexico",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.findings-naacl.280/",
+    doi = "10.18653/v1/2024.findings-naacl.280",
+    pages = "4481--4501",
+    abstract = "While large language models (LLMs) can already achieve strong performance on standard generic summarization benchmarks, their performance on more complex summarization task settings is less studied. Therefore, we benchmark LLMs on instruction controllable text summarization, where the model input consists of both a source article and a natural language requirement for desired summary characteristics. To this end, we curate an evaluation-only dataset for this task setting and conduct human evaluations of five LLM-based systems to assess their instruction-following capabilities in controllable summarization. We then benchmark LLM-based automatic evaluation for this task with 4 different evaluation protocols and 11 LLMs, resulting in 40 evaluation methods. Our study reveals that instruction controllable text summarization remains a challenging task for LLMs, since (1) all LLMs evaluated still make factual and other types of errors in their summaries; (2) no LLM-based evaluation methods can achieve a strong alignment with human annotators when judging the quality of candidate summaries; (3) different LLMs show large performance gaps in summary generation and evaluation capabilities. We make our collected benchmark InstruSum publicly available to facilitate future research in this direction."
+}
+
+@misc{gpt-4,
+      title={GPT-4 Technical Report}, 
+      author={OpenAI, Josh Achiam et. al},
+      year={2024},
+      eprint={2303.08774},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2303.08774}, 
+}
+
+@misc{RL3,
+      title={Factually Consistent Summarization via Reinforcement Learning with Textual Entailment Feedback}, 
+      author={Paul Roit and Johan Ferret and Lior Shani and Roee Aharoni and Geoffrey Cideron and Robert Dadashi and Matthieu Geist and Sertan Girgin and Léonard Hussenot and Orgad Keller and Nikola Momchev and Sabela Ramos and Piotr Stanczyk and Nino Vieillard and Olivier Bachem and Gal Elidan and Avinatan Hassidim and Olivier Pietquin and Idan Szpektor},
+      year={2023},
+      eprint={2306.00186},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2306.00186}, 
+}
+
+Timeline summarizaton
+=====================
+
+@inproceedings{0686,
+  title     = {Learning towards Abstractive Timeline Summarization},
+  author    = {Chen, Xiuying and Chan, Zhangming and Gao, Shen and Yu, Meng-Hsuan and Zhao, Dongyan and Yan, Rui},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on
+               Artificial Intelligence, {IJCAI-19}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  pages     = {4939--4945},
+  year      = {2019},
+  month     = {7},
+  doi       = {10.24963/ijcai.2019/686},
+  url       = {https://doi.org/10.24963/ijcai.2019/686},
+}
+
+@inproceedings{2021.emnlp-main.519,
+    title = "Timeline Summarization based on Event Graph Compression via Time-Aware Optimal Transport",
+    author = "Li, Manling  and
+      Ma, Tengfei  and
+      Yu, Mo  and
+      Wu, Lingfei  and
+      Gao, Tian  and
+      Ji, Heng  and
+      McKeown, Kathleen",
+    editor = "Moens, Marie-Francine  and
+      Huang, Xuanjing  and
+      Specia, Lucia  and
+      Yih, Scott Wen-tau",
+    booktitle = "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+    month = nov,
+    year = "2021",
+    address = "Online and Punta Cana, Dominican Republic",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.emnlp-main.519/",
+    doi = "10.18653/v1/2021.emnlp-main.519",
+    pages = "6443--6456",
+    abstract = "Timeline Summarization identifies major events from a news collection and describes them following temporal order, with key dates tagged. Previous methods generally generate summaries separately for each date after they determine the key dates of events. These methods overlook the events' intra-structures (arguments) and inter-structures (event-event connections). Following a different route, we propose to represent the news articles as an event-graph, thus the summarization becomes compressing the whole graph to its salient sub-graph. The key hypothesis is that the events connected through shared arguments and temporal order depict the skeleton of a timeline, containing events that are semantically related, temporally coherent and structurally salient in the global event graph. A time-aware optimal transport distance is then introduced for learning the compression model in an unsupervised manner. We show that our approach significantly improves on the state of the art on three real-world datasets, including two public standard benchmarks and our newly collected Timeline100 dataset."
+}
+
+@inproceedings{2024.acl-long.390,
+    title = "From Moments to Milestones: Incremental Timeline Summarization Leveraging Large Language Models",
+    author = "Hu, Qisheng  and
+      Moon, Geonsik  and
+      Ng, Hwee Tou",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.390/",
+    doi = "10.18653/v1/2024.acl-long.390",
+    pages = "7232--7246",
+    abstract = "Timeline summarization (TLS) is essential for distilling coherent narratives from a vast collection of texts, tracing the progression of events and topics over time. Prior research typically focuses on either event or topic timeline summarization, neglecting the potential synergy of these two forms. In this study, we bridge this gap by introducing a novel approach that leverages large language models (LLMs) for generating both event and topic timelines. Our approach diverges from conventional TLS by prioritizing event detection, leveraging LLMs as pseudo-oracles for incremental event clustering and the construction of timelines from a text stream. As a result, it produces a more interpretable pipeline. Empirical evaluation across four TLS benchmarks reveals that our approach outperforms the best prior published approaches, highlighting the potential of LLMs in timeline summarization for real-world applications."
+}
+
+@misc{2301.00867v1,
+      title={Follow the Timeline! Generating Abstractive and Extractive Timeline Summary in Chronological Order}, 
+      author={Xiuying Chen and Mingzhe Li and Shen Gao and Zhangming Chan and Dongyan Zhao and Xin Gao and Xiangliang Zhang and Rui Yan},
+      year={2023},
+      eprint={2301.00867},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2301.00867}, 
+}
+
+@misc{2412.17408v1,
+      title={Just What You Desire: Constrained Timeline Summarization with Self-Reflection for Enhanced Relevance}, 
+      author={Muhammad Reza Qorib and Qisheng Hu and Hwee Tou Ng},
+      year={2024},
+      eprint={2412.17408},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2412.17408}, 
+}
+
+@inproceedings{3626772.3657899,
+author = {Sojitra, Daivik and Jain, Raghav and Saha, Sriparna and Jatowt, Adam and Gupta, Manish},
+title = {Timeline Summarization in the Era of LLMs},
+year = {2024},
+isbn = {9798400704314},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3626772.3657899},
+doi = {10.1145/3626772.3657899},
+abstract = {Timeline summarization is the task of automatically generating concise overviews of documents that capture the key events and their progression on timelines. While this capability is useful for quickly comprehending event sequences without reading lengthy descriptions, timeline summarization remains a relatively underexplored area in recent years when compared to traditional document summarization task and their evolution. The advent of large language models (LLMs) has led some to presume summarization as a solved problem. However, timeline summarization poses unique challenges for LLMs. Our investigation is centered on evaluating the performance of LLMs, against state-of-the-art models in this field. We employed three different approaches: chunking, knowledge graph-based summarization, and TimeRanker. Each of these methods was systematically tested on three benchmark datasets for timeline summarization to assess their effectiveness in capturing and condensing key events and their evolution within timelines. Our findings reveal that while LLMs show promise, timeline summarization remains a complex task that is not yet fully resolved.},
+booktitle = {Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {2657–2661},
+numpages = {5},
+keywords = {benchmarking, knowledge graphs, llms, timeline summarization},
+location = {Washington DC, USA},
+series = {SIGIR '24}
+}
+
+@inproceedings{D19-5403,
+    title = "Abstractive Timeline Summarization",
+    author = "Steen, Julius  and
+      Markert, Katja",
+    editor = "Wang, Lu  and
+      Cheung, Jackie Chi Kit  and
+      Carenini, Giuseppe  and
+      Liu, Fei",
+    booktitle = "Proceedings of the 2nd Workshop on New Frontiers in Summarization",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/D19-5403/",
+    doi = "10.18653/v1/D19-5403",
+    pages = "21--31",
+    abstract = "Timeline summarization (TLS) automatically identifies key dates of major events and provides short descriptions of what happened on these dates. Previous approaches to TLS have focused on extractive methods. In contrast, we suggest an abstractive timeline summarization system. Our system is entirely unsupervised, which makes it especially suited to TLS where there are very few gold summaries available for training of supervised systems. In addition, we present the first abstractive oracle experiments for TLS. Our system outperforms extractive competitors in terms of ROUGE when the number of input documents is high and the output requires strong compression. In these cases, our oracle experiments confirm that our approach also has a higher upper bound for ROUGE scores than extractive methods. A study with human judges shows that our abstractive system also produces output that is easy to read and understand."
+}
+
+Event Extraction
+================
+
+@misc{EE-inst-tuning,
+      title={Instruction-Tuning LLMs for Event Extraction with Annotation Guidelines}, 
+      author={Saurabh Srivastava and Sweta Pati and Ziyu Yao},
+      year={2025},
+      eprint={2502.16377},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2502.16377}, 
+}
+
+@misc{multi-sources-ee,
+      title={Harvesting Events from Multiple Sources: Towards a Cross-Document Event Extraction Paradigm}, 
+      author={Qiang Gao and Zixiang Meng and Bobo Li and Jun Zhou and Fei Li and Chong Teng and Donghong Ji},
+      year={2024},
+      eprint={2406.16021},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2406.16021}, 
+}
+
+@inproceedings{ee-generative,
+    title = "Generative Approaches to Event Extraction: Survey and Outlook",
+    author = "Simon, {\'E}tienne  and
+      Olsen, Helene  and
+      You, Huiling  and
+      Touileb, Samia  and
+      {\O}vrelid, Lilja  and
+      Velldal, Erik",
+    editor = "Tetreault, Joel  and
+      Nguyen, Thien Huu  and
+      Lamba, Hemank  and
+      Hughes, Amanda",
+    booktitle = "Proceedings of the Workshop on the Future of Event Detection (FuturED)",
+    month = nov,
+    year = "2024",
+    address = "Miami, Florida, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.futured-1.7/",
+    doi = "10.18653/v1/2024.futured-1.7",
+    pages = "73--86",
+    abstract = "enter abstract here"
+}
+
+@misc{ee-prompt-opt,
+      title={Revisiting Prompt Optimization with Large Reasoning Models-A Case Study on Event Extraction}, 
+      author={Saurabh Srivastava and Ziyu Yao},
+      year={2025},
+      eprint={2504.07357},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2504.07357}, 
+}
+
+@ARTICLE{event-extraction-survay,
+  author={Li, Qian and Li, Jianxin and Sheng, Jiawei and Cui, Shiyao and Wu, Jia and Hei, Yiming and Peng, Hao and Guo, Shu and Wang, Lihong and Beheshti, Amin and Yu, Philip S.},
+  journal={IEEE Transactions on Neural Networks and Learning Systems}, 
+  title={A Survey on Deep Learning Event Extraction: Approaches and Applications}, 
+  year={2024},
+  volume={35},
+  number={5},
+  pages={6301-6321},
+  keywords={Task analysis;Deep learning;Data mining;Measurement;Feature extraction;Technological innovation;Deep learning;evaluation metrics;event extraction (EE);research trends},
+  doi={10.1109/TNNLS.2022.3213168}}
+
+@misc{ACE2005,
+  doi = {10.35111/MWXC-VH88},
+  url = {https://catalog.ldc.upenn.edu/LDC2006T06},
+  author = {{Walker,  Christopher} and {Strassel,  Stephanie} and {Medero,  Julie} and {Maeda,  Kazuaki}},
+  title = {ACE 2005 Multilingual Training Corpus},
+  publisher = {Linguistic Data Consortium},
+  year = {2006}
+}

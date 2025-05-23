@@ -19,7 +19,7 @@
 \department {Department of Computer Science}
 \title      {Multi-document Structured Summarization}
 \author     {Dominik Dvořáček}
-\date       {January 2025}
+\date       {May 2025}
 \supervisor {Ing. Jan Drchal, Ph.D.}  % One or more supervisors
 \studyinfo  {Open Informatics}  % Study programme etc.
 \workname   {Diploma Project}
@@ -31,10 +31,10 @@
 \pagetwo    {}  % The text printed on the page 2 at the bottom.
 
 \abstractEN {
-Multi-document structured summarization addresses the challenge of extracting key knowledge from large collections of related texts. Essential information—such as entities, their roles, and events with temporal attributes—must be detected and linked across heterogeneous sources. Recent advances in large language models (LLMs) and transformer-based architectures have greatly improved the quality of both extraction and summary generation. A modular extraction pipeline was designed, integrating named entity recognition and event extraction techniques, and evaluated on a manually annotated news corpus. Performance was assessed using both classical information retrieval metrics and custom measures for structured outputs. Results demonstrate the superiority of commercial LLMs over open-source alternatives and highlight that incremental improvements in prompt engineering and batch processing yield only marginal gains. This research establishes a reproducible framework for structured summarization and provides a foundation for further methodological innovation.
+Multi-document structured summarization addresses the challenge of extracting key knowledge from large collections of related texts. Essential information—such as entities, their roles, and events with temporal attributes—must be detected and linked across heterogeneous sources. Recent advances in large language models (LLMs) and transformer-based architectures have greatly improved the quality of both extraction and summary generation in these tasks. A modular extraction pipeline was designed, integrating named entity recognition and event extraction techniques, and evaluated on a manually annotated news corpus. Performance was assessed using both classical information retrieval metrics and custom measures for structured outputs. Results show that commercial LLMs outperform open-source models in this extraction pipeline when applied to the Czech news dataset. Furthermore, experiments demonstrate that additional enhancements in prompt engineering and batch processing within this system lead to only marginal improvements on the tested data and models. This research establishes a reproducible framework for structured summarization and provides a foundation for further methodological innovation.
 }
 \abstractCZ {
-Vícedokumentová strukturovaná sumarizace řeší problém extrakce klíčových znalostí z rozsáhlých kolekcí souvisejících textů. Je nutné detekovat a propojit základní informace—jako jsou entity, jejich role a události s časovými atributy—napříč heterogenními zdroji. Nedávný pokrok ve vývoji velkých jazykových modelů (LLM) výrazně zvýšil kvalitu extrakce i generování textových souhrnů. Byla navržena modulární extrakční sekvence výpočetních modulů, která integruje techniky rozpoznávání pojmenovaných entit a extrakce událostí, a její kvalita byla ověřena na ručně anotovaném textovém korpusu mediálních zpráv. Kvalita extrakcí byla posuzován pomocí klasických metrik informačního vyhledávání i vlastních měřítek pro strukturované výstupy. Výsledky prokazují převahu komerčních LLM nad open-source alternativami a ukazují, že dílčí vylepšení pomocí prompt engineeringu a dávkového zpracování přináší jen marginální zisky. Tento výzkum zavádí reprodukovatelný rámec pro strukturovanou sumarizaci a vytváří základ pro další metodologické inovace.
+Strukturovaná sumarizace množiny dokumentů řeší problém extrakce klíčových znalostí z rozsáhlých kolekcí souvisejících textů. Je nutné detekovat a propojit základní informace—jako jsou entity, jejich role a události s časovými atributy—napříč heterogenními zdroji. Nedávný pokrok ve vývoji velkých jazykových modelů (LLM) výrazně zvýšil kvalitu extrakce i generování textových souhrnů. Byla navržena modulární extrakční sekvence výpočetních modulů, která integruje techniky rozpoznávání pojmenovaných entit a extrakce událostí, a její kvalita byla ověřena na ručně anotovaném textovém korpusu mediálních zpráv. Kvalita extrakce byla posouzena pomocí klasických metrik informačního vyhledávání i vlastních měřítek pro strukturované výstupy. Výsledky ukazují, že komerční LLM modely v tomto extrakčním systému dosahují lepších výsledků než open-source modely při zpracování českého zpravodajského korpusu. Dále experimenty prokazují, že další vylepšení této sekvence, realizované pomocí prompt engineeringu a dávkového zpracování, přinášejí na testovaných datech a modelech pouze marginální vylepšení. Tento výzkum zavádí reprodukovatelný rámec pro strukturovanou sumarizaci a vytváří základ pro další metodologické inovace.
 }           % If your language is Slovak use \abstractSK instead \abstractCZ
 
 \keywordsEN {
@@ -45,9 +45,13 @@ vícedokumentová sumarizace, strukturovaná sumarizace, extrakce informací, ro
 }
 \thanks {           % Use main language here
 Computational resources were provided by the e-INFRA CZ project (ID:90254), supported by the Ministry of Education, Youth and Sports of the Czech Republic. The access to the computational infrastructure of the OP VVV funded project CZ.02.1.01/0.0/0.0/16\_019/0000765 ``Research Center for Informatics'' is also gratefully acknowledged.
+
+I would like to thank my supervisor Ing. Jan Drchal, Ph.D. for his valuable advice and my family and girlfriend for their support.
 }
 \declaration {      % Use main language here
-I declare that I have prepared my thesis independently and that I have provided all the information sources used in accordance with the Methodological Guideline on the Observance of Ethical Principles in the Preparation of University Theses and the Framework Rules for the Use of Artificial Intelligence at CTU for Study and Teaching Purposes in Bachelor and Master Studies.
+I, the undersigned, declare that I have elaborated the master’s thesis entitled {\it Multi-document Structured Summarization} independently, and have cited all information sources used in accordance with the Methodological Instruction on the Observance of Ethical Principles in the Preparation of University Theses and with the Framework Rules for the Use of Artificial Intelligence at CTU for Academic and Pedagogical Purposes in Bachelor’s and Continuing Master’s Programmes.
+
+I declare that I used artificial intelligence tools during the preparation and writing of this thesis. I verified the generated content. I hereby confirm that I am aware of the fact that I am fully responsible for the contents of the thesis.
 \signature % makes dots
 }
 

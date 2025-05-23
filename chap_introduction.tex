@@ -4,6 +4,49 @@
 
 This thesis investigates the problem of multi-document structured summarization. Summarization is a central task in natural language processing (NLP) that addresses the challenge of information overload by distilling essential content from voluminous and redundant textual data. Existing approaches for text summarization include both extractive and abstractive methods, yet structured summarization remains a distinct subproblem requiring not only the condensation of information but also the extraction and organization of entities and events.
 
+Structured summarization outputs data in a machine-readable format. Unlike conventional summaries, which yield a condensed text, the aim here is to extract and interlink key entities, such as people, organizations, locations, and events, in a structured schema. For example, given a set of news articles reporting on an election, the following JSON snippet demonstrates the nature of the system’s output:
+
+\begtt
+{
+  "people": [
+    {
+      "id": 1, 
+      "name": "David Rath", 
+      "roles": ["former governor", "former MP"]
+    }
+  ],
+  "organizations": [
+    {
+      "id": 1, 
+      "name": "ČSSD", 
+      "types": ["political party"]
+    }
+  ],
+  "locations": [
+    {
+      "id": 1, 
+      "name": "Litoměřice", 
+      "types": ["city"]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "text": "David Rath (ČSSD) received less than five percent 
+      of the votes in the first round of the Senate elections 
+      in Litoměřice.",
+      "people": [1],
+      "organizations": [1],
+      "locations": [1],
+      "time_start": "2018-10-07",
+      "time_end": "2018-10-07"
+    }
+  ]
+}
+\endtt
+
+This structured output enables downstream applications such as automatic timeline construction, entity-based search, and knowledge graph creation, supporting fine-grained and reproducible analysis across document collections.
+
 Modern advances in large language models (LLMs) have transformed the field. Deep learning techniques, particularly those based on transformer architectures, have achieved state-of-the-art results in text summarization tasks. However, multi-document summarization (MDS) presents unique challenges, including semantic conflicts, duplication, and the need for temporal alignment of information across heterogeneous sources. Addressing these issues demands not only robust models but also methodological innovations in knowledge extraction, prompt engineering, and evaluation metrics.
 
 The primary objective of this work is to design, implement, and evaluate a pipeline for structured knowledge extraction from a set of related documents. The core of the proposed system lies in the integration of advanced named entity recognition, event extraction, and clustering techniques, leveraging both open-source and commercial large language models. The pipeline is developed to extract and deduplicate structured elements—such as people, organizations, locations, and events—across document collections, supporting timeline construction.

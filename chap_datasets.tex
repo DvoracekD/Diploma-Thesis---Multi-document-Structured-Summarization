@@ -50,7 +50,7 @@ Example article:
 }
 \endtt
 
-\sec Exploratory analysis
+\sec Exploratory Analysis
 
 The exploratory analysis provides a comprehensive overview of the Český rozhlas articles dataset. The dataset consists of 104,677 news articles in JSONL format, with each article containing metadata such as date, URL, domicil, section, tags, title, abstract, and main text. Initial assessment demonstrates high data quality, as the dataset contains no duplicate URLs and only 48 duplicate article titles, which suggests minimal redundancy and high data integrity.
 
@@ -155,7 +155,7 @@ This reconstructed hierarchy provides a richer understanding of the topical orga
 
 Analysis of tags and locations reveals dominant topics and geographic distribution in the dataset. Figure \clabel[tags-locations] combines these perspectives in a single side-by-side visualization: the left panel shows a horizontal bar plot of the 20 most frequent tags, while the right panel displays the 20 most commonly mentioned locations (domicil). In both plots, the y-axes list tag or location names, and the x-axes (logarithmic scale) show the number of articles associated with each item. This logarithmic scaling compensates for the predominance of a few top categories, making it easier to observe mid-ranked items as well. Higher bars indicate more frequent tags or locations, highlighting the most important topics, entities, and places in the corpus.
 
-\medskip\clabel[tags-locations]{Top 20 tags and locations with logarithmic axis}\picw=14cm \cinspic figs/analysis/tags-domicil-combined.pdf
+\medskip\clabel[tags-locations]{Top 20 tags and locations}\picw=14cm \cinspic figs/analysis/tags-domicil-combined.pdf
 ~\caption/f The left panel shows the 20 most frequent tags and the right panel the 20 most frequent locations mentioned in the articles. For both, the y-axes list tag or location names. The x-axes are logarithmic, showing the number of articles per tag/location. This scaling compensates for the dominance of the top items, making differences among mid-frequency tags and locations more interpretable. Reading down each panel reveals the main themes and geographies covered by Český rozhlas.\medskip
 
 Lexical analysis using a word cloud enables intuitive visualization of word frequency across the corpus. Figure \ref[Fig7] depicts a word cloud, where each word’s size is proportional to its frequency (after lemmatization and filtering stopwords). The most frequently occurring words are visually larger and usually positioned centrally, while less common words are smaller and nearer the edges. This allows the reader to instantly identify which terms, concepts, and named entities are most prominent in the dataset. The word cloud thus offers a high-level summary of lexical salience and main topics.
@@ -168,7 +168,7 @@ Lexical analysis using a word cloud enables intuitive visualization of word freq
 In summary, the exploratory analysis establishes a foundational understanding of the Český rozhlas dataset’s structure, thematic focus, temporal patterns, and lexical characteristics. These insights inform subsequent methodological choices for advanced natural language processing, topic modeling, and event extraction tasks.
 
 
-\sec Challenges and considerations
+\sec Challenges and Considerations
 
 Several challenges and considerations arise when working with the Český rozhlas news articles dataset. The most significant challenge is the presence of heterogeneous article lengths, with some texts being exceptionally short or long, which may affect the robustness of downstream modeling and skew descriptive statistics. Another consideration is the evolving structure of metadata fields, such as sections, tags, and locations, which may change over time or be inconsistently applied by annotators. The dataset exhibits class imbalance, as a small number of topics, tags, or locations dominate the corpus, while others are underrepresented; this imbalance may bias machine learning models toward majority categories.
 
